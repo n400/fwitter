@@ -3,15 +3,13 @@
 * {
     box-sizing: border-box;
 }
-// Main colors used (https://www.color-blindness.com/color-name-hue/)
+// // Main colors used (https://www.color-blindness.com/color-name-hue/)
 $rhino: #2c3160;
 $chetwode: #6474af;
 $bluenav: #485C80;
 $bluebright: #4080ED;
 $bluebright-hover: rgb(49, 101, 190);
 $solitude: #F3F4F9;
-$soft-white: rgba(255,255,255,0.8);
-$hard-white: rgba(255,255,255,0.95);
 $wisteria: #bc9be0;
 $wisteria-hover: #cea2ff;
 $rock-blue: #9aaec3;
@@ -25,29 +23,37 @@ $blue-shade: #3A4A66;
 $dark-grey: #4A4A4A;
 $grey: #808080;
 $lovered: #D44D5C;
-// $fauna-cerulean: #323fcb;
-
-// layout
+$fauna-cerulean: #323fcb;
+$soft-white: rgba(255,255,255,0.8);
+$hard-white: rgba(255,255,255,0.95);
 $grid-unit: 30px;
 $touch-target-min: 36px;
 $touch-target: 44px;
 $border-radius: calc( #{$grid-unit} / 4);
 $border-radius-round: calc( #{$grid-unit} / 1.5);
-
-// fonts
 $menu-font-size: 20px;
-
-@import "./components/button";
-@import "./components/form";
 @import "./components/layout";
 @import "./components/card";
-@import "./components/nav";
 @import "./components/fweeter";
 @import "./components/suggestions";
 @import "./components/search";
 @import "./components/asset";
-
 @import "./pages/home";
+
+
+//NEW
+$soft-white: rgba(255,255,255,0.8);
+$hard-white: rgba(255,255,255,0.95);
+@import "./theme/normalize";
+@import "./theme/typ";
+@import "./theme/layout";
+@import "./theme/forms";
+@import "./components/nav";
+@import "./components/footer";
+
+//PAGE-SPECIFIC
+@import "./components/masonry";
+
 
 // CSS from libraries  
 @import "react-toastify/dist/ReactToastify";

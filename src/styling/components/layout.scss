@@ -27,16 +27,6 @@ body {
     flex-direction: column;
 }
 
-.body-container {
-    display: flex;
-    flex-direction: row;
-    margin: 0 auto;
-    padding: 0 $grid-unit;
-    width: 100%;
-    max-width: 1400px;
-    min-height: 100vh;
-}
-
 .body-container .body-content {
     display: flex;
     flex-direction: column;

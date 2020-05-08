@@ -1,33 +1,6 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
-
-import { QueryManager } from '../../src/fauna/query-manager'
-require('dotenv').config({ path: '.env.' + process.argv[2] })
-const { handleSetupError } = require('../../src/fauna/helpers/errors')
-// const faunadb = require('faunadb')
-// const q = faunadb.query
-// const { CreateKey, Database } = q
-// const faunadb = require('faunadb')
-// const q = faunadb.query
-// var client = new faunadb.Client({ secret: process.env.REACT_APP_LOCAL___ADMIN })
-var createDummyData = async () => {
-  let adminKey = process.env.REACT_APP_LOCAL___ADMIN
-  let faunaQueries = new QueryManager(adminKey)
-  await handleSetupError(
-    faunaQueries.register('oaumses1@test.com', 'testtest', 'iBrecht', 'uuuoatabrecht'),
-    'register user1'
-  )
-
-
-}
-// var createDummyData = () => client.query(
-//   q.Create(
-//     q.Collection('fweets'),
-//     { data: { testField: 'ramseypoo' } }
-//   )
-// ).then(function(response) {
-//   console.log(response.ref); // Logs the ref to the console.
-// })
 
 const Form = props => {
   const [username, setUsername] = useState('')
@@ -56,26 +29,30 @@ const Form = props => {
   //   setZip(event.target.value)
   // }
 
+  const linkInfo = props.isLogin
+    ? { linkText: 'No account yet? Register here!', link: 'register' }
+    : { linkText: 'Already have an account? Login here!', link: 'login' }
 
   return (
     <React.Fragment>
       <h1 className="jim-slogan">Jim writes something funny here!</h1>
-      <button className="button-cta" onClick={createDummyData}>
-click me
-</button>
       <div className="form-wrapper">
         <h3 className="form-header">Sign up today</h3>
         <small>(or stay sad forever)</small>
         <form className="account-form" onSubmit={e => props.handleSubmit(e, username, password, alias, name)}>
-          {props.isLogin ? null : renderInputField('Screen name', alias, 'text', e => handleChangeAlias(e))}
+        "page two"
+         {/* {props.isLogin ? null : renderInputField('Name', name, 'text', e => handleChangeName(e))}
+          {props.isLogin ? null : renderInputField('Alias', alias, 'text', e => handleChangeAlias(e))}
           {renderInputField('Email', username, 'text', e => handleChangeUserName(e))}
-          {renderInputField('Password', password, 'password', e => handleChangePassword(e))}   
-          {props.isLogin ? null : renderInputField('Zip', name, 'text', e => handleChangeName(e))}          
+          {renderInputField('Password', password, 'password', e => handleChangePassword(e))}   */}
          <div className="input-row align-right">
-            <button className="button-cta"> {props.isLogin ? 'Login' : 'Next'} </button>
+            <button className="button-cta"> {props.isLogin ? 'Login' : 'Register'} </button>
+          
           </div>
         </form>
       </div>
+
+
     </React.Fragment>
   )
 }

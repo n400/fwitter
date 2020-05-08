@@ -6,6 +6,8 @@ import SessionContext from './../context/session'
 import { faunaQueries } from '../fauna/query-manager'
 import { safeVerifyError } from '../fauna/helpers/errors'
 
+import { Masonry } from './../components/masonry'
+
 // Components
 import Form from '../components/form'
 
@@ -51,10 +53,13 @@ const Login = props => {
   const sessionContext = useContext(SessionContext)
 
   return (
+    <>
+    <Masonry />
     <Form
       isLogin={true}
       handleSubmit={(event, username, password) => handleLogin(event, username, password, history, sessionContext)}
     ></Form>
+    </>
   )
 }
 

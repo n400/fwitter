@@ -4,7 +4,7 @@ import { safeVerifyError } from './../fauna/helpers/errors'
 import { faunaQueries } from '../fauna/query-manager'
 import SessionContext from './../context/session'
 import { useHistory } from 'react-router-dom'
-
+import { Masonry } from './../components/masonry'
 // Components
 import Form from './../components/form'
 
@@ -14,7 +14,7 @@ const handleRegister = (event, username, password, alias, name, sessionContext, 
     .then(e => {
       toast.success('User registered')
       sessionContext.dispatch({ type: 'register', data: e })
-      history.push('/')
+      history.push('accounts/form-02')
     })
     .catch(err => {
       const errorCode = safeVerifyError(err, [
@@ -53,12 +53,16 @@ const Register = () => {
   const history = useHistory()
   const sessionContext = useContext(SessionContext)
   return ( 
+    <>
+    <Masonry />
+
     <Form
       isLogin={false}
       handleSubmit={(event, username, password, alias, name) =>
         handleRegister(event, username, password, alias, name, sessionContext, history)
       }
     ></Form>
+    </>
   )
 }
 

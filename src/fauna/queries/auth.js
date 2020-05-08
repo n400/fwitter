@@ -29,7 +29,8 @@ const {
 } = q
 
 /*
- * The following functions return an Fauna Query Language (FQL) statement that we will store in a  User defined Function (UDF).
+ * The following functions return an Fauna Query Language (FQL) statement that we will store in a  
+   User defined Function (UDF).
  * (this happens in ./../setup/functions)
  */
 

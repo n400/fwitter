@@ -3,6 +3,7 @@ import faunadb from 'faunadb'
 import { registerWithUser, login, logout } from './queries/auth'
 import {
   createFweet,
+  storeLookingFor,
   getFweets,
   getFweetsByTag,
   getFweetsByAuthor,
@@ -40,8 +41,7 @@ class QueryManager {
   }
 
   register(email, password, name, alias) {
-    // randomly choose an icon
-    const icon = 'person' + (Math.round(Math.random() * 22) + 1)
+    const icon = 'person' + (Math.round(Math.random() * 22) + 1) // randomly choose an icon
     return registerWithUser(this.client, email, password, name, alias, icon).then(res => {
       if (res) {
         this.client = new faunadb.Client({ secret: res.secret.secret })
@@ -73,6 +73,10 @@ class QueryManager {
 
   createFweet(message, asset) {
     return createFweet(this.client, message, asset)
+  }
+// ??IN PROGRESS
+  storeLookingFor(message, asset) {
+    return storeLookingFor(this.client, message, asset)
   }
 
   searchPeopleAndTags(keyword) {

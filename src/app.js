@@ -6,6 +6,7 @@ import Login from './pages/login'
 import User from './pages/user'
 import Tag from './pages/tag'
 import Register from './pages/register'
+// import Waitlist from './pages/waitlist'
 import Layout from './components/layout'
 import { SessionProvider, sessionReducer } from './context/session'
 

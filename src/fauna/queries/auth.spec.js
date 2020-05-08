@@ -132,7 +132,8 @@ it('If the functions themselves have no permissions, the call will also fail', f
 // A token that comes from a logged in entity has at this point
 // full access the entity itself, careful do not store things
 // on account such as an 'admin boolean' since a logged in account
-// can alter that. Since we noticed that this is not what people tend to expect will probably change in the future.
+// can alter that. Since we noticed that this is not what people tend 
+// to expect will probably change in the future.
 // Note that you can override this behaviour using roles!
 it('We can access the account once we logged in with the account', function() {
   let localClient

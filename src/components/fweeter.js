@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons'
 
 const Fweeter = props => {
+  const [lookingFor, setLookingFor] = useState('')
   const [fweet, setFweet] = useState('')
   const [asset, setAsset] = useState(null)
 
@@ -19,7 +20,7 @@ const Fweeter = props => {
 
   const handleSubmit = event => {
     event.preventDefault()
-    
+
     if (!fweet) return
     props.handleCreateFweet(fweet, asset).then(e => {
       setFweet('')
@@ -27,6 +28,21 @@ const Fweeter = props => {
     })
     return false
   }
+
+  const handleSubmitLookingFor = event => {
+    event.preventDefault()
+
+    if (!lookingFor) return
+    props.handleCreateFweet(lookingFor, asset).then(e => {
+      setLookingFor('')
+      setAsset(null)
+    })
+    return false
+  }
+  const handleChangeLookingFor = event => {
+    setLookingFor(event.target.value)
+  }
+
 
   const generateUploadImage = () => {
     return <Uploader onPhotosUploaded={handleUploadPhoto}></Uploader>
@@ -38,6 +54,20 @@ const Fweeter = props => {
 
   return (
     <div className="fweeter">
+    
+    <form className="" onSubmit={handleSubmitLookingFor}>
+          <input
+            className="fweet-input-field"
+            type="text"
+            id="fname"
+            name="fname"
+            placeholder="What are you looking for?"
+            value={lookingFor}
+            onChange={handleChangeLookingFor}
+          />
+        </form>
+
+
       <div className="fweet-card">
         <div className="avatar">
           <img className="avatar-image" src={`/images/${user.icon}.png`} alt="profile" />
@@ -66,7 +96,8 @@ const Fweeter = props => {
 }
 
 Fweeter.propTypes = {
-  handleCreateFweet: PropTypes.func
+  handleCreateFweet: PropTypes.func,
+  handleStoreLookingFor: PropTypes.func
 }
 
 export default Fweeter

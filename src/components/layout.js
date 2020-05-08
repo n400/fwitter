@@ -1,17 +1,22 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { ToastContainer, toast } from 'react-toastify'
+import Nav from './../components/nav'
+import { useLocation } from 'react-router-dom'
 
 const Layout = props => {
+  console.log(useLocation().pathname )
   return (
-    <div className="page">
+    <div className={"page " + useLocation().pathname}>
       <ToastContainer position={toast.POSITION.BOTTOM_RIGHT} />
-      <link
-        href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700&display=swap"
-        rel="stylesheet"
-      ></link>
-      <div className="body-container">{props.children}</div>
-    </div>
+      <div className="body-container">
+        <Nav/>
+        <main>
+          {props.children}
+        </main>
+        <footer><small>&copy; Copyright 2020 grinnr &nbsp; &#8226; &nbsp;</small><small>privacy policy	 &nbsp; &#8226; &nbsp; terms of service </small></footer>
+      </div>
+     </div>
   )
 }
 

@@ -5,7 +5,6 @@ import { toast } from 'react-toastify'
 import SessionContext from '../context/session'
 import Feed from '../components/feed'
 import Search from './../components/search'
-import Nav from './../components/nav'
 
 import { faunaQueries } from '../fauna/query-manager'
 import { safeVerifyError } from '../fauna/helpers/errors'
@@ -62,7 +61,6 @@ const TagPage = () => {
 
   return (
     <React.Fragment>
-      <Nav />
       <div className="fweeter-and-feed-container">
         <div className="feed-title">{'#' + tag}</div>
         <Feed update={update} error={state.error} loaded={state.loaded} fweets={state.fweets} />
