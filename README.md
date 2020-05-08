@@ -2,6 +2,9 @@ This project is an example of how to a 'real-world' app with highly dynamic data
 
 <img src="https://github.com/fauna-brecht/fwitter/blob/master/readme/fwitter.png?raw=true" width="600">
 
+There is a first [CSS-tricks article](https://css-tricks.com/rethinking-twitter-as-a-serverless-app/) that describes the application in general, explains auth, data modeling and simple queries and brushes over the other features. 
+More articles are coming on the [Fauna blog](https://fauna.com/blog) and/or CSS Tricks
+
 
 It uses the Fauna Query Language (FQL) and starts with a frontend-only approach that directly accesses the serverless database FaunaDB for data storage, authentication, and authorization. 
 
@@ -16,7 +19,7 @@ A few features are still missing and will be covered in future articles, includi
 This app was created with Create React App, to start using it we need to: 
 
 ### Install npm packages
-`npm run install`
+`npm install`
 
 ### Setup the database
 
@@ -108,7 +111,7 @@ REACT_APP_TEST__ADMIN_KEY=<your test database key>
 
 ### Update something in the setup
 What if I am experimenting and want to update something? 
-To update User Defined Functions or Roles you can just alter the definition and run `npm setup` again, it will verify whether the role/function exists and override it.
+To update User Defined Functions or Roles you can just alter the definition and run `npm run setup` again, it will verify whether the role/function exists and override it.
 
 One thing that can't be altered just like that are indexes (makes sense of course, they could contain quite some data). 
-In order to just setup from scratch again you can run `npm destroy` followed by `npm setup`. Note, that since names such as collections and indexes are cached, you will have to wait +-60 secs but we can easily get around that by just removing and adding the complete database. In that case, we would remove our ADMIN key as well which would mean that we have to generate a new one each time. However, if we just create an admin key and use that to add (on setup) and remove (on destroy) a child database, than we can get around that inconvenience. We have provided you with that option. When you add the environment variable 'REACT_APP_LOCAL___CHILD_DB_NAME', the script will create a child database on `npm setup` and destroy it on `npm destroy` instead of removing all collections/indices/functions. 
+In order to just setup from scratch again you can run `npm run destroy` followed by `npm run setup`. Note, that since names such as collections and indexes are cached, you will have to wait +-60 secs but we can easily get around that by just removing and adding the complete database. In that case, we would remove our ADMIN key as well which would mean that we have to generate a new one each time. However, if we just create an admin key and use that to add (on setup) and remove (on destroy) a child database, than we can get around that inconvenience. We have provided you with that option. When you add the environment variable 'REACT_APP_LOCAL___CHILD_DB_NAME', the script will create a child database on `npm run setup` and destroy it on `npm run destroy` instead of removing all collections/indices/functions. 

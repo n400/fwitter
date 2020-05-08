@@ -70,7 +70,9 @@ const renderLink = (
   } else {
     return (
       <li key={`nav-link-${link.href}-${link.label}`}>
-        <Link to={link.href}>{link.label}</Link>
+        <Link key={'link_' + link.label} to={link.href}>
+          {link.label}
+        </Link>
       </li>
     )
   }
