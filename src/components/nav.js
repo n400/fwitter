@@ -36,7 +36,7 @@ const renderLoginLink = sessionContext => {
   if (user) {
     return renderLink({ handleClick: handleLogout, label: 'Logout' }, sessionContext)
   } else {
-    return renderLink({ href: '/accounts/login', label: 'Login' }, sessionContext)
+    return renderLink({ href: '/accounts/login', label: 'skip' }, sessionContext)
   }
 }
 
@@ -63,11 +63,11 @@ const links = [
   // s => renderProtectedLink(s, { href: '/', label: 'faPaperPlane' }),
   // s => renderProtectedLink(s, { href: '/', label: 'Profile' }),
   // <FontAwesomeIcon icon={faPaperPlane} />
-  // SignupOrLoginOrLogout,
+  SignupOrLoginOrLogout,
   // s => renderProtectedLink(s, { href: '/topics', label: 'Topics' }),
   // s => renderProtectedLink(s, { href: '/messages', label: 'Messages' }),
-  s => renderProtectedLink(s, { href: '/profile', label: 'Profile' }),
-  renderLoginLink
+  s => renderProtectedLink(s, { href: '/profile', label: 'Profile' })
+  // ,renderLoginLink
 ]
 
 const renderLink = (

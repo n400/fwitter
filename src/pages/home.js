@@ -75,27 +75,6 @@ const Home = () => {
       })
   }
 
-  const handleStoreLookingFor = (message,asset) => {
-    return faunaQueries
-      .storeLookingFor(message, asset)
-      .then(fweetArray => {
-        setState({
-          fweets: fweetArray.concat(state.fweets),
-          loaded: true
-        })
-        toast.success('Fweeted')
-      })
-      .catch(err => {
-        const rawError = safeVerifyError(err, ['requestResult', 'responseRaw'])
-        if (rawError.includes('Rate limiting')) {
-          toast.warn('You are fweeting too fast')
-        } else {
-          console.error('error on Fweet', err)
-          toast.error('Fweet failed')
-        }
-      })
-  }
-
   const update = (fweets, loaded, error) => {
     setState({
       fweets: fweets,

@@ -88,9 +88,9 @@ class QueryManager {
     return likeFweet(this.client, fweetRef)
   }
 
-  updateUser(name, alias) {
+  updateUser(name, alias, zip, icon, wantMemes, wantFriends, wantDates) {
     // we don't pass in the icon yet atm
-    return this.client.query(UpdateUser(name, alias))
+    return this.client.query(UpdateUser(name, alias, zip, icon, wantMemes, wantFriends, wantDates))
   }
 
   refweet(fweetRef, message) {

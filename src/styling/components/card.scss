@@ -142,12 +142,23 @@
     display: block;
     flex-direction: column;
     justify-content: center;
-    padding: $grid-unit/2 0;
+    // padding: $grid-unit/2 0;
+    padding: 1%;
+    font-size:.8rem;
+    z-index:1;
+    background:rgba(0,0,0,.8);
+    color:white;
+    position: absolute;
+    width: 100%;
+    opacity:0;
+}
+.fweet-card-text:hover{
+    opacity:1;
 }
 
 .fweet-card-text.refweet {
-    padding: $grid-unit / 2;
-    background-color: $soft-shade;
+    // padding: $grid-unit / 2;
+    // background-color: $soft-shade;
 }
 
 .fweet-comments {
@@ -155,14 +166,14 @@
 }
 
 .fweet-card-text.comment {
-    padding: 0 $grid-unit/2;
-    margin: $grid-unit/2 0 $grid-unit $grid-unit;
-    border-left: 2px solid $wisteria;
-    background: $soft-white;
-    border-radius: $border-radius-round;
-    border: 1px solid $soft-border;
-    padding: $grid-unit;
-    width: 100%;
+    // padding: 0 $grid-unit/2;
+    // margin: $grid-unit/2 0 $grid-unit $grid-unit;
+    // border-left: 2px solid $wisteria;
+    // background: $soft-white;
+    // border-radius: $border-radius-round;
+    // border: 1px solid $soft-border;
+    // padding: $grid-unit;
+    // width: 100%;
 }
 
 .fweet-card-text.comment:first-child {

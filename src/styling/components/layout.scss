@@ -53,7 +53,8 @@ body {
 
 .main-column {
     display: flex;
+    flex:1;
     flex-direction: column;
-    width: 50%;
-    margin: $grid-unit * 1.5;
+    // margin: $grid-unit * 1.5;
+    width:100%;
 }

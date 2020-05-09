@@ -15,15 +15,20 @@ const Fweeter = props => {
   const sessionContext = useContext(SessionContext)
   const { user } = sessionContext.state
 
-  const handleChange = event => {
+  const handleChangeCaption = event => {
     setFweet(event.target.value)
+  }
+
+  const handleChangeAsset = event => {
+    // setFweet(event.target.value)
+    setAsset(event.target.value)
   }
 
   const handleSubmit = event => {
     event.preventDefault()
 
-    if (!fweet) {
-      toast.warn('Please enter some text first :)')
+    if (!asset) {
+      toast.warn('Please upload an image first :)')
       return
     }
 
@@ -32,20 +37,6 @@ const Fweeter = props => {
       setAsset(null)
     })
     return false
-  }
-
-  const handleSubmitLookingFor = event => {
-    event.preventDefault()
-
-    if (!lookingFor) return
-    props.handleCreateFweet(lookingFor, asset).then(e => {
-      setLookingFor('')
-      setAsset(null)
-    })
-    return false
-  }
-  const handleChangeLookingFor = event => {
-    setLookingFor(event.target.value)
   }
 
 
@@ -60,19 +51,6 @@ const Fweeter = props => {
   return (
     <div className="fweeter">
     
-    <form className="" onSubmit={handleSubmitLookingFor}>
-          <input
-            className="fweet-input-field"
-            type="text"
-            id="fname"
-            name="fname"
-            placeholder="What are you looking for?"
-            value={lookingFor}
-            onChange={handleChangeLookingFor}
-          />
-        </form>
-
-
       <div className="fweet-card">
         <div className="avatar">
           <img className="avatar-image" src={`/images/${user.icon}.png`} alt="profile" />
@@ -85,11 +63,11 @@ const Fweeter = props => {
             name="fname"
             placeholder="What's on your mind?"
             value={fweet}
-            onChange={handleChange}
+            onChange={handleChangeCaption}
           />
         </form>
       </div>
-      {asset ? <Asset asset={asset}></Asset> : null}
+      {asset ? <Asset asset={asset} onChange={handleChangeAsset}></Asset> : null}
       <div className="fweet-card-actions">
         <div className="icon">{generateUploadImage()}</div>
         <button className="icon" onClick={handleSubmit}>

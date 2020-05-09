@@ -18,8 +18,8 @@ function CreateUser(name, alias, icon) {
  * Instead, shows a different approach, security via Roles.
  */
 
-function UpdateUser(name, alias, icon) {
-  console.log('updating', name, alias, icon)
+function UpdateUser(name, alias, zip, icon, wantMemes, wantFriends, wantDates) {
+  console.log('updating', name, alias, zip, icon, wantMemes, wantFriends, wantDates)
   return Let(
     {
       accountRef: Identity(),
@@ -29,7 +29,11 @@ function UpdateUser(name, alias, icon) {
       data: {
         name: name,
         alias: alias,
-        icon: icon
+        zip: zip,
+        icon: icon,
+        wantMemes: wantMemes,
+        wantFriends: wantFriends,
+        wantDates: wantDates
       }
     })
   )
