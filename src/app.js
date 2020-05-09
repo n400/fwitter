@@ -7,6 +7,7 @@ import User from './pages/user'
 import Tag from './pages/tag'
 import Profile from './pages/profile'
 import Register from './pages/register'
+import Register02 from './pages/register02'
 // import Waitlist from './pages/waitlist'
 import Layout from './components/layout'
 import { SessionProvider, sessionReducer } from './context/session'
@@ -39,6 +40,9 @@ const App = () => {
               </Route>
               <Route exact path="/accounts/register">
                 <Register />
+              </Route>
+              <Route exact path="/accounts/register02">
+                <Register02 />
               </Route>
               {user ? <Route path="/profile/" component={Profile} /> : null}
               <Route path="/users/:authorAlias" component={User} />

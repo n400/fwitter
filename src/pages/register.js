@@ -14,7 +14,7 @@ const handleRegister = (event, email, password, alias, wantMemes, wantFriends, w
     .then(e => {
       toast.success('User registered')
       sessionContext.dispatch({ type: 'register', data: e })
-      history.push('accounts/form-02')
+      history.push('register02')
     })
     .catch(err => {
       const errorCode = safeVerifyError(err, [
