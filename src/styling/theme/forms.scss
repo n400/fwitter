@@ -81,6 +81,7 @@ label{
   input, label, button{
     max-width:580px;
   }
+  input, input[type=checkbox] + label{background:#f3f7ff;}
 }
 .button-checkboxes {
   input,label{margin:0;}
@@ -94,7 +95,7 @@ label{
     width: 20px;
     height: 30px;
     position: relative;
-    left: 42px;
+    left: 26px;
     top: 1px;
   }
   /* the actual checkbox button*/
@@ -104,12 +105,12 @@ label{
     flex:1;
     display: flex;
     align-items: center;
-    justify-content:center;
-    background:$soft-white;
+    // justify-content:center;
     color: #055dc9;
     font-weight: 500;
     cursor: pointer;
     letter-spacing: .02em;
+    padding: 0 10px 0 35px;
   } 
   // input[type=checkbox]:hover + label {
   //   background:#2da7c3;

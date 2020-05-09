@@ -11,9 +11,9 @@ import { Masonry } from './../components/masonry'
 // Components
 import Form from '../components/form'
 
-const handleLogin = (event, username, password, history, sessionContext) => {
+const handleLogin = (event, email, password, history, sessionContext) => {
   faunaQueries
-    .login(username, password)
+    .login(email, password)
     .then(e => {
       if (e === false) {
         toast.error('Login failed')
@@ -85,7 +85,7 @@ const Login = props => {
     <Masonry />
     <Form
       isLogin={true}
-      handleSubmit={(event, username, password) => handleLogin(event, username, password, history, sessionContext)}
+      handleSubmit={(event, email, password) => handleLogin(event, email, password, history, sessionContext)}
     ></Form>
     </>
   )

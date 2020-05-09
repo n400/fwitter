@@ -48,12 +48,19 @@ const CreateAccountUDF = CreateOrUpdateFunction({
 })
 
 // Let's show a second example where the function immediately adds a user that is linked to the account.
+
+// WHICH ONE IS ACTUALLY CREATING THE UDF, AND THEN WHICH ONE IS RUNNING????????
+//NEITHER OF THESE ARE FEEDING VARS TO THE UDF. UDF STILL GETS 'name' on the top line when no 'name' is in either of these
+// are we sure? what if i add wantMemes to bothof them...
+//nope. still no change.
+//but adding icon to the end everywhere seemed to work. now wantMemes is there. but just wantMemes.
+//ok, i have confirmed that it is the local storage bug. fuck.
 const CreateAccountWithUserUDF = CreateOrUpdateFunction({
   name: 'register_with_user',
   body: Query(
     Lambda(
-      ['email', 'password', 'name', 'alias', 'icon'],
-      RegisterWithUser(Var('email'), Var('password'), Var('name'), Var('alias'), Var('icon'))
+      ['email', 'password', 'alias', 'wantMemes', 'wantFriends', 'wantDates', 'icon'],
+      RegisterWithUser(Var('email'), Var('password'), Var('alias'), Var('wantMemes'), Var('wantFriends'),Var('wantDates'), Var('icon'))
     )
   ),
   role: Role('functionrole_register_with_user')
@@ -63,9 +70,9 @@ const CreateAccountWithUserNoRatelimitingUDF = CreateOrUpdateFunction({
   name: 'register_with_user',
   body: Query(
     Lambda(
-      ['email', 'password', 'name', 'alias', 'icon'],
-      RegisterWithUser(Var('email'), Var('password'), Var('name'), Var('alias'), Var('icon'), false)
-    )
+      ['email', 'password', 'alias', 'icon'],
+      RegisterWithUser(Var('email'), Var('password'), Var('alias'),  Var('icon'))
+     )
   ),
   role: Role('functionrole_register_with_user')
 })

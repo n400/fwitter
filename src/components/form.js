@@ -10,77 +10,89 @@ const { handleSetupError } = require('../../src/fauna/helpers/errors')
 // const faunadb = require('faunadb')
 // const q = faunadb.query
 // var client = new faunadb.Client({ secret: process.env.REACT_APP_LOCAL___ADMIN })
-var createDummyData = async () => {
-  let adminKey = process.env.REACT_APP_LOCAL___ADMIN
-  let faunaQueries = new QueryManager(adminKey)
-  await handleSetupError(
-    faunaQueries.register('oaumses1@test.com', 'testtest', 'iBrecht', 'uuuoatabrecht'),
-    'register user1'
-  )
-
-
-}
-// var createDummyData = () => client.query(
-//   q.Create(
-//     q.Collection('fweets'),
-//     { data: { testField: 'ramseypoo' } }
-//   )
-// ).then(function(response) {
-//   console.log(response.ref); // Logs the ref to the console.
-// })
 
 const Form = props => {
-  const [username, setUsername] = useState('')
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [name, setName] = useState('')
+  // const [name, setName] = useState('')
   const [alias, setAlias] = useState('')
-  // const [zip, setZip] = useState('')
+  const [wantMemes, setWantMemes] =useState('')
+  const [wantFriends, setWantFriends] = useState('')
+  const [wantDates, setWantDates] = useState('')
 
-  const handleChangeUserName = event => {
-    setUsername(event.target.value)
+
+  const handleChangeEmail = event => {
+    setEmail(event.target.value)
   }
 
   const handleChangePassword = event => {
     setPassword(event.target.value)
   }
 
-  const handleChangeName = event => {
-    setName(event.target.value)
-  }
+  // const handleChangeName = event => {
+  //   setName(event.target.value)
+  // }
 
   const handleChangeAlias = event => {
     setAlias(event.target.value)
   }
 
-  // const handleChangeZip = event => {
-  //   setZip(event.target.value)
-  // }
+  const handleChangeWantMemes = event => {
+    setWantMemes(event.target.checked)
+  }
+
+  const handleChangeWantFriends = event => {
+    console.log(event.target.checked)
+    setWantFriends(event.target.checked)
+  }
+
+  const handleChangeWantDates = event => {
+    console.log(event.target.checked)
+    setWantDates(event.target.checked)
+  }
+
 
 
   return (
     <React.Fragment>
       <h1 className="jim-slogan">Jim writes something funny here!</h1>
-      {/* <button className="button-cta" onClick={createDummyData}>click me</button> */}
+      
+
+
+
+
       <div className="form-wrapper">
         <h3 className="form-header">Sign up today</h3>
         <small>(or stay sad forever)</small>
-        <form className="account-form" onSubmit={e => props.handleSubmit(e, username, password, alias, name)}>
+        <form className="account-form form-with-button-checkboxes" onSubmit={e => props.handleSubmit(e, email, password, alias, wantMemes, wantFriends, wantDates)}>
 
-          {/* {props.isLogin ? null : renderInputField('Screen name', alias, 'text', e => handleChangeAlias(e))}
-          {renderInputField('Email', username, 'text', e => handleChangeUserName(e))}
-          {renderInputField('Password', password, 'password', e => handleChangePassword(e))}   
-          {props.isLogin ? null : renderInputField('Zip', name, 'text', e => handleChangeName(e))}          
-         <div className="input-row align-right">
-            <button className={props.isLogin ? 'login' : 'register'}> {props.isLogin ? 'Login' : 'Next'} </button>
-            </div> */}
+          {renderInputField('email', email, 'text', e => handleChangeEmail(e), 'email')}
+          {props.isLogin ? null : renderInputField('handle (you can change this later)', alias, 'text', e => handleChangeAlias(e))}
 
 
-          {renderInputField('email', username, 'text', e => handleChangeUserName(e), 'username')}
-          {props.isLogin ? null : renderInputField('name (you can change this later)', alias, 'text', e => handleChangeAlias(e))}
-          {props.isLogin ? null : renderInputField('zip code (optional)', name, 'text', e => handleChangeName(e))}
+
+
+
+          <div className="input-row">
+            <label>why grinnr? (select all that apply)</label>
+            <div className="button-checkboxes">
+              <input type="checkbox" id="memes" checked={wantMemes} onChange={handleChangeWantMemes} />
+              <label htmlFor="memes">memes</label>
+              <input type="checkbox" id="friends" checked={wantFriends} onChange={handleChangeWantFriends} />
+              <label htmlFor="friends">friends</label>
+              <input type="checkbox" id="dates" checked={wantDates} onChange={handleChangeWantDates} />
+              <label htmlFor="dates">dates</label>
+            </div>
+          </div>
+
+
+
+
           {renderInputField('password', password, 'password', e => handleChangePassword(e), 'current-password')}
           <div className="input-row align-right">
-            {/* <Link to={linkInfo.link}> {linkInfo.linkText}</Link> */}
+          
+
+
             <button className="button-cta"> {props.isLogin ? 'Login' : 'Next'} </button>
           </div>
 

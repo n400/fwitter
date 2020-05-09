@@ -8,9 +8,9 @@ import { Masonry } from './../components/masonry'
 // Components
 import Form from './../components/form'
 
-const handleRegister = (event, username, password, alias, name, sessionContext, history) => {
+const handleRegister = (event, email, password, alias, wantMemes, wantFriends, wantDates, sessionContext, history) => {
   faunaQueries
-    .register(username, password, name, alias)
+    .register(email, password, alias, wantMemes, wantFriends, wantDates)
     .then(e => {
       toast.success('User registered')
       sessionContext.dispatch({ type: 'register', data: e })
@@ -36,7 +36,7 @@ const handleRegister = (event, username, password, alias, name, sessionContext, 
         'description'
       ])
       if (errorCode === 'instance not unique') {
-        toast.error('An account with that e-mail already exists')
+        toast.error('An account with that e-mail or alias already exists')
       } else if (description.includes('Invalid e-mail provided')) {
         toast.error('Invalid e-mail format')
       } else if (description.includes('Invalid password')) {
@@ -58,8 +58,8 @@ const Register = () => {
 
     <Form
       isLogin={false}
-      handleSubmit={(event, username, password, alias, name) =>
-        handleRegister(event, username, password, alias, name, sessionContext, history)
+      handleSubmit={(event, email, password, alias, wantMemes, wantFriends, wantDates) =>
+        handleRegister(event, email, password, alias, wantMemes, wantFriends, wantDates, sessionContext, history)
       }
     ></Form>
     </>

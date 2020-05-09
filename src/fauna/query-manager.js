@@ -41,9 +41,10 @@ class QueryManager {
     })
   }
 
-  register(email, password, name, alias) {
+  register(email, password, alias, wantMemes, wantFriends, wantDates) {
     const icon = 'person' + (Math.round(Math.random() * 22) + 1) // randomly choose an icon
-    return registerWithUser(this.client, email, password, name, alias, icon).then(res => {
+    //ok the order of the vars here dictates the orders of the values
+    return registerWithUser(this.client, email, password, alias, wantMemes, wantFriends, wantDates, icon).then(res => {
       if (res) {
         this.client = new faunadb.Client({ secret: res.secret.secret })
       }
@@ -88,9 +89,9 @@ class QueryManager {
     return likeFweet(this.client, fweetRef)
   }
 
-  updateUser(name, alias, zip, icon, wantMemes, wantFriends, wantDates) {
+  updateUser(name, alias, zip, wantMemes, wantFriends, wantDates, icon) {
     // we don't pass in the icon yet atm
-    return this.client.query(UpdateUser(name, alias, zip, icon, wantMemes, wantFriends, wantDates))
+    return this.client.query(UpdateUser(name, alias, zip, wantMemes, wantFriends, wantDates, icon))
   }
 
   refweet(fweetRef, message) {

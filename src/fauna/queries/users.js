@@ -3,11 +3,14 @@ import faunadb from 'faunadb'
 const q = faunadb.query
 const { Create, Collection, Update, Let, Get, Identity, Var, Select } = q
 
-function CreateUser(name, alias, icon) {
+function CreateUser(email, alias, wantMemes, wantFriends, wantDates, icon) {
   return Create(Collection('users'), {
     data: {
-      name: name,
+      email: email,
       alias: alias,
+      wantMemes: wantMemes,
+      wantFriends: wantFriends,
+      wantDates: wantDates,
       icon: icon
     }
   })
