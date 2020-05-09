@@ -139,10 +139,7 @@ function RegisterWithUser(email, password, alias, wantMemes, wantFriends, wantDa
           credentials: { password: password },
           data: {
             email: email,
-            user: Select(['ref'], Var('user')),
-            wantMemes: wantMemes,
-            wantFriends: wantFriends,
-            wantDates: wantDates
+            user: Select(['ref'], Var('user'))
           }
         })
       ),
