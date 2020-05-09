@@ -45,30 +45,22 @@ nav {
 }
 
 
-// nav ul li {
-//     display: flex;
-//     align-items: center;
-//     margin: 0 calc(#{$grid-unit} / 2);
-//     max-width: 200px;
-// }
-
-// nav ul li:hover {
-//    background-color: $blue-shade;
-//    border-radius: 5px;
-// }
-
-// nav a {
+// nav .nav-link {
 //     display: flex;
 //     border: 0px solid #18ab29;
 //     cursor: pointer;
 //     width: 100px;
 //     height: 44px;
-//     text-decoration: none;
 //     padding-left: $grid-unit;
 //     color: $hard-white;
 //     font-weight: 700;
 //     font-size: $menu-font-size;
 //     align-items: center;
+// }
+
+// nav a {
+//     text-decoration: none;
+//     color: $hard-white;
 // }
 
 // .fauna-logo {
@@ -79,17 +71,4 @@ nav {
 //     max-height: var(--header-height);
 //     color: $soft-white;
 //     margin-bottom: calc(#{$grid-unit} / 2);
-// }
-
-// .fauna-logo .logo-container {
-//     display: flex;
-//     justify-content: flex-start;
-//     align-items: center;
-//     height: var(--header-height);
-//     padding-left: calc(#{$grid-unit} / 2.0);
-//     z-index: 30;
-// }
-
-// .fauna-logo .logo-container img {
-//     height: var(--header-title-height);
 // }

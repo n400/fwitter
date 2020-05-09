@@ -123,7 +123,7 @@ const Home = () => {
       about what you're looking for to vote on other memes other users have submitted.
      
      
-      <button className="button-cta" onClick={createDummyData}>click me</button>
+      {/* <button className="button-cta" onClick={createDummyData}>click me</button> */}
       </section>
     </React.Fragment>
   )

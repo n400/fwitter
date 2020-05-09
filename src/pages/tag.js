@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
-
 import SessionContext from '../context/session'
 import Feed from '../components/feed'
 import Search from './../components/search'
@@ -61,8 +60,8 @@ const TagPage = () => {
 
   return (
     <React.Fragment>
-      <div className="fweeter-and-feed-container">
-        <div className="feed-title">{'#' + tag}</div>
+      <div className="main-column">
+        <div className="main-title">{'#' + tag}</div>
         <Feed update={update} error={state.error} loaded={state.loaded} fweets={state.fweets} />
       </div>
       {user ? <Search /> : null}

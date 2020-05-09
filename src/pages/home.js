@@ -30,7 +30,6 @@ const Home = () => {
       faunaQueries
         .getFweets()
         .then(result => {
-          console.log('fweets', result)
           setState({
             fweets: result,
             loaded: true
@@ -109,7 +108,7 @@ const Home = () => {
   return (
     <React.Fragment>
 
-      <section className="fweeter-and-feed-container">
+      <section className="main-column">
         {user ? <Fweeter handleCreateFweet={handleCreateFweet}></Fweeter> : null}
         <Feed update={update} error={state.error} loaded={state.loaded} fweets={state.fweets} />
       </section>

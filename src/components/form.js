@@ -60,39 +60,51 @@ const Form = props => {
   return (
     <React.Fragment>
       <h1 className="jim-slogan">Jim writes something funny here!</h1>
-      <button className="button-cta" onClick={createDummyData}>
-click me
-</button>
+      {/* <button className="button-cta" onClick={createDummyData}>click me</button> */}
       <div className="form-wrapper">
         <h3 className="form-header">Sign up today</h3>
         <small>(or stay sad forever)</small>
         <form className="account-form" onSubmit={e => props.handleSubmit(e, username, password, alias, name)}>
-          {props.isLogin ? null : renderInputField('Screen name', alias, 'text', e => handleChangeAlias(e))}
+
+          {/* {props.isLogin ? null : renderInputField('Screen name', alias, 'text', e => handleChangeAlias(e))}
           {renderInputField('Email', username, 'text', e => handleChangeUserName(e))}
           {renderInputField('Password', password, 'password', e => handleChangePassword(e))}   
           {props.isLogin ? null : renderInputField('Zip', name, 'text', e => handleChangeName(e))}          
          <div className="input-row align-right">
+            <button className={props.isLogin ? 'login' : 'register'}> {props.isLogin ? 'Login' : 'Next'} </button>
+            </div> */}
+
+
+          {renderInputField('email', username, 'text', e => handleChangeUserName(e), 'username')}
+          {props.isLogin ? null : renderInputField('name (you can change this later)', alias, 'text', e => handleChangeAlias(e))}
+          {props.isLogin ? null : renderInputField('zip code (optional)', name, 'text', e => handleChangeName(e))}
+          {renderInputField('password', password, 'password', e => handleChangePassword(e), 'current-password')}
+          <div className="input-row align-right">
+            {/* <Link to={linkInfo.link}> {linkInfo.linkText}</Link> */}
             <button className="button-cta"> {props.isLogin ? 'Login' : 'Next'} </button>
           </div>
+
         </form>
       </div>
     </React.Fragment>
   )
 }
 
-const renderInputField = (name, value, type, fun) => {
+const renderInputField = (name, value, type, fun, autocomplete) => {
   const lowerCaseName = name.toLowerCase()
   return (
     <div className="input-row">
-      <label htmlFor="{lowerCaseName}" className="input-row-column">{name}</label>
+      <label htmlFor="{lowerCaseName}" className="input-row-column">
+        {name}
+      </label>
       <input
         className="input-row-column"
-        autoComplete={lowerCaseName}
         value={value}
         onChange={fun}
         type={type}
         id={lowerCaseName}
         name={lowerCaseName}
+        autoComplete={autocomplete}
       />
     </div>
   )

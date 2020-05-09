@@ -2,6 +2,7 @@ import faunadb from 'faunadb'
 import { flattenDataKeys } from '../helpers/util'
 import { AddRateLimiting } from './rate-limiting'
 import { Follow } from './followers'
+import { CreateUser } from './users'
 
 const q = faunadb.query
 const {
@@ -79,13 +80,7 @@ function RegisterAccountExample2(email, password) {
 function RegisterExample3(email, password, name, alias, icon, rateLimiting = true) {
   const RegisterFQLStatement = Let(
     {
-      user: Create(Collection('users'), {
-        data: {
-          name: name,
-          alias: alias,
-          icon: icon
-        }
-      }),
+      user: CreateUser(name, alias, icon),
       account: Select(
         ['ref'],
         Create(Collection('accounts'), {
@@ -134,13 +129,7 @@ function RegisterWithUser(email, password, name, alias, icon, rateLimiting = tru
 
   const RegisterFQLStatement = Let(
     {
-      user: Create(Collection('users'), {
-        data: {
-          name: name,
-          alias: alias,
-          icon: icon
-        }
-      }),
+      user: CreateUser(name, alias, icon),
       account: Select(
         ['ref'],
         Create(Collection('accounts'), {
