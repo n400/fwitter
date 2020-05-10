@@ -27,18 +27,18 @@ function SignupOrLoginOrLogout(sessionContext) {
   if (user) {
     return renderLink({ handleClick: handleLogout, label: 'Logout' }, sessionContext)
   } else {
-    return  <li><Link className="button" to={linkInfo.link}> {linkInfo.linkText}</Link></li>
+    return  <li key=''><Link className="button" to={linkInfo.link}> {linkInfo.linkText}</Link></li>
   }
 }
 
-const renderLoginLink = sessionContext => {
-  const { user } = sessionContext.state
-  if (user) {
-    return renderLink({ handleClick: handleLogout, label: 'Logout' }, sessionContext)
-  } else {
-    return renderLink({ href: '/accounts/login', label: 'skip' }, sessionContext)
-  }
-}
+// const renderLoginLink = sessionContext => {
+//   const { user } = sessionContext.state
+//   if (user) {
+//     return renderLink({ handleClick: handleLogout, label: 'Logout' }, sessionContext)
+//   } else {
+//     return renderLink({ href: '/accounts/login', label: 'skip' }, sessionContext)
+//   }
+// }
 
 const renderProtectedLink = (sessionContext, linkData) => {
   if (sessionContext.state && sessionContext.state.user) {

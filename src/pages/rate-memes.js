@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState,  useContext } from 'react'
 
 import SessionContext from '../context/session'
 import { faunaQueries } from '../fauna/query-manager'
@@ -11,23 +11,30 @@ const RateMemes = props => {
   const history = useHistory();
   const sessionContext = useContext(SessionContext)
   const { user } = sessionContext.state
-  // const [memerating, setMemerating] = useState(user && user.memes.meme.rating ? user.memes.meme.rating : '')  
-  const [meme, setMeme] = useState('')
-  const [memeRating, setMemeRating] = useState('')
+  const memes_list = [ //TODO: at some point, write FQL query to get all the memes the user hasnt rated yet
+    '/images/memes/jim/FB_IMG_1567648753248.jpg', 
+    '/images/memes/jim/FB_IMG_1567822761676.jpg', 
+    '/images/memes/jim/FB_IMG_1571669594704.jpg',
+    '/images/memes/jim/FB_IMG_1567648753248.jpg', 
+    '/images/memes/jim/FB_IMG_1567822761676.jpg', 
+    '/images/memes/jim/FB_IMG_1571669594704.jpg'
+  ];
+  // const [meme, setMeme] = useState('')
+  // const [memeRating, setMemeRating] = useState('')
+  let [meme_i, setmeme_i] = useState(0)
+  let memeRating = ''  
+  let memeId = memes_list[meme_i]
 
   const handleChangeRating = event => {
-    setMeme(event.target.name)
-    setMemeRating(event.target.value)
-    handleSaveRating(event.target.name, event.target.value)
-  }
+    let memeRating = event.target.value
+    handleSaveRating(memeId, memeRating)
+  } 
 
-  const handleSaveRating = (meme, memeRating) => {
-    console.log('WTF', meme, memeRating)
+  const handleSaveRating = (memeId, memeRating) => {
     faunaQueries
-      .saveRating(meme, memeRating)
-      .then(res => {
-        // toast.success('Rating saved')
-        replaceMemeToRate()
+      .saveRating(memeId, memeRating)
+      .then(res => { // toast.success('Rating saved')
+        nextMeme()
       })
       .catch(err => {
         console.log(err)
@@ -36,66 +43,57 @@ const RateMemes = props => {
     // event.preventDefault()
   }
 
-  const replaceMemeToRate = event => {
-    console.log("go to next meme")
+  let nextMeme = () => {
+    setmeme_i(++meme_i)
+    let memeId = memes_list[meme_i]
+    let memeRating = ''
+    // event.preventDefault()
   }
 
-  // // Just for debugging to get in quickly
-  // useEffect(() => {
-  //   // For debugging, autologin to get in faster for testing, add a user and pword in the .env.local         
-  // }, [])
 
-  const memes_list = [
-    '/images/memes/jim/FB_IMG_1567648753248.jpg', 
-    '/images/memes/jim/FB_IMG_1567822761676.jpg', 
-    '/images/memes/jim/FB_IMG_1571669594704.jpg'
-  ];
-  const rate_meme_element = []
 
-  for (const [index, meme_id] of memes_list.entries()) {
-    rate_meme_element.push( 
-      <div key={index} className="rate_meme_element">
-        <img alt="" src={meme_id} />
-        <div className="button-checkboxes">
-          <div className="button-radio">
-            <label htmlFor={"hate_"+meme_id}>&#128556;</label>
-            <input type="radio" id={"hate_"+meme_id} name={meme_id} 
-            value="hate" onChange={handleChangeRating} />
+  const renderMeme = () => {
+    console.log("rendering", meme_i, memeId)
+      return (
+        <React.Fragment>
+        <div id="rate_meme_element">
+          <img alt="" src={memeId} />
+          <div className="button-checkboxes">
+            <div className="button-radio">
+              <label htmlFor={"hate_"+memeId}><span role="img" aria-label="emoji">&#128556;</span></label>
+              <input type="radio" id={"hate_"+memeId} name={memeId} 
+              value="hate" onChange={handleChangeRating} />
+            </div>
+            <div className="button-radio">
+              <label htmlFor={"dislike_"+memeId}><span role="img" aria-label="emoji">&#128580;</span></label>
+              <input type="radio" id={"dislike_"+memeId} name={memeId} 
+              value="dislike" onChange={handleChangeRating} />
+            </div>
+            <div className="button-radio">
+              <label htmlFor={"neutral_"+memeId}><span role="img" aria-label="emoji">&#129300; &#128533;</span></label>
+              <input type="radio" id={"neutral_"+memeId} name={memeId} 
+              value="neutral" onChange={handleChangeRating} />
+            </div>
+            <div className="button-radio">
+              <label htmlFor={"like_"+memeId}><span role="img" aria-label="emoji">&#128521;</span></label>
+              <input type="radio" id={"like_"+memeId} name={memeId} 
+              value="like" onChange={handleChangeRating} />
+            </div>
+            <div className="button-radio">
+              <label htmlFor={"love_"+memeId}><span role="img" aria-label="emoji">&#128525;</span></label>
+              <input type="radio" id={"love_"+memeId} name={memeId} 
+              value="love" onChange={handleChangeRating} />
+            </div>
           </div>
-          <div className="button-radio">
-            <label htmlFor={"dislike_"+meme_id}>&#128580;</label>
-            <input type="radio" id={"dislike_"+meme_id} name={meme_id} 
-            value="dislike" onChange={handleChangeRating} />
-          </div>
-          <div className="button-radio">
-            <label htmlFor={"neutral_"+meme_id}>&#129300; &#128533;</label>
-            <input type="radio" id={"neutral_"+meme_id} name={meme_id} 
-            value="neutral" onChange={handleChangeRating} />
-          </div>
-          <div className="button-radio">
-            <label htmlFor={"like_"+meme_id}>&#128521;</label>
-            <input type="radio" id={"like_"+meme_id} name={meme_id} 
-            value="like" onChange={handleChangeRating} />
-          </div>
-          <div className="button-radio">
-            <label htmlFor={"love_"+meme_id}>&#128525;</label>
-            <input type="radio" id={"love_"+meme_id} name={meme_id} 
-            value="love" onChange={handleChangeRating} />
-          </div>
-        </div>
-    </div>  
-      
-    )
+      </div>  
+    </React.Fragment>
+      )
   }
-
   
   if (user){
     return (
-      <React.Fragment>
-          {rate_meme_element}
-      </React.Fragment>
+      renderMeme(memeId)
     )
-    
   } else {
     history.push('/accounts/register')
     return null;

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import RateMemes from './pages/rate-memes'
-import Home from './pages/home'
+// import Home from './pages/home'
 import Login from './pages/login'
 import User from './pages/user'
 import Tag from './pages/tag'

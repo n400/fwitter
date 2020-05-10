@@ -30,8 +30,7 @@ function UpdateUser(avatar, alias, zip, icon, wantMemes, wantFriends, wantDates)
     },
     Update(Var('userRef'), {
       data: {
-        avatar: avatar,
-        avatar: avatar,
+        alias: alias,
         zip: zip,
         icon: icon,
         wantMemes: wantMemes,

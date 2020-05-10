@@ -1,29 +1,18 @@
-import React, { useState, useEffect, useContext } from 'react'
-import PropTypes from 'prop-types'
-import SessionContext from '../context/session'
-import { faunaQueries } from '../fauna/query-manager'
-import { toast } from 'react-toastify'
+import React, { 
+  // useEffect, useContext 
+} from 'react'
+// import SessionContext from '../context/session'
 import { Masonry } from './../components/masonry'
-
-import { Uploader } from './../components/uploader'
-import Asset from './../components/asset'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPaperPlane } from '@fortawesome/free-solid-svg-icons'
 
 // Components
 
 const Profile = props => {
-  const sessionContext = useContext(SessionContext)
-  const { user } = sessionContext.state
-  const [asset, setAsset] = useState(null)
-  const [alias, setAlias] = useState(user ? user.alias : '')
-  const [zip, setZip] = useState ((user && user.zip) ? user.zip : '')
+  // const sessionContext = useContext(SessionContext)
 
-
-  // Just for debugging to get in quickly
-  useEffect(() => {
-    // For debugging, autologin to get in faster for testing, add a user and pword in the .env.local
-  }, [])
+  // // Just for debugging to get in quickly
+  // useEffect(() => {
+  //   // For debugging, autologin to get in faster for testing, add a user and pword in the .env.local
+  // }, [])
 
   return (
     <React.Fragment>

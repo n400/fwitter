@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from 'react'
-import PropTypes from 'prop-types'
 import SessionContext from '../context/session'
 import { faunaQueries } from '../fauna/query-manager'
 import { toast } from 'react-toastify'
@@ -7,8 +6,8 @@ import { Masonry } from './../components/masonry'
 
 import { Uploader } from './../components/uploader'
 import Asset from './../components/asset'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPaperPlane } from '@fortawesome/free-solid-svg-icons'
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+// import { faPaperPlane } from '@fortawesome/free-solid-svg-icons'
 import { useHistory } from 'react-router-dom'
 
 // Components

@@ -1,12 +1,12 @@
 import React, { useContext } from 'react'
 import { toast } from 'react-toastify'
-import { safeVerifyError } from './../fauna/helpers/errors'
+import { safeVerifyError } from '../fauna/helpers/errors'
 import { faunaQueries } from '../fauna/query-manager'
-import SessionContext from './../context/session'
+import SessionContext from '../context/session'
 import { useHistory } from 'react-router-dom'
-import { Masonry } from './../components/masonry'
+import { Masonry } from '../components/masonry'
 // Components
-import Form from './../components/form'
+import Form from '../components/form'
 
 const handleRegister = (event, email, password, alias, wantMemes, wantFriends, wantDates, sessionContext, history) => {
   faunaQueries
