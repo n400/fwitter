@@ -12,7 +12,7 @@ import {
   comment
 } from './queries/fweets'
 import { UpdateUser } from './queries/users'
-import { UploadUserAvatar } from './queries/users'
+import { SaveRating } from './queries/users'
 import { searchPeopleAndTags } from './queries/search'
 import { follow } from './queries/followers'
 
@@ -95,9 +95,9 @@ class QueryManager {
     return this.client.query(UpdateUser(name, alias, zip, wantMemes, wantFriends, wantDates, icon, avatar))
   }
 
-  uploadUserAvatar(avatar, alias, zip) {
+  saveRating(meme, rating) {
     // we don't pass in the icon yet atm
-    return this.client.query(UploadUserAvatar(avatar, alias, zip))
+    return this.client.query(SaveRating(meme, rating))
   }
 
   refweet(fweetRef, message) {

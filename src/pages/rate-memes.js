@@ -11,54 +11,91 @@ const RateMemes = props => {
   const history = useHistory();
   const sessionContext = useContext(SessionContext)
   const { user } = sessionContext.state
-  const [meme01, setMeme01] = useState(user ? user.alias : '')
-  const handleEditProfile = event => {
-    console.log('saving ratings', meme01)
+  // const [memerating, setMemerating] = useState(user && user.memes.meme.rating ? user.memes.meme.rating : '')  
+  const [meme, setMeme] = useState('')
+  const [memeRating, setMemeRating] = useState('')
+
+  const handleChangeRating = event => {
+    setMeme(event.target.name)
+    setMemeRating(event.target.value)
+    handleSaveRating(event.target.name, event.target.value)
+  }
+
+  const handleSaveRating = (meme, memeRating) => {
+    console.log('WTF', meme, memeRating)
     faunaQueries
-      .updateUser(meme01)
+      .saveRating(meme, memeRating)
       .then(res => {
-        toast.success('Ratings saved')
+        // toast.success('Rating saved')
+        replaceMemeToRate()
       })
       .catch(err => {
         console.log(err)
         toast.error('Rating save failed')
       })
-    event.preventDefault()
+    // event.preventDefault()
   }
 
-  const handleChangeMeme01 = event => {setMeme01(event.target.value)}
+  const replaceMemeToRate = event => {
+    console.log("go to next meme")
+  }
 
-  // Just for debugging to get in quickly
-  useEffect(() => {
-    // For debugging, autologin to get in faster for testing, add a user and pword in the .env.local         
-   //TODO: this is a really slow redirect, but it's slow on the home page too. write a conditional rendering instead
-    // if (!user){
-    //   history.push('/accounts/register')
-    // }
-  }, [])
+  // // Just for debugging to get in quickly
+  // useEffect(() => {
+  //   // For debugging, autologin to get in faster for testing, add a user and pword in the .env.local         
+  // }, [])
+
+  const memes_list = [
+    '/images/memes/jim/FB_IMG_1567648753248.jpg', 
+    '/images/memes/jim/FB_IMG_1567822761676.jpg', 
+    '/images/memes/jim/FB_IMG_1571669594704.jpg'
+  ];
+  const rate_meme_element = []
+
+  for (const [index, meme_id] of memes_list.entries()) {
+    rate_meme_element.push( 
+      <div key={index} className="rate_meme_element">
+        <img alt="" src={meme_id} />
+        <div className="button-checkboxes">
+          <div className="button-radio">
+            <label htmlFor={"hate_"+meme_id}>&#128556;</label>
+            <input type="radio" id={"hate_"+meme_id} name={meme_id} 
+            value="hate" onChange={handleChangeRating} />
+          </div>
+          <div className="button-radio">
+            <label htmlFor={"dislike_"+meme_id}>&#128580;</label>
+            <input type="radio" id={"dislike_"+meme_id} name={meme_id} 
+            value="dislike" onChange={handleChangeRating} />
+          </div>
+          <div className="button-radio">
+            <label htmlFor={"neutral_"+meme_id}>&#129300; &#128533;</label>
+            <input type="radio" id={"neutral_"+meme_id} name={meme_id} 
+            value="neutral" onChange={handleChangeRating} />
+          </div>
+          <div className="button-radio">
+            <label htmlFor={"like_"+meme_id}>&#128521;</label>
+            <input type="radio" id={"like_"+meme_id} name={meme_id} 
+            value="like" onChange={handleChangeRating} />
+          </div>
+          <div className="button-radio">
+            <label htmlFor={"love_"+meme_id}>&#128525;</label>
+            <input type="radio" id={"love_"+meme_id} name={meme_id} 
+            value="love" onChange={handleChangeRating} />
+          </div>
+        </div>
+    </div>  
+      
+    )
+  }
 
   
   if (user){
     return (
       <React.Fragment>
-        <div className="main-column">
-          <div className="main-title">Profile</div>
-  
-          <form className="account-form form-with-button-checkboxes" onSubmit={handleEditProfile}>
-            <div className="input-row">
-              <label htmlFor="icon" className="input-row-column">
-                icon
-              </label>
-              <input id="alias" className="input-row-column" value={meme01} onChange={handleChangeMeme01} type="text" />
-            </div>
-
-            <div className="input-row align-right">
-              <button className="button-cta"> Update </button>
-            </div>
-          </form>
-        </div>
+          {rate_meme_element}
       </React.Fragment>
     )
+    
   } else {
     history.push('/accounts/register')
     return null;

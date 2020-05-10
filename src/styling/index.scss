@@ -38,8 +38,6 @@ $menu-font-size: 20px;
 @import "./components/suggestions";
 @import "./components/search";
 @import "./components/asset";
-@import "./pages/home";
-
 
 //NEW
 $soft-white: rgba(255,255,255,0.8);
@@ -56,6 +54,7 @@ $footer-height: 36px;
 
 //PAGE-SPECIFIC
 @import "./components/masonry";
+@import "./pages/page-specific-styles";
 
 
 // CSS from libraries  

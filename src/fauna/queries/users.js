@@ -44,22 +44,40 @@ function UpdateUser(avatar, alias, zip, icon, wantMemes, wantFriends, wantDates)
 }
 
 
-function UploadUserAvatar(avatar, alias, zip) {
-  console.log('updating', avatar, alias, zip)
+function SaveRating(meme, rating) {
+  console.log('updating', meme, rating)
   return Let(
     {
       accountRef: Identity(),
       userRef: Select(['data', 'user'], Get(Var('accountRef')))
     },
-    Update(Var('userRef'), {
+    Create(Collection('meme_ratings'), {
       data: {
-        avatar: avatar,
-        alias: alias,
-        zip: zip
+          user: Var('userRef'),
+          meme_id: meme,
+          meme_rating: rating
+          // user: Var('userRef'),
+          // meme_id: Var('meme'),
+          // meme_rating: Var('rating')
       }
     })
   )
 }
 
 
-export { CreateUser, UpdateUser, UploadUserAvatar }
+// Let(
+//   { x: "url", y: "rating" },
+//   Create(
+//     Collection('memes'),
+//     {
+//       data: {
+//           user: userRef,
+//           meme_url: Var('x'),
+//           meme_rating: Var('y')
+//       },
+//     },
+//   )
+// )
+
+
+export { CreateUser, UpdateUser, SaveRating }

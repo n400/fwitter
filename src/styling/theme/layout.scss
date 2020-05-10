@@ -28,15 +28,6 @@ align-items:flex-start;
 .jim-slogan{color:white;text-align:center;}
 
 
-div[class*="register"],
-div[class*="login"], {
-  .main-wrapper{
-    height:100%;
-    flex-direction: column;
-    align-items:center;
-  }
-}
-
 .split-page-layout{
   display: flex;
   flex-direction: column;

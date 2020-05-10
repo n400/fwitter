@@ -1,3 +1,5 @@
+$input-border:  2px solid #3384e8;
+
 
 .account-form {
 //     display: flex;
@@ -53,7 +55,7 @@ form {
 input{
   width: 100%;
   background: transparent;
-  border-bottom: 2px solid #3384e8;
+  border: $input-border;
 }
 label{
   display:flex;
@@ -95,7 +97,9 @@ label{
   width:100%;
   padding-top:0.5rem;
   // margin-left:-20px; //fix this later
-  input[type=checkbox] {
+  input[type=checkbox]
+  // ,input[type=radio] 
+  {
     display: none;
     width: 20px;
     height: 30px;
@@ -104,7 +108,8 @@ label{
     top: 1px;
   }
   /* the actual checkbox button*/
-  input[type=checkbox] + label {
+  input[type=checkbox] + label,
+  input[type=radio] + label {
     height: 45px;
     margin-right: 5px;
     flex:1;
@@ -116,11 +121,12 @@ label{
     cursor: pointer;
     letter-spacing: .02em;
     // padding: 0 10px 0 35px;
-    border: 2px solid #3384e8;    
+    border: $input-border;    
     box-shadow: 2px 2px 4px #888888;
   } 
   // input[type=checkbox]:hover + label {} 
-  input[type=checkbox]:checked + label {
+  input[type=checkbox]:checked + label,
+  input[type=radio]:checked + label {
     background:#3384e8;
     font-style: normal;
     color:$hard-white;
