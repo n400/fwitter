@@ -5,30 +5,67 @@
 img { object-fit: cover; width:100%; }
 a{text-decoration:none;}
 
+.body-container, .main-wrapper, .main-left, .main-right{
+  min-height: calc(100vh);
+  height: 100%;
+}
+
+.split-page-layout {
+  height: calc(100vh - #{$footer-height});
+}
+
 .body-container{
-  height:100%;
+  min-height:100vh;
   position:absolute;display:flex;flex-direction:column;width:100%;}
 
-main {
+.main-wrapper {
   flex-direction:column;
 display:flex;
 align-items:flex-start;
 // justify-content:space-between;
-padding-top: 50px;
+// padding-top: 44px;
 }
 .jim-slogan{color:white;text-align:center;}
 
 
 div[class*="register"],
 div[class*="login"], {
-  main{
+  .main-wrapper{
     height:100%;
     flex-direction: column;
     align-items:center;
   }
 }
 
+.split-page-layout{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+
 @media only screen and (min-width:768px){
-  main {
-  flex-direction: row;}
+  main {  flex-direction: row;}
+  .split-page-layout{
+    display: flex;
+    flex-direction: row;
+    .main-left, .main-right{
+      // flex: 1;
+      width: 50%;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .main-left {
+      // background: black;
+      padding: 3%;
+      max-height: 100vh;
+      img {
+        max-height: 100%;
+        width: auto;
+        max-width: 100%;
+      }
+    }
+  }
 }

@@ -8,7 +8,6 @@ import { faPaperPlane } from '@fortawesome/free-solid-svg-icons'
 import { toast } from 'react-toastify'
 
 const Fweeter = props => {
-  const [lookingFor, setLookingFor] = useState('')
   const [fweet, setFweet] = useState('')
   const [asset, setAsset] = useState(null)
 

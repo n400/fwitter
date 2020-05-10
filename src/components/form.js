@@ -55,9 +55,6 @@ const Form = props => {
 
   return (
     <React.Fragment>
-      <h1 className="jim-slogan">Jim writes something funny here!</h1>
-      
-
 
 
 
@@ -91,6 +88,7 @@ const Form = props => {
 
         </form>
       </div>
+      
     </React.Fragment>
   )
 }

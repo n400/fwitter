@@ -11,11 +11,11 @@ const Layout = props => {
       <ToastContainer position={toast.POSITION.BOTTOM_RIGHT} />
       <div className="body-container">
         <Nav/>
-        <main>
+        <div className="main-wrapper">
           {props.children}
-        </main>
-        <footer><small>&copy; Copyright 2020 grinnr &nbsp; &#8226; &nbsp;</small><small>privacy policy	 &nbsp; &#8226; &nbsp; terms of service </small></footer>
-      </div>
+          <footer><small>&copy; Copyright 2020 grinnr &nbsp; &#8226; &nbsp;</small><small>privacy policy	 &nbsp; &#8226; &nbsp; terms of service </small></footer>
+        </div>
+     </div>
      </div>
   )
 }

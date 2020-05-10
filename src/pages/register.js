@@ -55,13 +55,20 @@ const Register = () => {
   return ( 
     <>
     <Masonry />
-
-    <Form
-      isLogin={false}
-      handleSubmit={(event, email, password, alias, wantMemes, wantFriends, wantDates) =>
-        handleRegister(event, email, password, alias, wantMemes, wantFriends, wantDates, sessionContext, history)
-      }
-    ></Form>
+    <div className="split-page-layout">
+      <div className="main-left">
+        <img src="/images/memes/grinnr-is-01.jpg" alt="grinnr is a networking and dating app that analyzes your sense of humor to find people who share your sense of humor.
+" />
+      </div>
+      <div className="main-right">
+          <Form
+            isLogin={false}
+            handleSubmit={(event, email, password, alias, wantMemes, wantFriends, wantDates) =>
+              handleRegister(event, email, password, alias, wantMemes, wantFriends, wantDates, sessionContext, history)
+            }
+          ></Form>
+      </div>
+ </div>
     </>
   )
 }

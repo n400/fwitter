@@ -21,8 +21,8 @@ function CreateUser(email, alias, wantMemes, wantFriends, wantDates, icon) {
  * Instead, shows a different approach, security via Roles.
  */
 
-function UpdateUser(name, alias, zip, icon, wantMemes, wantFriends, wantDates) {
-  console.log('updating', name, alias, zip, icon, wantMemes, wantFriends, wantDates)
+function UpdateUser(avatar, alias, zip, icon, wantMemes, wantFriends, wantDates) {
+  console.log('updating', avatar, alias, zip, icon, wantMemes, wantFriends, wantDates)
   return Let(
     {
       accountRef: Identity(),
@@ -30,16 +30,36 @@ function UpdateUser(name, alias, zip, icon, wantMemes, wantFriends, wantDates) {
     },
     Update(Var('userRef'), {
       data: {
-        name: name,
-        alias: alias,
+        avatar: avatar,
+        avatar: avatar,
         zip: zip,
         icon: icon,
         wantMemes: wantMemes,
         wantFriends: wantFriends,
-        wantDates: wantDates
+        wantDates: wantDates,
+        avatar: avatar
       }
     })
   )
 }
 
-export { CreateUser, UpdateUser }
+
+function UploadUserAvatar(avatar, alias, zip) {
+  console.log('updating', avatar, alias, zip)
+  return Let(
+    {
+      accountRef: Identity(),
+      userRef: Select(['data', 'user'], Get(Var('accountRef')))
+    },
+    Update(Var('userRef'), {
+      data: {
+        avatar: avatar,
+        alias: alias,
+        zip: zip
+      }
+    })
+  )
+}
+
+
+export { CreateUser, UpdateUser, UploadUserAvatar }

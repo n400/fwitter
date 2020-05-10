@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-
+import RateMemes from './pages/rate-memes'
 import Home from './pages/home'
 import Login from './pages/login'
 import User from './pages/user'
@@ -8,6 +8,7 @@ import Tag from './pages/tag'
 import Profile from './pages/profile'
 import Register from './pages/register'
 import Register02 from './pages/register02'
+import Register03 from './pages/register03'
 // import Waitlist from './pages/waitlist'
 import Layout from './components/layout'
 import { SessionProvider, sessionReducer } from './context/session'
@@ -41,14 +42,13 @@ const App = () => {
               <Route exact path="/accounts/register">
                 <Register />
               </Route>
-              <Route exact path="/accounts/register02">
-                <Register02 />
-              </Route>
+              {user ? <Route exact path="/accounts/register02"><Register02 /></Route> : null}
+              {user ? <Route exact path="/accounts/register03"><Register03 /></Route> : null}
               {user ? <Route path="/profile/" component={Profile} /> : null}
               <Route path="/users/:authorAlias" component={User} />
               <Route path="/tags/:tag" component={Tag} />
               <Route path="/">
-                <Home />
+                <RateMemes />
               </Route>
             </Switch>
           </Layout>

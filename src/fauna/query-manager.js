@@ -12,6 +12,7 @@ import {
   comment
 } from './queries/fweets'
 import { UpdateUser } from './queries/users'
+import { UploadUserAvatar } from './queries/users'
 import { searchPeopleAndTags } from './queries/search'
 import { follow } from './queries/followers'
 
@@ -89,9 +90,14 @@ class QueryManager {
     return likeFweet(this.client, fweetRef)
   }
 
-  updateUser(name, alias, zip, wantMemes, wantFriends, wantDates, icon) {
+  updateUser(name, alias, zip, wantMemes, wantFriends, wantDates, icon, avatar) {
     // we don't pass in the icon yet atm
-    return this.client.query(UpdateUser(name, alias, zip, wantMemes, wantFriends, wantDates, icon))
+    return this.client.query(UpdateUser(name, alias, zip, wantMemes, wantFriends, wantDates, icon, avatar))
+  }
+
+  uploadUserAvatar(avatar, alias, zip) {
+    // we don't pass in the icon yet atm
+    return this.client.query(UploadUserAvatar(avatar, alias, zip))
   }
 
   refweet(fweetRef, message) {
