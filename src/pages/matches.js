@@ -3,11 +3,11 @@ import React, {
 } from 'react'
 // import SessionContext from '../context/session'
 import { Link } from 'react-router-dom'
-import { Masonry } from './../components/masonry'
+import { Masonry } from '../components/masonry'
 
 // Components
 
-const Profile = props => {
+const Matches = props => {
   // const sessionContext = useContext(SessionContext)
 
   // // Just for debugging to get in quickly
@@ -43,4 +43,4 @@ const Profile = props => {
   )
 }
 
-export default Profile
+export default Matches

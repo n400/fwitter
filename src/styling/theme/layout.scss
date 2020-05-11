@@ -49,7 +49,7 @@ justify-content: center;
   max-width: 400px;
 }
 
-@media only screen and (min-width:768px){
+@media only screen and (min-width: $ipad-portrait){
   
   .body-container, .main-wrapper, .main-left, .main-right{
     min-height: calc(100vh);

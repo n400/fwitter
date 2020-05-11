@@ -52,6 +52,8 @@ $form-border: 2px solid $primary-cta;
 $footer-height: 36px;
 $nav-height: 44px;
 
+$ipad-portrait: 768px;
+
 @import "./theme/normalize";
 @import "./theme/typ";
 @import "./theme/layout";

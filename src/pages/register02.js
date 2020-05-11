@@ -2,16 +2,16 @@ import React, { useState, useEffect, useContext } from 'react'
 import SessionContext from '../context/session'
 import { faunaQueries } from '../fauna/query-manager'
 import { toast } from 'react-toastify'
-import { Masonry } from './../components/masonry'
+import { Masonry } from '../components/masonry'
 
-import { Uploader } from './../components/uploader'
-import Asset from './../components/asset'
+import { Uploader } from '../components/uploader'
+import Asset from '../components/asset'
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // import { faPaperPlane } from '@fortawesome/free-solid-svg-icons'
 import { useHistory } from 'react-router-dom'
 
 // Components
-import {renderInputField} from './../components/input'
+import {renderInputField} from '../components/input'
 
 
 const Register02 = (props) => {
@@ -26,17 +26,15 @@ const Register02 = (props) => {
 
   const handleEditProfile = (event) => {
     console.log('editing profile', dob, zip)
-
     // if (!asset) {
     //   toast.warn('Please upload an image first :)')
     //   return
     // }
-
     faunaQueries
       .finishRegistration(dob, zip)
       .then(res => {
         // if(history) 
-        history.push('register03');
+        history.push('/matches');
         toast.success('Profile updated')
       })
       .catch(err => {
@@ -83,7 +81,7 @@ const Register02 = (props) => {
             <form className="account-form form-with-button-checkboxes" onSubmit={handleEditProfile}>
               {/* {asset ? <Asset asset={asset} onChange={handleChangeAsset}></Asset> : null} */}
               {/* <div className="icon">{generateUploadImage()}</div> */}
-              {renderInputField('dob (you must be over 18)', dob, 'date', e => handleChangeDob(e), 'dob')}
+              {renderInputField('dob (you must be over 18 to view profiles)', dob, 'date', e => handleChangeDob(e), 'dob')}
               {renderInputField('zip code', zip, 'text', e => handleChangeZip(e), 'zip')}
               <div className="input-row align-right">
                 <button className="button-cta"> Next </button>

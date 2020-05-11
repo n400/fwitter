@@ -25,7 +25,7 @@ function SignupOrLoginOrLogout(sessionContext) {
   ? { linkText: 'signup', link: 'register' }
   : { linkText: 'login', link: 'login' }
   if (user) {
-    return renderLink({ handleClick: handleLogout, label: 'Logout' }, sessionContext)
+    return renderLink({ handleClick: handleLogout, label: 'logout' }, sessionContext)
   } else {
     return  <li key=''><Link className="button" to={linkInfo.link}> {linkInfo.linkText}</Link></li>
   }
@@ -63,11 +63,11 @@ const links = [
   // s => renderProtectedLink(s, { href: '/', label: 'faPaperPlane' }),
   // s => renderProtectedLink(s, { href: '/', label: 'Profile' }),
   // <FontAwesomeIcon icon={faPaperPlane} />
-  "Matches",
   SignupOrLoginOrLogout,
   // s => renderProtectedLink(s, { href: '/topics', label: 'Topics' }),
   // s => renderProtectedLink(s, { href: '/messages', label: 'Messages' }),
-  s => renderProtectedLink(s, { href: '/profile', label: 'Profile' })
+  s => renderProtectedLink(s, { href: '/profile', label: 'profile' }),
+  s => renderProtectedLink(s, { href: '/matches', label: 'matches' }),
   // ,renderLoginLink
 ]
 

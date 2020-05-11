@@ -8,26 +8,6 @@ import { Masonry } from '../components/masonry'
 // Components
 import Form from '../components/form'
 
-// function MyTraversableArray() {
-//   console.log(this)
-//   if (typeof arguments[0] === "number")
-//       this.length = arguments[0];
-//   else this.push.apply(this, arguments);
-//   this.current = 0;
-//   }
-//   MyTraversableArray.prototype = [];
-//   MyTraversableArray.prototype.constructor = MyTraversableArray;
-//   MyTraversableArray.prototype.next = function() {
-//       console.log( this[++this.current] )
-//   };
-//   MyTraversableArray.prototype.prev = function() {
-//       console.log( this[--this.current] )
-// };
-// MyTraversableArray()
-
-
-
-
 const handleRegister = (event, email, password, alias, wantMemes, wantFriends, wantDates, sessionContext, history) => {
   faunaQueries
     .register(email, password, alias, wantMemes, wantFriends, wantDates)
@@ -72,53 +52,23 @@ const handleRegister = (event, email, password, alias, wantMemes, wantFriends, w
 const Register = () => {
   const history = useHistory()
   const sessionContext = useContext(SessionContext)
+  // const memes_list = [
+  //   // '/images/memes/jim/FB_IMG_1567648753248.jpg', 
+  //   // '/images/memes/jim/FB_IMG_1567822761676.jpg', 
+  //   // '/images/memes/jim/FB_IMG_1571669594704.jpg'
+  //   'm1','m2','m3','m4','m5','m6','m7','m8','m9','m10'
+  // ];
+  // let meme_i = 0
+  // let [meme, setMeme] = useState(memes_list[meme_i])
+  // // let meme = memes_list[meme_i]
+  // function setNextMeme() {
+  //  meme =  memes_list[++meme_i] 
+  //   console.log( meme )
+  //   // setMemeRating(event.target.value)
+  //   // handleSaveRating(event.target.name, event.target.value)
+  // } 
 
-
-
-
-
-
-  const memes_list = [
-    // '/images/memes/jim/FB_IMG_1567648753248.jpg', 
-    // '/images/memes/jim/FB_IMG_1567822761676.jpg', 
-    // '/images/memes/jim/FB_IMG_1571669594704.jpg'
-    'm1','m2','m3','m4','m5','m6','m7','m8','m9','m10'
-  ];
-  let meme_i = 0
-
-  let [meme, setMeme] = useState(memes_list[meme_i])
-  // let meme = memes_list[meme_i]
-
-
-
-
-  console.log(meme)
-
-  function setNextMeme() {
-
-   meme =  memes_list[++meme_i] 
-    console.log( meme )
-    // setMemeRating(event.target.value)
-    // handleSaveRating(event.target.name, event.target.value)
-  } 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  console.log(history)
 
   return ( 
     <>
@@ -126,7 +76,7 @@ const Register = () => {
     <div className="split-page-layout">
       <div className="main-left">
         <img 
-        onClick={setNextMeme}
+        // onClick={setNextMeme}
         src="/images/memes/grinnr-texting-boy-girl-color.jpg" alt="grinnr is a networking and dating app that analyzes your sense of humor to find people who share your sense of humor.
 " />
       </div>
