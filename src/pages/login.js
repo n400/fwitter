@@ -6,8 +6,6 @@ import SessionContext from './../context/session'
 import { faunaQueries } from '../fauna/query-manager'
 import { safeVerifyError } from '../fauna/helpers/errors'
 
-import { Masonry } from './../components/masonry'
-
 // Components
 import Form from '../components/form'
 
@@ -18,7 +16,7 @@ const handleLogin = (event, email, password, history, sessionContext) => {
       if (e === false) {
         toast.error('Login failed')
       } else {
-        toast.success('Login successful')
+        // toast.success('Login successful')
         sessionContext.dispatch({ type: 'login', data: e })
         history.push('/')
       }
@@ -69,7 +67,7 @@ const Login = props => {
           if (e === false) {
             toast.error('Login failed')
           } else {
-            toast.success('Login successful')
+            // toast.success('Login successful')
             sessionContext.dispatch({ type: 'login', data: e })
             history.push('/')
           }
@@ -81,13 +79,10 @@ const Login = props => {
   }, [history, sessionContext])
 
   return (
-    <>
-    <Masonry />
     <Form
       isLogin={true}
       handleSubmit={(event, email, password) => handleLogin(event, email, password, history, sessionContext)}
     ></Form>
-    </>
   )
 }
 

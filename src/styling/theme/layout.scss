@@ -20,7 +20,24 @@ a{text-decoration:none;}
   flex-direction:column;
 display:flex;
 align-items: center;
-justify-content: center;
+justify-content: center; //needs to be  flex-start for media page and short browsers, 
+//at least for now. figure out another way to center stuff on the page. 
+//maybe an extra div inside of this one could center the stuff while this one starts at the top like:
+                  // height: 100%;
+                  //     display: flex;
+                  //     justify-content: center;
+                  //     flex-direction: column;
+
+}
+
+
+div[class*="media"]{
+  .main-wrapper {
+    justify-content: flex-start;
+    padding-top:$nav-height; //creates bug with footer when used elsewhere. 
+    ///refactor layout for mobile once all else is done before wasting time 
+    ///on this only to have to do it again later
+  } 
 }
 
 

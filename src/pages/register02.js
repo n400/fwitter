@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from 'react'
 import SessionContext from '../context/session'
 import { faunaQueries } from '../fauna/query-manager'
 import { toast } from 'react-toastify'
-import { Masonry } from '../components/masonry'
 
 import { Uploader } from '../components/uploader'
 import Asset from '../components/asset'
@@ -64,7 +63,6 @@ const Register02 = (props) => {
 
   return (
     <React.Fragment>
-      <Masonry />
       {/* <h1 className="jim-slogan">Jim writes something funny here!</h1> */}
       <div className="split-page-layout">
         <div className="main-left">

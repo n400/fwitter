@@ -4,7 +4,6 @@ import { safeVerifyError } from '../fauna/helpers/errors'
 import { faunaQueries } from '../fauna/query-manager'
 import SessionContext from '../context/session'
 import { useHistory } from 'react-router-dom'
-import { Masonry } from '../components/masonry'
 // Components
 import Form from '../components/form'
 
@@ -72,7 +71,7 @@ const Register = () => {
 
   return ( 
     <>
-    <Masonry />
+
     <div className="split-page-layout">
       <div className="main-left">
         <img 

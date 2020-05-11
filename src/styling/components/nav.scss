@@ -30,17 +30,18 @@ nav {
         justify-content: space-between;
     }
     .logo {
-        letter-spacing: 0.1rem;
-    font-weight: 800;
+        letter-spacing: 0.05rem;
+        font-weight: 700;
     }
     a {
         display: flex;
         align-items: center;
         padding: 0 1rem;
         color: $soft-white;
+        font-weight: normal;
     }
-    a:hover {  
-        color: $hard-white;
+    .active {
+        color: white;
     }
 }
 

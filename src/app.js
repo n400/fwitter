@@ -9,6 +9,8 @@ import Profile from './pages/profile'
 import Register01 from './pages/register01'
 import Register02 from './pages/register02'
 import Matches from './pages/matches'
+import Media from './pages/media'
+import Legal from './pages/legal'
 // import Waitlist from './pages/waitlist'
 import Layout from './components/layout'
 import { SessionProvider, sessionReducer } from './context/session'
@@ -45,6 +47,8 @@ const App = () => {
               {user ? <Route exact path="/accounts/register02"><Register02 /></Route> : null}
               {user ? <Route exact path="/matches"><Matches /></Route> : null}
               {user ? <Route path="/profile/" component={Profile} /> : null}
+              <Route exact path="/legal"><Legal /></Route> 
+              <Route exact path="/media"><Media /></Route> 
               {/* <Route path="/users/:authorAlias" component={User} />
               <Route path="/tags/:tag" component={Tag} /> */}
               <Route path="/">

@@ -71,6 +71,10 @@ label{
   letter-spacing: .06em;
   box-shadow: $button-box-shadow;
   margin-top:1rem;
+  &:hover{
+    color: white;
+    background: $link-color;
+  }
 }
 
 .form-with-button-checkboxes{

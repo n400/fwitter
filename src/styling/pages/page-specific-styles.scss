@@ -32,19 +32,19 @@
 // }
 
 
+// div[class*="register"],
+// div[class*="login"], {
+//   .main-wrapper{
+//     height:100%;
+//     flex-direction: column;
+//     align-items:center;
+//     // align-items:flex-start;
+//   }
+//   nav{
+//       background: transparent;
+//   }
+//   footer{
+//     // color: $soft-white;
+//   }
+// }
 
-div[class*="register"],
-div[class*="login"], {
-  .main-wrapper{
-    height:100%;
-    flex-direction: column;
-    align-items:center;
-    // align-items:flex-start;
-  }
-  nav{
-      background: transparent;
-  }
-  footer{
-    // color: $soft-white;
-  }
-}

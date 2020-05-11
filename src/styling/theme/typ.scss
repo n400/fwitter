@@ -1,7 +1,8 @@
-@import url('https://fonts.googleapis.com/css?family=Manrope');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;523;600;700;800&display=swap');
 
 body {
   font-family: 'Manrope', sans-serif;
+  font-weight: 400;
 }
 
 ul {
@@ -11,10 +12,19 @@ ul {
 
 a, button, input {
   min-height: 44px;
+  cursor: pointer;
+}
+
+a{
+  font-weight: 600;
+  transition: $generic-transition;
+  &:hover{
+    color: $primary-cta;
+  }
 }
 
 p{
-  line-height: 1.3;
+  line-height: 1.5;
 }
 
 strong{

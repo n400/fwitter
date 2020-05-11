@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { toast } from 'react-toastify'
-import { Link, useLocation } from 'react-router-dom'
+import { NavLink, Link, useLocation } from 'react-router-dom'
 import SessionContext from './../context/session'
 import { faunaQueries } from '../fauna/query-manager'
 import { isFunction } from '../fauna/helpers/util'
@@ -63,11 +63,12 @@ const links = [
   // s => renderProtectedLink(s, { href: '/', label: 'faPaperPlane' }),
   // s => renderProtectedLink(s, { href: '/', label: 'Profile' }),
   // <FontAwesomeIcon icon={faPaperPlane} />
-  SignupOrLoginOrLogout,
   // s => renderProtectedLink(s, { href: '/topics', label: 'Topics' }),
   // s => renderProtectedLink(s, { href: '/messages', label: 'Messages' }),
-  s => renderProtectedLink(s, { href: '/profile', label: 'profile' }),
+  s => renderProtectedLink(s, { href: '/', label: 'memes' }),
   s => renderProtectedLink(s, { href: '/matches', label: 'matches' }),
+  s => renderProtectedLink(s, { href: '/profile', label: 'profile' }),
+  SignupOrLoginOrLogout
   // ,renderLoginLink
 ]
 
@@ -85,10 +86,10 @@ const renderLink = (
     )
   } else {
     return (
-      <li className="nav-link" key={`nav-link-${link.href}-${link.label}`}>
-        <Link key={'link_' + link.label} to={link.href}>
+      <li key={`nav-link-${link.href}-${link.label}`}>
+        <NavLink className="navlink" key={'link_' + link.label} to={link.href} exact={true}>
           {link.label}
-        </Link>
+        </NavLink>
       </li>
     )
   }
@@ -98,7 +99,10 @@ const Nav = () => {
   const sessionContext = useContext(SessionContext)
   return (
     <nav>
-      <Link className="logo" to='/'>grinnr</Link>
+      <NavLink className="logo" to='/' exact={true}>
+        {/* <i aria-hidden="true" className="home  icon" ></i> */}
+        grinnr
+      </NavLink>
       <ul>
         {links.map(link => {
           if (isFunction(link)) {

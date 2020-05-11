@@ -9,4 +9,8 @@ footer {
   // bottom: 0;
   padding: 0 1rem;
   height: $footer-height;
+  a{
+    color: rgba(255,255,225,.4);
+    font-weight: normal;
+  }
 }

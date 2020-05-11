@@ -42,7 +42,9 @@ $menu-font-size: 20px;
 //NEW
 $soft-white: rgba(255,255,255,0.8);
 $hard-white: rgba(255,255,255,0.95);
+$text-color: grey;
 $primary-cta: #FF0AF7;
+$link-color: #172ff0;
 $secondary-cta: #03b0a0;
 $input-color: #3384e8; 
 $input-border:  2px solid $input-color;
@@ -51,6 +53,7 @@ $form-background: white;
 $form-border: 2px solid $primary-cta;
 $footer-height: 36px;
 $nav-height: 44px;
+$generic-transition: all .5s ease-in-out;
 
 $ipad-portrait: 768px;
 
