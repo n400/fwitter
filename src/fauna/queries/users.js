@@ -60,8 +60,8 @@ function UpdateUser(
 }
 
 
-function SaveRating(meme) {
-  console.log('updating', meme.url, meme.rating)
+function SaveRating(url, rating) {
+  console.log('calling db', url, rating)
   return Let(
     {
       accountRef: Identity(),
@@ -70,8 +70,8 @@ function SaveRating(meme) {
     Create(Collection('meme_ratings'), {
       data: {
           user: Var('userRef'),
-          meme_url: meme.url,
-          meme_rating: meme.rating
+          meme_url: url,
+          meme_rating: rating
           // user: Var('userRef'),
           // meme_id: Var('meme'),
           // meme_rating: Var('rating')
@@ -79,21 +79,5 @@ function SaveRating(meme) {
     })
   )
 }
-
-
-// Let(
-//   { x: "url", y: "rating" },
-//   Create(
-//     Collection('memes'),
-//     {
-//       data: {
-//           user: userRef,
-//           meme_url: Var('x'),
-//           meme_rating: Var('y')
-//       },
-//     },
-//   )
-// )
-
 
 export { CreateUser, UpdateUser, SaveRating, FinishRegistration }
