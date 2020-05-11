@@ -1,36 +1,24 @@
-$input-border:  2px solid #3384e8;
-
 
 .account-form {
-//     display: flex;
-//     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
     text-align:left;
-//     width: 80%;
-//     max-width: 600px;
-//     height: 400px;
-//     background: rgba(255,255,255,0.05);
     padding-top: 1rem;
 }
 
-// .account-form button {
-//   min-width: 80px; 
-//   margin-left: $grid-unit;
-// }
-
 .input-row {
-//     display: flex;
-//     margin: 10px;
-//     justify-content: space-between;
-//     align-items: center;
     width: 100%;
 padding-top:1rem;
 }
 
+button, input, optgroup, select, textarea {
+  font-family: inherit;
+  font-size: 100%;
+  line-height: 1.5;
+}
 input, button, input[type=checkbox] + label {
   border:none; 
-  height: 44px; 
+  min-height: 44px; 
   padding: 0 1rem;
   cursor: pointer;
 }
@@ -39,13 +27,17 @@ input, button, input[type=checkbox] + label {
   width: 400px;
   /* color: #ffffff; */
   padding: 2rem;
-  background: white;
+  background: $form-background;
   flex-direction: column;
-  border-radius:12px;
+  border: $form-border;
+  // border-radius:12px;
 }
 
 .form-header {
-  margin: 0 0 .3rem 0;
+  text-align: center;
+  h1{
+    margin: 0 0 .5rem 0;
+  }
 }
 form {
   display: flex;
@@ -59,35 +51,39 @@ input{
 }
 label{
   display:flex;
-  // padding-bottom:.4rem;
-}
-
-
-.button-cta{
-  margin-top:1.5rem;
+  font-size: .8rem;
+  padding-bottom: .2rem;
+  color: $input-color;
+    font-weight: 600;
 }
 
 .button-cta {
   background: $primary-cta;
   color:white;
   border-radius:50px;
-  height:100%;width:100%;
+  height: 60px;
+  width:100%;
   display:flex;
   align-items:center;
   justify-content:center;
   cursor: pointer;
+  font-weight: 600;
+  letter-spacing: .06em;
+  box-shadow: $button-box-shadow;
+  margin-top:1rem;
 }
 
 .form-with-button-checkboxes{
-  font-weight: 600;
   input, label, button{
-    max-width:580px;   //fix this later
+    // max-width:580px;   //fix this later
   }
   input, input[type=checkbox] + label{
     // background:#f3f7ff;
-    background: transparent;
-    
+    // background: transparent;
   }
+}
+.button-row-label{
+  padding-bottom:.3rem;
 }
 .button-checkboxes {
   input,label{margin:0;}
@@ -95,10 +91,10 @@ label{
   display: flex;
   flex-direction: row;
   width:100%;
-  padding-top:0.5rem;
+  // padding-top:0.5rem;
   // margin-left:-20px; //fix this later
   input[type=checkbox]
-  // ,input[type=radio] 
+  ,input[type=radio] 
   {
     display: none;
     width: 20px;
@@ -108,28 +104,51 @@ label{
     top: 1px;
   }
   /* the actual checkbox button*/
-  input[type=checkbox] + label,
-  input[type=radio] + label {
-    height: 45px;
+  
+  //input[type=radio]:checked + label,
+  input[type=checkbox] + label
+  {
+    font-size:1rem;
+    min-height: 45px;
+    min-width: 45px;
     margin-right: 5px;
+    &:last-child{
+      margin-right:0;
+    }
     flex:1;
     display: flex;
     align-items: center;
-    justify-content:center;
-    font-weight: 500;
-    color: #055dc9;
+    font-weight: 600;
+    color: $input-color;
     cursor: pointer;
     letter-spacing: .02em;
-    // padding: 0 10px 0 35px;
+    justify-content: flex-start;
+    padding-left: 20px;
     border: $input-border;    
-    box-shadow: 2px 2px 4px #888888;
+    box-shadow: $button-box-shadow;
+    &:before {
+      position: relative;
+      font-family: 'Font Awesome 5 Free';
+      font-weight: 400;
+      left: -10px;
+      content: "\f0c8";
+    }
   } 
-  // input[type=checkbox]:hover + label {} 
-  input[type=checkbox]:checked + label,
-  input[type=radio]:checked + label {
+
+  input[type=checkbox]:hover + label { border:$input-border;} 
+
+  //input[type=radio]:checked + label, 
+  input[type=checkbox]:checked + label
+  {
     background:#3384e8;
     font-style: normal;
     color:$hard-white;
     box-shadow: 0 0 0 transparent;
+    &:before {
+      // position: relative;
+      // font-family: 'Font Awesome 5 Free';
+      font-weight: 900;
+      content: "\f14a";
+    }
   } 
 }

@@ -1,3 +1,14 @@
+// .memes_to_rate{
+//   display: flex;
+//   flex-wrap: wrap;
+//   .meme_to_rate{
+//     width: 25%;
+//     img{
+//       object-fit: contain;
+//     }
+//   }
+// }
+
 import React, { useState, useEffect, useContext } from 'react'
 
 import SessionContext from '../context/session'

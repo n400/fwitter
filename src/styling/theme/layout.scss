@@ -2,13 +2,11 @@
 *{
   box-sizing: border-box;
 }
+.body-container, .main-wrapper, .main-left, .main-right{
+  // width: 100%;
+}
 img { object-fit: cover; width:100%; }
 a{text-decoration:none;}
-
-.body-container, .main-wrapper, .main-left, .main-right{
-  min-height: calc(100vh);
-  height: 100%;
-}
 
 .split-page-layout {
   height: calc(100vh - #{$footer-height});
@@ -21,42 +19,81 @@ a{text-decoration:none;}
 .main-wrapper {
   flex-direction:column;
 display:flex;
-align-items:flex-start;
-// justify-content:space-between;
-// padding-top: 44px;
+align-items: center;
+justify-content: center;
 }
-.jim-slogan{color:white;text-align:center;}
 
 
 .split-page-layout{
   display: flex;
   flex-direction: column;
   width: 100%;
-}
-
-
-@media only screen and (min-width:768px){
-  main {  flex-direction: row;}
-  .split-page-layout{
+  .main-left, .main-right{
     display: flex;
-    flex-direction: row;
-    .main-left, .main-right{
-      // flex: 1;
-      width: 50%;
-      display: flex;
-      align-items: center;
-      flex-direction: column;
-      justify-content: center;
-    }
-    .main-left {
-      // background: black;
-      padding: 3%;
-      max-height: 100vh;
-      img {
-        max-height: 100%;
-        width: auto;
-        max-width: 100%;
-      }
+    flex: 1;
+    // width: 50%;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 100%;
+    img{
+      // width: 100%;
+      width: 200px;
+      // border: 2px solid white;
     }
   }
 }
+
+.form-wrapper{
+  border:0;
+  max-width: 400px;
+}
+
+@media only screen and (min-width:768px){
+  
+  .body-container, .main-wrapper, .main-left, .main-right{
+    min-height: calc(100vh);
+    height: 100%;
+  }
+
+  main {  flex-direction: row;}
+  .split-page-layout{
+    flex-direction: row;
+    .main-left, .main-right{}
+    .main-left {
+      padding: 3%;
+      max-height: 100vh;
+      img {
+        // max-height: 100%;
+        max-height:552px; //TODO js to make it same as form-height or a  $form-01-height variable
+        width: auto;
+        // max-width: 100%;
+        border: 2px solid white;
+      }
+    }
+    .form-wrapper{
+      border:$form-border;
+    }
+  }
+}
+
+// @media only screen and (min-width:1024px){
+//   .body-container, .main-wrapper, .main-left, .main-right{}
+
+//   main {}
+//   .split-page-layout{
+//     .main-left, .main-right{}
+//     .main-left {
+//       img {
+//         height:552px; //TODO js to make it same as form-height or a  $form-01-height variable
+//         width: auto;
+//         // max-width: 100%;
+//         border: 2px solid white;
+//       }
+//     }
+//     .form-wrapper{
+//       border:$form-border;
+//     }
+//   }
+
+// }

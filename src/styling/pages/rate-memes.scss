@@ -1,0 +1,40 @@
+
+.rate_meme_element{
+  background: transparent;
+  height: calc(100% - #{$nav-height} - #{$footer-height} - 40px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: calc(5px + #{$nav-height});
+  padding-bottom: calc(80px + #{$footer-height});
+  .meme-radios{
+    input{display:none;}
+    display:flex;flex-direction:row;justify-content:space-evenly;width:100%;
+  }
+  .button-radio label{
+    border-radius:200px;
+    background:transparent;
+    border:0;
+    cursor: pointer;
+    // box-shadow: 2px 2px 8px #3384e8;
+    height: 72px;
+    width: 72px;
+    transition:all ease-in-out .3s;
+    &:hover{
+      box-shadow: none;
+      transform:scale(2);
+      
+    }
+    span{font-size:4rem; padding: 0;
+      position: relative;
+      top: -3px;
+      left:-8px;
+    }
+  }
+  img{
+    background:black;
+    border:2px solid white;;
+    max-height: 100%;
+    width: auto;
+  }
+}

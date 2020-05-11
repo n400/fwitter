@@ -39,23 +39,12 @@ div[class*="login"], {
     height:100%;
     flex-direction: column;
     align-items:center;
+    // align-items:flex-start;
   }
   nav{
       background: transparent;
   }
   footer{
-    color: $soft-white;
-  }
-}
-
-
-.memes_to_rate{
-  display: flex;
-  flex-wrap: wrap;
-  .meme_to_rate{
-    width: 25%;
-    img{
-      object-fit: contain;
-    }
+    // color: $soft-white;
   }
 }

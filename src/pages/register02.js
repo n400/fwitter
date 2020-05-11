@@ -11,19 +11,21 @@ import Asset from './../components/asset'
 import { useHistory } from 'react-router-dom'
 
 // Components
+import {renderInputField} from './../components/input'
 
-const Profile = (props) => {
+
+const Register02 = (props) => {
   
   const history = useHistory()
   const sessionContext = useContext(SessionContext)
   const { user } = sessionContext.state
-  const [asset, setAsset] = useState(null)
-  const [alias, setAlias] = useState(user ? user.alias : '')
+  // const [asset, setAsset] = useState(null)
+  const [dob, setDob] = useState(user ? user.dob : '')
   const [zip, setZip] = useState ((user && user.zip) ? user.zip : '')
 
 
   const handleEditProfile = (event) => {
-    console.log('editing profile', props, history, asset, alias, zip)
+    console.log('editing profile', dob, zip)
 
     // if (!asset) {
     //   toast.warn('Please upload an image first :)')
@@ -31,7 +33,7 @@ const Profile = (props) => {
     // }
 
     faunaQueries
-      .updateUser(asset, alias, zip)
+      .finishRegistration(dob, zip)
       .then(res => {
         // if(history) 
         history.push('register03');
@@ -39,97 +41,59 @@ const Profile = (props) => {
       })
       .catch(err => {
         console.log(err)
-        toast.error('Profile update failed')
+        toast.error('Something went wrong. Please reload the page and log into your account.')
       })
     event.preventDefault()
   }
-
-
-
-
-
-
-
-  const generateUploadImage = () => {
-    return <Uploader onPhotosUploaded={handleUploadPhoto}></Uploader>
-  }
-
-  const handleUploadPhoto = photoInfo => {
-    setAsset({ url: photoInfo.secure_url, type: photoInfo.resource_type, id: photoInfo.public_id })
-  }
-
-
-
-
-
-
-
-
-
-
-
-  const handleChangeAlias = event => {
-    setAlias(event.target.value)
+  const handleChangeDob = event => {
+    setDob(event.target.value)
   }
 
   const handleChangeZip = event => {
     setZip(event.target.value)
   }
 
-  const handleChangeAsset = event => {
-    // setFweet(event.target.value)
-    setAsset(event.target.value)
-  }
+  // const generateUploadImage = () => {
+  //   return <Uploader onPhotosUploaded={handleUploadPhoto}></Uploader>
+  // }
 
-  // Just for debugging to get in quickly
-  useEffect(() => {
-    // For debugging, autologin to get in faster for testing, add a user and pword in the .env.local
-  }, [])
+  // const handleUploadPhoto = photoInfo => {
+  //   setAsset({ url: photoInfo.secure_url, type: photoInfo.resource_type, id: photoInfo.public_id })
+  // }
+  // const handleChangeAsset = event => {
+  //   setAsset(event.target.value)
+  // }
 
   return (
     <React.Fragment>
-
-<Masonry />
-
-<h1 className="jim-slogan">Jim writes something funny here!</h1>
-      
-
-
-
-
-      <div className="form-wrapper">
-        <h3 className="form-header">Sign up today</h3>
-        <small>(or stay sad forever)</small>
-
-        <form className="account-form form-with-button-checkboxes" onSubmit={handleEditProfile}>
-
-          {asset ? <Asset asset={asset} onChange={handleChangeAsset}></Asset> : null}
-          <div className="icon">{generateUploadImage()}</div>
-
-          <div className="input-row">
-            <label htmlFor="dob" className="input-row-column">
-              dob
-            </label>
-            <input id="dob" className="input-row-column" value={alias} onChange={handleChangeAlias} type="text" />
+      <Masonry />
+      {/* <h1 className="jim-slogan">Jim writes something funny here!</h1> */}
+      <div className="split-page-layout">
+        <div className="main-left">
+          <img 
+          // onClick={setNextMeme}
+          src="/images/memes/grinnr-is-01.jpg" alt="grinnr is a networking and dating app that analyzes your sense of humor to find people who share your sense of humor." />
+        </div>
+        <div className="main-right">
+          <div className="form-wrapper">
+            <div className="form-header">
+              <h1>2 more questions</h1>
+              <small>(you can do it)</small>
+            </div>
+            <form className="account-form form-with-button-checkboxes" onSubmit={handleEditProfile}>
+              {/* {asset ? <Asset asset={asset} onChange={handleChangeAsset}></Asset> : null} */}
+              {/* <div className="icon">{generateUploadImage()}</div> */}
+              {renderInputField('dob (you must be over 18)', dob, 'date', e => handleChangeDob(e), 'dob')}
+              {renderInputField('zip code', zip, 'text', e => handleChangeZip(e), 'zip')}
+              <div className="input-row align-right">
+                <button className="button-cta"> Next </button>
+              </div>
+            </form>
           </div>
-
-          <div className="input-row">
-            <label htmlFor="zip" className="input-row-column">
-              zip code (optional)
-            </label>
-            <input id="zip" className="input-row-column" value={zip} onChange={handleChangeZip} type="text" />
-          </div>
-          <div className="input-row align-right">
-            <button className="button-cta"> Next </button>
-          </div>
-
-
-
-        </form></div>
-
-      {/* {user ? <Search /> : null} */}
+        </div>
+      </div>
     </React.Fragment>
   )
 }
 
-export default Profile
+export default Register02

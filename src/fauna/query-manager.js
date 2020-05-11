@@ -11,8 +11,7 @@ import {
   refweet,
   comment
 } from './queries/fweets'
-import { UpdateUser } from './queries/users'
-import { SaveRating } from './queries/users'
+import { UpdateUser, FinishRegistration, SaveRating } from './queries/users'
 import { searchPeopleAndTags } from './queries/search'
 import { follow } from './queries/followers'
 
@@ -43,9 +42,9 @@ class QueryManager {
   }
 
   register(email, password, alias, wantMemes, wantFriends, wantDates) {
-    const icon = 'person' + (Math.round(Math.random() * 22) + 1) // randomly choose an icon
+    // const icon = 'person' + (Math.round(Math.random() * 22) + 1) // randomly choose an icon
     //ok the order of the vars here dictates the orders of the values
-    return registerWithUser(this.client, email, password, alias, wantMemes, wantFriends, wantDates, icon).then(res => {
+    return registerWithUser(this.client, email, password, alias, wantMemes, wantFriends, wantDates).then(res => {
       if (res) {
         this.client = new faunadb.Client({ secret: res.secret.secret })
       }
@@ -77,10 +76,6 @@ class QueryManager {
   createFweet(message, asset) {
     return createFweet(this.client, message, asset)
   }
-// ??IN PROGRESS
-  storeLookingFor(message, asset) {
-    return storeLookingFor(this.client, message, asset)
-  }
 
   searchPeopleAndTags(keyword) {
     return searchPeopleAndTags(this.client, keyword)
@@ -90,9 +85,18 @@ class QueryManager {
     return likeFweet(this.client, fweetRef)
   }
 
-  updateUser(name, alias, zip, wantMemes, wantFriends, wantDates, icon, avatar) {
+  updateUser(
+    // email, 
+    alias, dob, zip, wantMemes, wantFriends, wantDates) {
     // we don't pass in the icon yet atm
-    return this.client.query(UpdateUser(name, alias, zip, wantMemes, wantFriends, wantDates, icon, avatar))
+    return this.client.query(UpdateUser(
+      // email, 
+      alias, dob, zip, wantMemes, wantFriends, wantDates))
+  }
+
+  finishRegistration(dob, zip) {
+    // we don't pass in the icon yet atm
+    return this.client.query(FinishRegistration(dob, zip))
   }
 
   saveRating(meme, rating) {

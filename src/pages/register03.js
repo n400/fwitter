@@ -2,6 +2,7 @@ import React, {
   // useEffect, useContext 
 } from 'react'
 // import SessionContext from '../context/session'
+import { Link } from 'react-router-dom'
 import { Masonry } from './../components/masonry'
 
 // Components
@@ -21,13 +22,20 @@ const Profile = props => {
 
 
       <div className="form-wrapper">
-        <h3 className="form-header">You've been added to our waitlist</h3>
-        <small>(i'm sorry)</small>
-
+        <div className="form-header">
+          <h1>Not enough users in your area</h1>
+          <small>(sorry)</small>
+        </div>
         <p>
-        We will contact you as soon as we 
-      have a critical mass of users in your area. 
+        Grinnr is still in beta testing, but we will email you once we have a critical mass 
+        of users in your area.</p>
+        <p> You can accelerate this process by advertising for us on 
+          your tinder profile.</p>
+          {/* <p><strong>"Waiting for you on grinnr.com (no, not grindr)".</strong></p> */}
+        <p>Meanwhile, start rating memes to improve your matches (don't worry--they will come).
         </p>
+        <Link className="button-cta" to="/">Rate memes</Link>
+
      </div>
 
       {/* {user ? <Search /> : null} */}

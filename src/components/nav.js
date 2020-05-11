@@ -63,6 +63,7 @@ const links = [
   // s => renderProtectedLink(s, { href: '/', label: 'faPaperPlane' }),
   // s => renderProtectedLink(s, { href: '/', label: 'Profile' }),
   // <FontAwesomeIcon icon={faPaperPlane} />
+  "Matches",
   SignupOrLoginOrLogout,
   // s => renderProtectedLink(s, { href: '/topics', label: 'Topics' }),
   // s => renderProtectedLink(s, { href: '/messages', label: 'Messages' }),

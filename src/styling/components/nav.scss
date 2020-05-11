@@ -20,7 +20,7 @@ nav {
     background: rgba(0,0,0,.8);
     position: fixed;
     color:$soft-white;
-    height:44px;
+    height:$nav-height;
     display: flex;
     justify-content: space-between;
     z-index:1;

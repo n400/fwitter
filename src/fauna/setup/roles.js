@@ -39,7 +39,8 @@ const CreatePowerlessRole = CreateOrUpdateRole({
   privileges: []
 })
 
-// When a user first arrives to the application, he should only be able to create a new account (register UDF) and login with a given account (login UDF)
+// When a user first arrives to the application, he should only be able to create a new account 
+// (register UDF) and login with a given account (login UDF)
 // This role will be used to generate a key to bootstrap this process.
 const CreateBootstrapRole = CreateOrUpdateRole({
   name: 'keyrole_calludfs',

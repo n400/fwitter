@@ -127,7 +127,7 @@ const Register = () => {
       <div className="main-left">
         <img 
         onClick={setNextMeme}
-        src="/images/memes/grinnr-is-01.jpg" alt="grinnr is a networking and dating app that analyzes your sense of humor to find people who share your sense of humor.
+        src="/images/memes/grinnr-texting-boy-girl-color.jpg" alt="grinnr is a networking and dating app that analyzes your sense of humor to find people who share your sense of humor.
 " />
       </div>
       <div className="main-right">

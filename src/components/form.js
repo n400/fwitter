@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-
+import {renderInputField} from './input'
 import { QueryManager } from '../../src/fauna/query-manager'
 require('dotenv').config({ path: '.env.' + process.argv[2] })
 const { handleSetupError } = require('../../src/fauna/helpers/errors')
@@ -20,34 +20,22 @@ const Form = props => {
   const [wantFriends, setWantFriends] = useState('')
   const [wantDates, setWantDates] = useState('')
 
-
   const handleChangeEmail = event => {
     setEmail(event.target.value)
   }
-
   const handleChangePassword = event => {
     setPassword(event.target.value)
   }
-
-  // const handleChangeName = event => {
-  //   setName(event.target.value)
-  // }
-
   const handleChangeAlias = event => {
     setAlias(event.target.value)
   }
-
   const handleChangeWantMemes = event => {
     setWantMemes(event.target.checked)
   }
-
   const handleChangeWantFriends = event => {
-    console.log(event.target.checked)
     setWantFriends(event.target.checked)
   }
-
   const handleChangeWantDates = event => {
-    console.log(event.target.checked)
     setWantDates(event.target.checked)
   }
 
@@ -56,17 +44,15 @@ const Form = props => {
   return (
     <React.Fragment>
 
-
-
       <div className="form-wrapper">
-        <h3 className="form-header">Sign up today</h3>
-        <small>(or stay sad forever)</small>
-        <form className="account-form form-with-button-checkboxes" onSubmit={e => props.handleSubmit(e, email, password, alias, wantMemes, wantFriends, wantDates)}>
-
-
+      <div className="form-header">
+        <h1>{props.isLogin ? "welcome to grinnr" : "sign up today"}</h1>
+        <small>{props.isLogin ? "(the end is near... if you know what i mean)" : "(or stay sad forever)"}</small>
+      </div>
+      <form className="account-form form-with-button-checkboxes" onSubmit={e => props.handleSubmit(e, email, password, alias, wantMemes, wantFriends, wantDates)}>
         {props.isLogin ? null : 
             <div className="input-row">
-              <label>why grinnr? (select all that apply)</label>
+              <label className="button-row-label">why grinnr? (select all that apply)</label>
               <div className="button-checkboxes">
                 <input type="checkbox" id="memes" checked={wantMemes} onChange={handleChangeWantMemes} />
                 <label htmlFor="memes">memes</label>
@@ -93,26 +79,26 @@ const Form = props => {
   )
 }
 
-const renderInputField = (name, value, type, fun, autocomplete) => {
-  const lowerCaseName = name.toLowerCase()
-  return (
-    <div className="input-row">
-      {/* <label htmlFor="{lowerCaseName}" className="input-row-column">
-        {name}
-      </label> */}
-      <input
-        className="input-row-column"
-        placeholder={name}
-        value={value}
-        onChange={fun}
-        type={type}
-        id={lowerCaseName}
-        name={lowerCaseName}
-        autoComplete={autocomplete}
-      />
-    </div>
-  )
-}
+// const renderInputField = (name, value, type, fun, autocomplete) => {
+//   const lowerCaseName = name.toLowerCase()
+//   return (
+//     <div className="input-row">
+//       {/* <label htmlFor="{lowerCaseName}" className="input-row-column">
+//         {name}
+//       </label> */}
+//       <input
+//         className="input-row-column"
+//         placeholder={name}
+//         value={value}
+//         onChange={fun}
+//         type={type}
+//         id={lowerCaseName}
+//         name={lowerCaseName}
+//         autoComplete={autocomplete}
+//       />
+//     </div>
+//   )
+// }
 
 Form.propTypes = {
   isLogin: PropTypes.bool,

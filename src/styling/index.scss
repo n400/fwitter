@@ -32,19 +32,26 @@ $touch-target: 44px;
 $border-radius: calc( #{$grid-unit} / 4);
 $border-radius-round: calc( #{$grid-unit} / 1.5);
 $menu-font-size: 20px;
-@import "./components/layout";
-@import "./components/card";
-@import "./components/fweeter";
-@import "./components/suggestions";
-@import "./components/search";
-@import "./components/asset";
+// @import "./components/layout";
+// @import "./components/card";
+// @import "./components/fweeter";
+// @import "./components/suggestions";
+// @import "./components/search";
+// @import "./components/asset";
 
 //NEW
 $soft-white: rgba(255,255,255,0.8);
 $hard-white: rgba(255,255,255,0.95);
-$primary-cta: #03b0a0;
-
+$primary-cta: #FF0AF7;
+$secondary-cta: #03b0a0;
+$input-color: #3384e8; 
+$input-border:  2px solid $input-color;
+$button-box-shadow: 2px 2px 4px rgba(0,0,0,.5);
+$form-background: white;
+$form-border: 2px solid $primary-cta;
 $footer-height: 36px;
+$nav-height: 44px;
+
 @import "./theme/normalize";
 @import "./theme/typ";
 @import "./theme/layout";
@@ -55,6 +62,7 @@ $footer-height: 36px;
 //PAGE-SPECIFIC
 @import "./components/masonry";
 @import "./pages/page-specific-styles";
+@import "./pages/rate-memes";
 
 
 // CSS from libraries  
