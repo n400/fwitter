@@ -13,30 +13,20 @@ const RateMemes = props => {
   const history = useHistory();
   const sessionContext = useContext(SessionContext)
   const { user } = sessionContext.state
-
-  var memeRating = false  
   let [meme_i, setmeme_i] = useState(1)
-
-console.log(meme_i)
 
   const handleChangeRating = event => {
     console.log("handleChange", event.target.value)
     let memeRating = event.target.value
-
     handleSaveRating(meme_i, memeRating)
-    ///---///
-
-
-    event.preventDefault()
- 
+    setmeme_i(++meme_i)
   };
 
-  const handleSaveRating = (url, rating) => {
-    console.log("handleSave", url, rating)
+  const handleSaveRating = (meme_i, rating) => {
+    console.log("handleSave", meme_i, rating)
     faunaQueries
-      .saveRating(url, rating)
+      .saveRating(meme_i, rating)
       .then(res => { // toast.success('Rating saved')
-        setmeme_i(++meme_i)
       })
       .catch(err => {
         console.log(err)
@@ -44,22 +34,12 @@ console.log(meme_i)
       })
   }
 
-  // useEffect((i, memeRating) => {
-  //   console.log("useEffect")
-
-  //   var memeRating = memeRating  
-  // }, [])
-
-
   const renderMeme = () => {
       return (
         <React.Fragment>
         <div className="rate_meme_element">
           <img alt="" src={"/images/memes/jim/meme ("+meme_i+").jpg"} />
           <div className="meme-radios">
-
-
-
           <div className="button-radio">
               <label htmlFor={"hate_"+meme_i}><span role="img" aria-label="emoji"><FontAwesomeIcon icon={faGrimace} /></span></label>
               <input type="radio" id={"hate_"+meme_i} name={meme_i} 
