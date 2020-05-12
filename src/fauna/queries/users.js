@@ -38,7 +38,7 @@ function FinishRegistration(dob, zip) {
 
 function UpdateUser(
   // email, 
-  alias, dob, zip, wantMemes, wantFriends, wantDates) {
+  alias, dob, zip, wantMemes, wantFriends, wantDates, asset01) {
   // console.log('updating', email, alias, dob, zip, wantMemes, wantFriends, wantDates)
   return Let(
     {
@@ -53,44 +53,12 @@ function UpdateUser(
         zip: zip,
         wantMemes: wantMemes,
         wantFriends: wantFriends,
-        wantDates: wantDates
+        wantDates: wantDates,
+        asset01: asset01
       }
     })
   )
 }
 
 
-function SaveRating(url, rating, email) {
-  console.log('calling db', url, rating)
-  return Let(
-    {
-      accountRef: Identity(),
-      userRef: Select(['data', 'user'], Get(Var('accountRef')))
-    },
-    Create(Collection('meme_ratings'), {
-      data: {
-          account: Var('userRef'),
-          email: email,
-          meme_url: url,
-          meme_rating: rating
-          // user: Var('userRef'),
-          // meme_id: Var('meme'),
-          // meme_rating: Var('rating')
-      }
-    })
-  )
-}
-
-function GetMemeRating(email, meme_url) {
-  console.log('calling db', url, rating)
-  return Let(
-    {
-      accountRef: Identity(),
-      userRef: Select(['data', 'user'], Get(Var('accountRef')))
-    },
-    Paginate(Match(Index("rating_by_user_and_meme"), email, meme_url))
-  )
-}
-
-
-export { CreateUser, UpdateUser, SaveRating, FinishRegistration, GetMemeRating }
+export { CreateUser, UpdateUser, FinishRegistration }

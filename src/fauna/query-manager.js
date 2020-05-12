@@ -3,7 +3,6 @@ import faunadb from 'faunadb'
 import { registerWithUser, login, logout } from './queries/auth'
 import {
   createFweet,
-  storeLookingFor,
   getFweets,
   getFweetsByTag,
   getFweetsByAuthor,
@@ -11,7 +10,8 @@ import {
   refweet,
   comment
 } from './queries/fweets'
-import { UpdateUser, FinishRegistration, SaveRating } from './queries/users'
+import { UpdateUser, FinishRegistration } from './queries/users'
+import { SaveRating, GetMemeRating, UploadMeme } from './queries/memes'
 import { searchPeopleAndTags } from './queries/search'
 import { follow } from './queries/followers'
 
@@ -87,11 +87,11 @@ class QueryManager {
 
   updateUser(
     // email, 
-    alias, dob, zip, wantMemes, wantFriends, wantDates) {
+    alias, dob, zip, wantMemes, wantFriends, wantDates, asset01) {
     // we don't pass in the icon yet atm
     return this.client.query(UpdateUser(
       // email, 
-      alias, dob, zip, wantMemes, wantFriends, wantDates))
+      alias, dob, zip, wantMemes, wantFriends, wantDates, asset01))
   }
 
   finishRegistration(dob, zip) {
@@ -100,6 +100,14 @@ class QueryManager {
 
   saveRating(meme, rating, email) {
     return this.client.query(SaveRating(meme, rating, email))
+  }
+
+  getMemeRating(email, meme) {
+    return this.client.query(GetMemeRating(email, meme))
+  }
+
+  uploadMeme(asset) {
+    return this.client.query(UploadMeme(asset))
   }
 
   refweet(fweetRef, message) {

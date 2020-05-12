@@ -69,7 +69,7 @@ const Login = props => {
           } else {
             // toast.success('Login successful')
             sessionContext.dispatch({ type: 'login', data: e })
-            history.push('/')
+            history.push('/profile')
           }
         })
         .catch(err => {

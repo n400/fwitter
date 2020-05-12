@@ -4,53 +4,40 @@ import SessionContext from './../context/session'
 import { faunaQueries } from '../fauna/query-manager'
 import { toast } from 'react-toastify'
 
+import { Uploader } from '../components/uploader'
+import Asset from '../components/asset'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPaperPlane } from '@fortawesome/free-solid-svg-icons'
+
 // Components
 import {renderInputField} from './../components/input'
 
 const Profile = props => {
   const sessionContext = useContext(SessionContext)
   const { user } = sessionContext.state
+  //TODO (techdebt): change these to useState with an array at some point: https://daveceddia.com/usestate-hook-examples/
   const [wantMemes, setWantMemes] = useState ((user && user.wantMemes) ? user.wantMemes : '')
   const [wantFriends, setWantFriends] = useState ((user && user.wantFriends) ? user.wantFriends : '')
   const [wantDates, setWantDates] = useState ((user && user.wantDates) ? user.wantDates : '')
-  // const [email, setEmail] = useState((user && user.wantDates) ? user.email : '')
+  //TODO (need to learn this): const [email, setEmail] = useState((user && user.wantDates) ? user.email : '')
   const [alias, setAlias] = useState(user ? user.alias : '')
   const [dob, setDob] = useState((user && user.zip) ? user.dob : '')
   const [zip, setZip] = useState ((user && user.zip) ? user.zip : '')
-
-  //TODO: 
-//  1. zeit or netlify?
-//  2. help@grinnr.com
-//  3. generic privacy policy, tos pages 
-//  4. create collection of memes by user who uploaded them (like the fewwet; can probably resue that code)
-//
-  //BUGS:
-  // 1. refresh user info after finishregistration function (whatever happens after updateuser) so that it appears 
-  //    in the profile page without having to refresh/re-login
-  // 2. only show memes user has not yet rated
-  //
-  //
-  // NICE TO HAVE:
-  // 1. add memes for moderation, to memes collection? should meme_ratings be restrctured? 
-  //    Or keep it flat and rely on indexes? But then we will run into pagination issues, right? which way is easier?
-  // 2. allow user to re-rate memes?
-  //
-  // NOT BLOCKER FOR LAUNCH *(can rely on help@grinnr.com)
-  // 2. make email editable via profile (update account info when the user info gets updated)
-  // 3. not a blocker for launch: password reset flow, make password editable
-  // 4. not a blocker for launch: lambda to stay logged in
-  console.log('viewing profile', "user: " + user, 
-  // email, 
-  alias, dob, zip, wantMemes, wantFriends, wantDates)
+  const [asset01, setAsset01] = useState((user && user.asset01) ? user.asset01 : '')
 
   const handleEditProfile = event => {
     console.log('editing profile', 
-    // email, 
-    alias, dob, zip, wantMemes, wantFriends, wantDates)
+    alias, dob, zip, wantMemes, wantFriends, wantDates, 
+    asset01)
+    // if (!asset01) {
+    //   toast.warn('Please upload an image first :)')
+    //   return
+    // }
     faunaQueries
       .updateUser(
-        // email, 
-        alias, dob, zip, wantMemes, wantFriends, wantDates)
+        alias, dob, zip, wantMemes, wantFriends, wantDates, 
+        asset01)
+      // .uploadMeme(asset01)
       .then(res => {
         toast.success('Profile updated')
         console.log(res)
@@ -66,31 +53,24 @@ const Profile = props => {
   //   setEmail(event.target.value)
   // }
 
-  const handleChangeAlias = event => {
-    setAlias(event.target.value)
-  }
+  const handleChangeAlias = event => {setAlias(event.target.value)}
+  const handleChangeDob = event => {setDob(event.target.value)}
+  const handleChangeZip = event => {setZip(event.target.value)}
+  const handleChangeWantMemes = event => {setWantMemes(event.target.checked)}
+  const handleChangeWantFriends = event => {setWantFriends(event.target.checked)}
+  const handleChangeWantDates = event => {setWantDates(event.target.checked)}
+  const handleChangeAssets = event => {setAsset01(event.target.value)}
 
-  const handleChangeDob = event => {
-    setDob(event.target.value)
+  const generateUploadImage = () => {
+    console.log("generateUploadImage", asset01)
+    return <Uploader onPhotosUploaded={handleUploadPhoto}></Uploader>
   }
-
-  const handleChangeZip = event => {
-    setZip(event.target.value)
+  const handleUploadPhoto = photoInfo => {
+    setAsset01({ url: photoInfo.secure_url, type: photoInfo.resource_type, id: photoInfo.public_id 
+    })
+    console.log("handleUploadPhoto", asset01)
   }
-
-  const handleChangeWantMemes = event => {
-    setWantMemes(event.target.checked)
-  }
-
-  const handleChangeWantFriends = event => {
-    console.log(event.target.checked)
-    setWantFriends(event.target.checked)
-  }
-
-  const handleChangeWantDates = event => {
-    console.log(event.target.checked)
-    setWantDates(event.target.checked)
-  }
+  
 
   // Just for debugging to get in quickly
   useEffect(() => {
@@ -108,6 +88,14 @@ const Profile = props => {
         </div>
         <form className="account-form" onSubmit={handleEditProfile}>
           
+            
+        <div className="uploadImageBox">
+          {generateUploadImage()}
+          {asset01 ? <Asset asset={asset01} onChange={handleChangeAssets}></Asset> : null}
+        </div>
+
+
+
         <div className="input-row">
               <label>why grinnr? (select all that apply)</label>
               <div className="button-checkboxes">
@@ -119,13 +107,11 @@ const Profile = props => {
                 <label htmlFor="dates">dates</label>
               </div>
             </div>
-          {/* {renderInputField('email', email, 'text', e => handleChangeEmail(e), 'email')} */}
             {renderInputField('screen name', alias, 'text', e => handleChangeAlias(e), 'alias')}
             {renderInputField('dob (you must be over 18 to view profiles)', dob, 'date', e => handleChangeDob(e), 'dob')}
-                {renderInputField('zip code', zip, 'text', e => handleChangeZip(e), 'zip')}
-  {/* 
-           
-            {renderInputField('password', password, 'password', e => handleChangePassword(e), 'current-password')} */}
+            {renderInputField('zip code', zip, 'text', e => handleChangeZip(e), 'zip')}
+            {/* {renderInputField('email', email, 'text', e => handleChangeEmail(e), 'email')} */}
+            {/*{renderInputField('password', password, 'password', e => handleChangePassword(e), 'current-password')} */}
 
   
             <div className="input-row align-right">

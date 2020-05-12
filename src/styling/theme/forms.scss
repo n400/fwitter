@@ -73,7 +73,7 @@ label{
   margin-top:1rem;
   &:hover{
     color: white;
-    background: $link-color;
+    background: $primary-cta-hover;
   }
 }
 
@@ -152,7 +152,41 @@ label{
       // position: relative;
       // font-family: 'Font Awesome 5 Free';
       font-weight: 900;
-      content: "\f14a";
+      // content: "\f14a";
+      content: "\f00c";
     }
   } 
+}
+
+.uploadImageBox{
+  border: 2px dashed $input-color;
+  width: 33.33%;
+  position:relative;min-height: 44px;
+  &>div{
+    display: flex;
+    align-items: center;
+    position: relative;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    min-height: 44px;
+  }
+  svg{
+    position: absolute;
+    z-index: 2;
+    width: 100% !important; //could also be .svg-inline--fa.fa-w-16, 
+    //but this should be edited in uploader.js anyway
+    //and this isnt the final design yet anyway
+    height: 100%;
+    padding: 5%;
+    color: $input-color;
+    transition: $generic-transition;
+    // padding: 2rem;
+    cursor: pointer;
+    &:hover{
+      background: $primary-cta-hover;
+      color: white;
+      opacity: .7;
+    }
+  }
 }

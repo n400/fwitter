@@ -5,9 +5,17 @@ import { faImage } from '@fortawesome/free-solid-svg-icons'
 
 const Uploader = props => {
   const widget = window.cloudinary.createUploadWidget(
+  //Widget options: https://cloudinary.com/documentation/upload_widget#upload_widget_options
     {
       cloudName: process.env.REACT_APP_LOCAL___CLOUDINARY_CLOUDNAME,
       uploadPreset: process.env.REACT_APP_LOCAL___CLOUDINARY_TEMPLATE,
+      maxFiles: 1,
+      cropping: true,
+      // showSkipCropButton: false,
+      folder: "profile-photos",
+      maxFileSize: 300000,
+      //allows tagging suggestions (good for NSFW, mean, etc, although that kind of defeats the purpose)
+      //allows a lot of additional css options, like where to put te thumbnails, etc.
       styles: {
         palette: {
           window: '#E5E8EB',

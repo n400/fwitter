@@ -14,13 +14,25 @@ const RateMemes = props => {
   const sessionContext = useContext(SessionContext)
   const { user } = sessionContext.state
   let [meme_i, setmeme_i] = useState(1)
-
   const handleChangeRating = event => {
     console.log("handleChange", event.target.value)
     let memeRating = event.target.value
     handleSaveRating(meme_i, memeRating)
     setmeme_i(++meme_i)
+    checkForMemeRating(user.email, meme_i)
   };
+
+  const checkForMemeRating = (email, meme_i) => {
+    faunaQueries
+      .getMemeRating(email, meme_i)
+      .then(res => {
+        console.log(res)
+      })
+      .catch(err => {
+        console.log(err)
+        toast.error('check failed')
+      })
+  }
 
   const handleSaveRating = (meme_i, rating) => {
     console.log("handleSave", meme_i, rating)

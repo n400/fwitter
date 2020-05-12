@@ -37,3 +37,41 @@ Lambda(ref => Delete(ref))
 //
 // ''Use it:
 // Paginate(Match(Index("rating_by_user_and_meme"), "test@gmail.com", 1))
+
+userRef
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  //TODO: 
+//  1. zeit or netlify?
+//  2. help@grinnr.com
+//  3. generic privacy policy, tos pages 
+//  4. create collection of memes by user who uploaded them (like the fewwet; can probably resue that code)
+//
+  //BUGS:
+  // 1. refresh user info after finishregistration function (whatever happens after updateuser) so that it appears 
+  //    in the profile page without having to refresh/re-login
+  // 2. only show memes user has not yet rated
+  //
+  //
+  // NICE TO HAVE:
+  // 1. add memes for moderation, to memes collection? should meme_ratings be restrctured? 
+  //    Or keep it flat and rely on indexes? But then we will run into pagination issues, right? which way is easier?
+  // 2. allow user to re-rate memes?
+  //
+  // NOT BLOCKER FOR LAUNCH *(can rely on help@grinnr.com)
+  // 2. make email editable via profile (update account info when the user info gets updated)
+  // 3. not a blocker for launch: password reset flow, make password editable
+  // 4. not a blocker for launch: lambda to stay logged in
