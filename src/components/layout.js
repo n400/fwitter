@@ -17,7 +17,8 @@ const Layout = props => {
         <Nav/>
         <div className="main-wrapper">
           {props.children}
-          <footer><small>&copy; Copyright 2020 grinnr &nbsp; &#8226; &nbsp;</small><small><NavLink to="/legal">legal</NavLink>	 &nbsp; &#8226; &nbsp;<NavLink to="/media">media</NavLink>	</small></footer>
+          {/* TODO: hide footer on home page (memes page), and fix how it looks everywhere else  */}
+          {/* <footer><small>&copy; Copyright 2020 grinnr &nbsp; &#8226; &nbsp;</small><small><NavLink to="/legal">legal</NavLink>	 &nbsp; &#8226; &nbsp;<NavLink to="/media">media</NavLink>	</small></footer> */}
         </div>
       </div>
      </div>

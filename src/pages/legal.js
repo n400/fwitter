@@ -20,8 +20,7 @@ const Media = props => {
         <div className="form-header">
           <h1>Legal stuff</h1>
         </div>
-        <p>If you try to create a similar app that matches people based on their response to memes, we will sue you. Trust us; we will. We have absolutely nothing better to do and could use the publicity.</p>
-        <p>
+ <p>
         If you work for tinder and want us to tell people to stop advertising us on your app, contact our lawyers.</p>
         <p><a>Terms of use</a></p>
         <p><a>Privacy policy</a></p>

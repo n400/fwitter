@@ -60,7 +60,7 @@ function UpdateUser(
 }
 
 
-function SaveRating(url, rating) {
+function SaveRating(url, rating, email) {
   console.log('calling db', url, rating)
   return Let(
     {
@@ -69,7 +69,8 @@ function SaveRating(url, rating) {
     },
     Create(Collection('meme_ratings'), {
       data: {
-          user: Var('userRef'),
+          account: Var('userRef'),
+          email: email,
           meme_url: url,
           meme_rating: rating
           // user: Var('userRef'),
@@ -80,4 +81,16 @@ function SaveRating(url, rating) {
   )
 }
 
-export { CreateUser, UpdateUser, SaveRating, FinishRegistration }
+function GetMemeRating(email, meme_url) {
+  console.log('calling db', url, rating)
+  return Let(
+    {
+      accountRef: Identity(),
+      userRef: Select(['data', 'user'], Get(Var('accountRef')))
+    },
+    Paginate(Match(Index("rating_by_user_and_meme"), email, meme_url))
+  )
+}
+
+
+export { CreateUser, UpdateUser, SaveRating, FinishRegistration, GetMemeRating }

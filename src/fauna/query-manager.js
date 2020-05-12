@@ -95,13 +95,11 @@ class QueryManager {
   }
 
   finishRegistration(dob, zip) {
-    // we don't pass in the icon yet atm
     return this.client.query(FinishRegistration(dob, zip))
   }
 
-  saveRating(meme, rating) {
-    // we don't pass in the icon yet atm
-    return this.client.query(SaveRating(meme, rating))
+  saveRating(meme, rating, email) {
+    return this.client.query(SaveRating(meme, rating, email))
   }
 
   refweet(fweetRef, message) {

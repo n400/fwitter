@@ -17,6 +17,7 @@ a{text-decoration:none;}
   position:absolute;display:flex;flex-direction:column;width:100%;}
 
 .main-wrapper {
+  min-height: 100vh;
   flex-direction:column;
 display:flex;
 align-items: center;

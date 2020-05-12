@@ -24,8 +24,9 @@ const RateMemes = props => {
 
   const handleSaveRating = (meme_i, rating) => {
     console.log("handleSave", meme_i, rating)
+    console.log(user.email)
     faunaQueries
-      .saveRating(meme_i, rating)
+      .saveRating(meme_i, rating, user.email)
       .then(res => { // toast.success('Rating saved')
       })
       .catch(err => {
@@ -38,30 +39,33 @@ const RateMemes = props => {
       return (
         <React.Fragment>
         <div className="rate_meme_element">
-          <img alt="" src={"/images/memes/jim/meme ("+meme_i+").jpg"} />
+          <img className="meme_to_rate" alt="" src={"/images/memes/jim/meme ("+meme_i+").jpg"} />
           <div className="meme-radios">
           <div className="button-radio">
-              <label htmlFor={"hate_"+meme_i}><span role="img" aria-label="emoji"><FontAwesomeIcon icon={faGrimace} /></span></label>
+              <label htmlFor={"hate_"+meme_i}><img class="emoji" src="images/icons/meh-rolling-eyes-regular.svg"/></label>
               <input type="radio" id={"hate_"+meme_i} name={meme_i} 
               value="hate" onClick={handleChangeRating} />
             </div>
             <div className="button-radio">
-              <label htmlFor={"dislike_"+meme_i}><span role="img" aria-label="emoji"><FontAwesomeIcon icon={faMehRollingEyes} /></span></label>
+              <label htmlFor={"dislike_"+meme_i}>
+              <img class="emoji" src="images/icons/meh-rolling-eyes-regular.svg"/>
+              </label>
               <input type="radio" id={"dislike_"+meme_i} name={meme_i} 
               value="dislike" onClick={handleChangeRating} />
             </div>
             <div className="button-radio">
-              <label htmlFor={"meh_"+meme_i}><span role="img" aria-label="emoji"><FontAwesomeIcon icon={faMehBlank} /></span></label>
+              <label htmlFor={"meh_"+meme_i}><img class="emoji" src="images/icons/meh-rolling-eyes-regular.svg"/></label>
               <input type="radio" id={"meh_"+meme_i} name={meme_i} 
               value="meh" onClick={handleChangeRating} />
             </div>
             <div className="button-radio">
-              <label htmlFor={"like_"+meme_i}><span role="img" aria-label="emoji"><FontAwesomeIcon icon={faSmileWink} /></span></label>
+              <label htmlFor={"like_"+meme_i}>
+              <img class="emoji" src="images/icons/meh-rolling-eyes-regular.svg"/></label>
               <input type="radio" id={"like_"+meme_i} name={meme_i} 
               value="like" onClick={handleChangeRating} />
             </div>
             <div className="button-radio">
-              <label htmlFor={"love_"+meme_i}><span role="img" aria-label="emoji"><FontAwesomeIcon icon={faGrinTears} /></span></label>
+              <label htmlFor={"love_"+meme_i}><img class="emoji" src="images/icons/meh-rolling-eyes-regular.svg"/></label>
               <input type="radio" id={"love_"+meme_i} name={meme_i} 
               value="love" onClick={handleChangeRating} />
             </div>

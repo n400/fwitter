@@ -11,3 +11,29 @@ to make grinnr work if you delete the db and npm run setup:
 Map(Paginate(Documents(Collection('meme_ratings'))),
 Lambda(ref => Delete(ref))
 )
+
+
+
+//Create index to find a rating by meme and user (to see if user has already rated the meme yet)
+// {
+//   name: "rating_by_user_and_meme",
+//   unique: false,
+//   serialized: true,
+//   source: "meme_ratings",
+//   terms: [
+//     {
+//       field: ["data", "email"]
+//     },
+//     {
+//       field: ["data", "meme_url"]
+//     }
+//   ],
+//   values: [
+//     {
+//       field: ["data", "meme_rating"]
+//     }
+//   ]
+// }
+//
+// ''Use it:
+// Paginate(Match(Index("rating_by_user_and_meme"), "test@gmail.com", 1))

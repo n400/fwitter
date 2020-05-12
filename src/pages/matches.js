@@ -18,7 +18,7 @@ const Matches = props => {
     <React.Fragment>
       <div className="form-wrapper">
         <div className="form-header">
-          <h1>No matches yet</h1>
+          <h1>Not enough users in your area</h1>
           <small>(sorry)</small>
         </div>
         <p>

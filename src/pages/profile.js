@@ -22,7 +22,7 @@ const Profile = props => {
 //  1. zeit or netlify?
 //  2. help@grinnr.com
 //  3. generic privacy policy, tos pages 
-//  4. curate memes (jim will do)
+//  4. create collection of memes by user who uploaded them (like the fewwet; can probably resue that code)
 //
   //BUGS:
   // 1. refresh user info after finishregistration function (whatever happens after updateuser) so that it appears 
