@@ -78,8 +78,7 @@ const Fweeter = props => {
 }
 
 Fweeter.propTypes = {
-  handleCreateFweet: PropTypes.func,
-  handleStoreLookingFor: PropTypes.func
+  handleCreateFweet: PropTypes.func
 }
 
 export default Fweeter

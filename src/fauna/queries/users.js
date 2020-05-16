@@ -1,7 +1,7 @@
 import faunadb from 'faunadb'
 
 const q = faunadb.query
-const { Create, Collection, Update, Let, Get, Identity, Var, Select } = q
+const { Create, Collection, Update, Let, Get, Identity, Var, Select, Now } = q
 
 function CreateUser(email, alias, wantMemes, wantFriends, wantDates) {
   return Create(Collection('users'), {
@@ -38,7 +38,7 @@ function FinishRegistration(dob, zip) {
 
 function UpdateUser(
   // email, 
-  alias, dob, zip, wantMemes, wantFriends, wantDates, asset01) {
+  alias, dob, zip, wantMemes, wantFriends, wantDates, asset01, asset02, asset03, asset04, asset05, asset06) {
   // console.log('updating', email, alias, dob, zip, wantMemes, wantFriends, wantDates)
   return Let(
     {
@@ -54,7 +54,13 @@ function UpdateUser(
         wantMemes: wantMemes,
         wantFriends: wantFriends,
         wantDates: wantDates,
-        asset01: asset01
+        asset01: asset01,
+        asset02: asset02,
+        asset03: asset03,
+        asset04: asset04,
+        asset05: asset05,
+        asset06: asset06,
+        created: Now()
       }
     })
   )

@@ -11,7 +11,7 @@ import {
   comment
 } from './queries/fweets'
 import { UpdateUser, FinishRegistration } from './queries/users'
-import { SaveRating, GetMemeRating, UploadMeme } from './queries/memes'
+import { SaveRating, GetUnratedMemes, UploadMeme } from './queries/memes'
 import { searchPeopleAndTags } from './queries/search'
 import { follow } from './queries/followers'
 
@@ -87,11 +87,11 @@ class QueryManager {
 
   updateUser(
     // email, 
-    alias, dob, zip, wantMemes, wantFriends, wantDates, asset01) {
+    alias, dob, zip, wantMemes, wantFriends, wantDates, asset01, asset02, asset03, asset04, asset05, asset06) {
     // we don't pass in the icon yet atm
     return this.client.query(UpdateUser(
       // email, 
-      alias, dob, zip, wantMemes, wantFriends, wantDates, asset01))
+      alias, dob, zip, wantMemes, wantFriends, wantDates, asset01, asset02, asset03, asset04, asset05, asset06))
   }
 
   finishRegistration(dob, zip) {
@@ -102,8 +102,8 @@ class QueryManager {
     return this.client.query(SaveRating(meme, rating, email))
   }
 
-  getMemeRating(email, meme) {
-    return this.client.query(GetMemeRating(email, meme))
+  getUnratedMemes() {
+    return this.client.query(GetUnratedMemes())
   }
 
   uploadMeme(asset) {

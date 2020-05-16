@@ -1,0 +1,257 @@
+google sheet:
+https://docs.google.com/spreadsheets/d/1sKpUomrkZ50xiUmBG8DHAZDrysCBtlq9gVZsqgE34P0/edit#gid=0
+
+images/memes/jim/meme (1).jpg   
+images/memes/jim/meme (2).jpg   
+images/memes/jim/meme (3).jpg   
+images/memes/jim/meme (4).jpg  
+images/memes/jim/meme (5).jpg  
+images/memes/jim/meme (6).jpg  
+images/memes/jim/meme (7).jpg  
+images/memes/jim/meme (8).jpg  
+images/memes/jim/meme (9).jpg  
+images/memes/jim/meme (10).jpg  
+images/memes/jim/meme (11).jpg  
+images/memes/jim/meme (12).jpg  
+images/memes/jim/meme (13).jpg  
+images/memes/jim/meme (14).jpg  
+images/memes/jim/meme (15).jpg  
+images/memes/jim/meme (16).jpg  
+images/memes/jim/meme (17).jpg  
+images/memes/jim/meme (18).jpg  
+images/memes/jim/meme (19).jpg  
+images/memes/jim/meme (20).jpg  
+images/memes/jim/meme (21).jpg  
+images/memes/jim/meme (22).jpg  
+images/memes/jim/meme (23).jpg  
+images/memes/jim/meme (24).jpg  
+images/memes/jim/meme (25).jpg  
+images/memes/jim/meme (26).jpg  
+images/memes/jim/meme (27).jpg  
+images/memes/jim/meme (28).jpg  
+images/memes/jim/meme (29).jpg  
+images/memes/jim/meme (30).jpg  
+images/memes/jim/meme (31).jpg  
+images/memes/jim/meme (32).jpg  
+images/memes/jim/meme (33).jpg  
+images/memes/jim/meme (34).jpg  
+images/memes/jim/meme (35).jpg  
+images/memes/jim/meme (36).jpg  
+images/memes/jim/meme (37).jpg  
+images/memes/jim/meme (38).jpg  
+images/memes/jim/meme (39).jpg  
+images/memes/jim/meme (40).jpg  
+images/memes/jim/meme (41).jpg  
+images/memes/jim/meme (42).jpg  
+images/memes/jim/meme (43).jpg  
+images/memes/jim/meme (44).jpg  
+images/memes/jim/meme (45).jpg  
+images/memes/jim/meme (46).jpg  
+images/memes/jim/meme (47).jpg  
+images/memes/jim/meme (48).jpg  
+images/memes/jim/meme (49).jpg  
+images/memes/jim/meme (50).jpg  
+images/memes/jim/meme (51).jpg  
+images/memes/jim/meme (52).jpg  
+images/memes/jim/meme (53).jpg  
+images/memes/jim/meme (54).jpg  
+images/memes/jim/meme (55).jpg  
+images/memes/jim/meme (56).jpg  
+images/memes/jim/meme (57).jpg  
+images/memes/jim/meme (58).jpg  
+images/memes/jim/meme (59).jpg  
+images/memes/jim/meme (60).jpg  
+images/memes/jim/meme (61).jpg  
+images/memes/jim/meme (62).jpg  
+images/memes/jim/meme (63).jpg  
+images/memes/jim/meme (64).jpg  
+images/memes/jim/meme (65).jpg  
+images/memes/jim/meme (66).jpg  
+images/memes/jim/meme (67).jpg  
+images/memes/jim/meme (68).jpg  
+images/memes/jim/meme (69).jpg  
+images/memes/jim/meme (70).jpg  
+images/memes/jim/meme (71).jpg  
+images/memes/jim/meme (72).jpg  
+images/memes/jim/meme (73).jpg  
+images/memes/jim/meme (74).jpg  
+images/memes/jim/meme (75).jpg  
+images/memes/jim/meme (76).jpg  
+images/memes/jim/meme (77).jpg  
+images/memes/jim/meme (78).jpg  
+images/memes/jim/meme (79).jpg
+images/memes/jim/meme (80).jpg  
+images/memes/jim/meme (81).jpg  
+images/memes/jim/meme (82).jpg  
+images/memes/jim/meme (83).jpg  
+images/memes/jim/meme (84).jpg  
+images/memes/jim/meme (85).jpg  
+images/memes/jim/meme (86).jpg  
+images/memes/jim/meme (87).jpg  
+images/memes/jim/meme (88).jpg  
+images/memes/jim/meme (89).jpg  
+images/memes/jim/meme (90).jpg  
+images/memes/jim/meme (91).jpg  
+images/memes/jim/meme (92).jpg
+images/memes/jim/meme (93).jpg
+images/memes/jim/meme (94).jpg  
+images/memes/jim/meme (95).jpg  
+images/memes/jim/meme (96).jpg  
+images/memes/jim/meme (97).jpg  
+images/memes/jim/meme (98).jpg  
+images/memes/jim/meme (99).jpg  
+images/memes/jim/meme (100).jpg  
+images/memes/jim/meme (101).jpg  
+images/memes/jim/meme (102).jpg  
+images/memes/jim/meme (103).jpg  
+images/memes/jim/meme (104).jpg  
+images/memes/jim/meme (105).jpg  
+images/memes/jim/meme (106).jpg  
+images/memes/jim/meme (107).jpg  
+images/memes/jim/meme (108).jpg  
+images/memes/jim/meme (109).jpg  
+images/memes/jim/meme (110).jpg  
+images/memes/jim/meme (111).jpg  
+images/memes/jim/meme (112).jpg  
+images/memes/jim/meme (113).jpg  
+
+
+Map(
+  Paginate(Documents(Collection("memes"))),
+  Lambda(ref => Delete(ref))
+)
+
+url: "https://res.cloudinary.com/n400/image/upload/v1589293692/memes/FB_IMG_1570198296141_vxxqha.jpg", type: "image", 
+id: "memes/FB_IMG_1570198296141_vxxqha"
+created: '2020'
+
+  q.Create(
+    q.Collection('memes'),
+    {
+      data:  {images/memes/jim/meme (1).jpg", type: "image", id: "memes/meme (1)", created: "5-12-2020"},
+    },
+  )
+)
+
+
+Map(
+  [
+[ "1", { url: "images/memes/jim/meme (1).jpg", type: "image", id: "memes/meme (1)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "2", { url: "images/memes/jim/meme (2).jpg", type: "image", id: "memes/meme (2)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "3", { url: "images/memes/jim/meme (3).jpg", type: "image", id: "memes/meme (3)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "4", { url: "images/memes/jim/meme (4).jpg", type: "image", id: "memes/meme (4)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "5", { url: "images/memes/jim/meme (5).jpg", type: "image", id: "memes/meme (5)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "6", { url: "images/memes/jim/meme (6).jpg", type: "image", id: "memes/meme (6)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "7", { url: "images/memes/jim/meme (7).jpg", type: "image", id: "memes/meme (7)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "8", { url: "images/memes/jim/meme (8).jpg", type: "image", id: "memes/meme (8)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "9", { url: "images/memes/jim/meme (9).jpg", type: "image", id: "memes/meme (9)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "10", { url: "images/memes/jim/meme (10).jpg", type: "image", id: "memes/meme (10)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "11", { url: "images/memes/jim/meme (11).jpg", type: "image", id: "memes/meme (11)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "12", { url: "images/memes/jim/meme (12).jpg", type: "image", id: "memes/meme (12)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "13", { url: "images/memes/jim/meme (13).jpg", type: "image", id: "memes/meme (13)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "14", { url: "images/memes/jim/meme (14).jpg", type: "image", id: "memes/meme (14)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "15", { url: "images/memes/jim/meme (15).jpg", type: "image", id: "memes/meme (15)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "16", { url: "images/memes/jim/meme (16).jpg", type: "image", id: "memes/meme (16)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "17", { url: "images/memes/jim/meme (17).jpg", type: "image", id: "memes/meme (17)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "18", { url: "images/memes/jim/meme (18).jpg", type: "image", id: "memes/meme (18)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "19", { url: "images/memes/jim/meme (19).jpg", type: "image", id: "memes/meme (19)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "20", { url: "images/memes/jim/meme (20).jpg", type: "image", id: "memes/meme (20)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "21", { url: "images/memes/jim/meme (21).jpg", type: "image", id: "memes/meme (21)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "22", { url: "images/memes/jim/meme (22).jpg", type: "image", id: "memes/meme (22)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "23", { url: "images/memes/jim/meme (23).jpg", type: "image", id: "memes/meme (23)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "24", { url: "images/memes/jim/meme (24).jpg", type: "image", id: "memes/meme (24)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "25", { url: "images/memes/jim/meme (25).jpg", type: "image", id: "memes/meme (25)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "26", { url: "images/memes/jim/meme (26).jpg", type: "image", id: "memes/meme (26)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "27", { url: "images/memes/jim/meme (27).jpg", type: "image", id: "memes/meme (27)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "28", { url: "images/memes/jim/meme (28).jpg", type: "image", id: "memes/meme (28)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "29", { url: "images/memes/jim/meme (29).jpg", type: "image", id: "memes/meme (29)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "30", { url: "images/memes/jim/meme (30).jpg", type: "image", id: "memes/meme (30)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "31", { url: "images/memes/jim/meme (31).jpg", type: "image", id: "memes/meme (31)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "32", { url: "images/memes/jim/meme (32).jpg", type: "image", id: "memes/meme (32)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "33", { url: "images/memes/jim/meme (33).jpg", type: "image", id: "memes/meme (33)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "34", { url: "images/memes/jim/meme (34).jpg", type: "image", id: "memes/meme (34)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "35", { url: "images/memes/jim/meme (35).jpg", type: "image", id: "memes/meme (35)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "36", { url: "images/memes/jim/meme (36).jpg", type: "image", id: "memes/meme (36)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "37", { url: "images/memes/jim/meme (37).jpg", type: "image", id: "memes/meme (37)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "38", { url: "images/memes/jim/meme (38).jpg", type: "image", id: "memes/meme (38)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "39", { url: "images/memes/jim/meme (39).jpg", type: "image", id: "memes/meme (39)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "40", { url: "images/memes/jim/meme (40).jpg", type: "image", id: "memes/meme (40)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "41", { url: "images/memes/jim/meme (41).jpg", type: "image", id: "memes/meme (41)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "42", { url: "images/memes/jim/meme (42).jpg", type: "image", id: "memes/meme (42)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "43", { url: "images/memes/jim/meme (43).jpg", type: "image", id: "memes/meme (43)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "44", { url: "images/memes/jim/meme (44).jpg", type: "image", id: "memes/meme (44)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "45", { url: "images/memes/jim/meme (45).jpg", type: "image", id: "memes/meme (45)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "46", { url: "images/memes/jim/meme (46).jpg", type: "image", id: "memes/meme (46)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "47", { url: "images/memes/jim/meme (47).jpg", type: "image", id: "memes/meme (47)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "48", { url: "images/memes/jim/meme (48).jpg", type: "image", id: "memes/meme (48)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "49", { url: "images/memes/jim/meme (49).jpg", type: "image", id: "memes/meme (49)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "50", { url: "images/memes/jim/meme (50).jpg", type: "image", id: "memes/meme (50)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "51", { url: "images/memes/jim/meme (51).jpg", type: "image", id: "memes/meme (51)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "52", { url: "images/memes/jim/meme (52).jpg", type: "image", id: "memes/meme (52)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "53", { url: "images/memes/jim/meme (53).jpg", type: "image", id: "memes/meme (53)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "54", { url: "images/memes/jim/meme (54).jpg", type: "image", id: "memes/meme (54)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "55", { url: "images/memes/jim/meme (55).jpg", type: "image", id: "memes/meme (55)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "56", { url: "images/memes/jim/meme (56).jpg", type: "image", id: "memes/meme (56)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "57", { url: "images/memes/jim/meme (57).jpg", type: "image", id: "memes/meme (57)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "58", { url: "images/memes/jim/meme (58).jpg", type: "image", id: "memes/meme (58)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "59", { url: "images/memes/jim/meme (59).jpg", type: "image", id: "memes/meme (59)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "60", { url: "images/memes/jim/meme (60).jpg", type: "image", id: "memes/meme (60)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "61", { url: "images/memes/jim/meme (61).jpg", type: "image", id: "memes/meme (61)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "62", { url: "images/memes/jim/meme (62).jpg", type: "image", id: "memes/meme (62)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "63", { url: "images/memes/jim/meme (63).jpg", type: "image", id: "memes/meme (63)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "64", { url: "images/memes/jim/meme (64).jpg", type: "image", id: "memes/meme (64)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "65", { url: "images/memes/jim/meme (65).jpg", type: "image", id: "memes/meme (65)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "66", { url: "images/memes/jim/meme (66).jpg", type: "image", id: "memes/meme (66)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "67", { url: "images/memes/jim/meme (67).jpg", type: "image", id: "memes/meme (67)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "68", { url: "images/memes/jim/meme (68).jpg", type: "image", id: "memes/meme (68)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "69", { url: "images/memes/jim/meme (69).jpg", type: "image", id: "memes/meme (69)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "70", { url: "images/memes/jim/meme (70).jpg", type: "image", id: "memes/meme (70)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "71", { url: "images/memes/jim/meme (71).jpg", type: "image", id: "memes/meme (71)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "72", { url: "images/memes/jim/meme (72).jpg", type: "image", id: "memes/meme (72)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "73", { url: "images/memes/jim/meme (73).jpg", type: "image", id: "memes/meme (73)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "74", { url: "images/memes/jim/meme (74).jpg", type: "image", id: "memes/meme (74)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "75", { url: "images/memes/jim/meme (75).jpg", type: "image", id: "memes/meme (75)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "76", { url: "images/memes/jim/meme (76).jpg", type: "image", id: "memes/meme (76)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "77", { url: "images/memes/jim/meme (77).jpg", type: "image", id: "memes/meme (77)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "78", { url: "images/memes/jim/meme (78).jpg", type: "image", id: "memes/meme (78)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "79", { url: "images/memes/jim/meme (79).jpg", type: "image", id: "memes/meme (79)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "80", { url: "images/memes/jim/meme (80).jpg", type: "image", id: "memes/meme (80)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "81", { url: "images/memes/jim/meme (81).jpg", type: "image", id: "memes/meme (81)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "82", { url: "images/memes/jim/meme (82).jpg", type: "image", id: "memes/meme (82)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "83", { url: "images/memes/jim/meme (83).jpg", type: "image", id: "memes/meme (83)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "84", { url: "images/memes/jim/meme (84).jpg", type: "image", id: "memes/meme (84)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "85", { url: "images/memes/jim/meme (85).jpg", type: "image", id: "memes/meme (85)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "86", { url: "images/memes/jim/meme (86).jpg", type: "image", id: "memes/meme (86)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "87", { url: "images/memes/jim/meme (87).jpg", type: "image", id: "memes/meme (87)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "88", { url: "images/memes/jim/meme (88).jpg", type: "image", id: "memes/meme (88)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "89", { url: "images/memes/jim/meme (89).jpg", type: "image", id: "memes/meme (89)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "90", { url: "images/memes/jim/meme (90).jpg", type: "image", id: "memes/meme (90)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "91", { url: "images/memes/jim/meme (91).jpg", type: "image", id: "memes/meme (91)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "92", { url: "images/memes/jim/meme (92).jpg", type: "image", id: "memes/meme (92)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "93", { url: "images/memes/jim/meme (93).jpg", type: "image", id: "memes/meme (93)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "94", { url: "images/memes/jim/meme (94).jpg", type: "image", id: "memes/meme (94)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "95", { url: "images/memes/jim/meme (95).jpg", type: "image", id: "memes/meme (95)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "96", { url: "images/memes/jim/meme (96).jpg", type: "image", id: "memes/meme (96)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "97", { url: "images/memes/jim/meme (97).jpg", type: "image", id: "memes/meme (97)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "98", { url: "images/memes/jim/meme (98).jpg", type: "image", id: "memes/meme (98)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "99", { url: "images/memes/jim/meme (99).jpg", type: "image", id: "memes/meme (99)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "100", { url: "images/memes/jim/meme (100).jpg", type: "image", id: "memes/meme (100)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "101", { url: "images/memes/jim/meme (101).jpg", type: "image", id: "memes/meme (101)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "102", { url: "images/memes/jim/meme (102).jpg", type: "image", id: "memes/meme (102)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "103", { url: "images/memes/jim/meme (103).jpg", type: "image", id: "memes/meme (103)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "104", { url: "images/memes/jim/meme (104).jpg", type: "image", id: "memes/meme (104)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "105", { url: "images/memes/jim/meme (105).jpg", type: "image", id: "memes/meme (105)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "106", { url: "images/memes/jim/meme (106).jpg", type: "image", id: "memes/meme (106)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "107", { url: "images/memes/jim/meme (107).jpg", type: "image", id: "memes/meme (107)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "108", { url: "images/memes/jim/meme (108).jpg", type: "image", id: "memes/meme (108)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "109", { url: "images/memes/jim/meme (109).jpg", type: "image", id: "memes/meme (109)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "110", { url: "images/memes/jim/meme (110).jpg", type: "image", id: "memes/meme (110)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "111", { url: "images/memes/jim/meme (111).jpg", type: "image", id: "memes/meme (111)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "112", { url: "images/memes/jim/meme (112).jpg", type: "image", id: "memes/meme (112)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+[ "113", { url: "images/memes/jim/meme (113).jpg", type: "image", id: "memes/meme (113)", created: "5-12-2020", hashtags: [], uploader: "jim", source: "unknown"} ],
+  ],
+  Lambda(
+    ["id", "data"],
+    Create(Ref(Collection("memes"), Var("id")), { data: Var("data") })
+  )
+)

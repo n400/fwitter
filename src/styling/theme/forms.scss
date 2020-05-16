@@ -158,6 +158,12 @@ label{
   } 
 }
 
+
+.uploadAssets{
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+}
 .uploadImageBox{
   border: 2px dashed $input-color;
   width: 33.33%;
@@ -165,14 +171,13 @@ label{
   &>div{
     display: flex;
     align-items: center;
-    position: relative;
     justify-content: center;
     height: 100%;
     width: 100%;
     min-height: 44px;
+    position: absolute;
   }
   svg{
-    position: absolute;
     z-index: 2;
     width: 100% !important; //could also be .svg-inline--fa.fa-w-16, 
     //but this should be edited in uploader.js anyway

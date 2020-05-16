@@ -60,34 +60,6 @@ function CreateFweet(message, tags, asset) {
   return AddRateLimiting('create_fweet', FQLStatement, Identity())
 }
 
-function StoreLookingFor(message) {
-  console.log("storing looking for")
-  const FQLStatement = Let(
-    {
-      hashtagrefs: "stuff",
-      newFweet: Create(Collection('users'), {
-        data: {
-          message: message,
-          author: Select(['data', 'user'], Get(Identity())),
-          hashtags: Var('hashtagrefs'),
-          asset: "photo (was asset var)",
-          likes: 10,
-          refweets: 10,
-          comments: 10,
-          // we will order by creation time, we already have 'ts' by default but updated will also update 'ts'.
-          created: Now()
-        }
-      }),
-      // We then get the fweet in the same format as when we normally get them.
-      // Since FQL is composable we can easily do this.
-      fweetWithUserAndAccount: GetFweetsWithUsersMapGetGeneric([Select(['ref'], Var('newFweet'))])
-    },
-    Var('fweetWithUserAndAccount')
-  )
-
-  return AddRateLimiting('create_fweet', FQLStatement, Identity())
-}
-
 /* LikeFweet will be used to create a user defined function
  * hence we do not execute it but return an FQL statement instead */
 function LikeFweet(fweetRef) {
@@ -293,13 +265,6 @@ function Comment(fweetRef, message) {
 // help you secure a piece of code as a whole.
 function createFweetWithoutUDF(client, message, tags) {
   return client.query(CreateFweet(message, tags)).then(res => flattenDataKeys(res))
-}
-
-function storeLookingFor(client, message, asset) {
-  return (
-    console.log("storing looking for"),
-    client.query(StoreLookingFor(message, asset)).then(res => flattenDataKeys(res))
-  )
 }
 
 // Instead we call the function
@@ -571,7 +536,6 @@ function findHashtags(searchText) {
 export {
   createFweet,
   CreateFweet,
-  storeLookingFor,
   createFweetWithoutUDF,
   GetFweets,
   getFweets,

@@ -24,6 +24,11 @@ const Profile = props => {
   const [dob, setDob] = useState((user && user.zip) ? user.dob : '')
   const [zip, setZip] = useState ((user && user.zip) ? user.zip : '')
   const [asset01, setAsset01] = useState((user && user.asset01) ? user.asset01 : '')
+  const [asset02, setAsset02] = useState((user && user.asset02) ? user.asset02 : '')
+  const [asset03, setAsset03] = useState((user && user.asset03) ? user.asset03 : '')
+  const [asset04, setAsset04] = useState((user && user.asset04) ? user.asset04 : '')
+  const [asset05, setAsset05] = useState((user && user.asset05) ? user.asset05 : '')
+  const [asset06, setAsset06] = useState((user && user.asset06) ? user.asset06 : '')
 
   const handleEditProfile = event => {
     console.log('editing profile', 
@@ -36,7 +41,7 @@ const Profile = props => {
     faunaQueries
       .updateUser(
         alias, dob, zip, wantMemes, wantFriends, wantDates, 
-        asset01)
+        asset01, asset02, asset03, asset04, asset05, asset06)
       // .uploadMeme(asset01)
       .then(res => {
         toast.success('Profile updated')
@@ -49,27 +54,32 @@ const Profile = props => {
     event.preventDefault()
   }
 
-  // const handleChangeEmail = event => {
-  //   setEmail(event.target.value)
-  // }
-
   const handleChangeAlias = event => {setAlias(event.target.value)}
   const handleChangeDob = event => {setDob(event.target.value)}
   const handleChangeZip = event => {setZip(event.target.value)}
   const handleChangeWantMemes = event => {setWantMemes(event.target.checked)}
   const handleChangeWantFriends = event => {setWantFriends(event.target.checked)}
   const handleChangeWantDates = event => {setWantDates(event.target.checked)}
-  const handleChangeAssets = event => {setAsset01(event.target.value)}
+  const handleChangeAsset01 = event => {setAsset01(event.target.value)}
+  const handleChangeAsset02 = event => {setAsset02(event.target.value)}
+  const handleChangeAsset03 = event => {setAsset03(event.target.value)}
+  const handleChangeAsset04 = event => {setAsset04(event.target.value)}
+  const handleChangeAsset05 = event => {setAsset05(event.target.value)}
+  const handleChangeAsset06 = event => {setAsset06(event.target.value)}
 
-  const generateUploadImage = () => {
-    console.log("generateUploadImage", asset01)
-    return <Uploader onPhotosUploaded={handleUploadPhoto}></Uploader>
-  }
-  const handleUploadPhoto = photoInfo => {
-    setAsset01({ url: photoInfo.secure_url, type: photoInfo.resource_type, id: photoInfo.public_id 
-    })
-    console.log("handleUploadPhoto", asset01)
-  }
+  const generateUploadImage01 = () => {return <Uploader onPhotosUploaded={handleUploadPhoto01}></Uploader>}
+  const generateUploadImage02 = () => {return <Uploader onPhotosUploaded={handleUploadPhoto02}></Uploader>}
+  const generateUploadImage03 = () => {return <Uploader onPhotosUploaded={handleUploadPhoto03}></Uploader>}
+  const generateUploadImage04 = () => {return <Uploader onPhotosUploaded={handleUploadPhoto04}></Uploader>}
+  const generateUploadImage05 = () => {return <Uploader onPhotosUploaded={handleUploadPhoto05}></Uploader>}
+  const generateUploadImage06 = () => {return <Uploader onPhotosUploaded={handleUploadPhoto06}></Uploader>}
+
+  const handleUploadPhoto01 = photoInfo => {setAsset01({ url: photoInfo.secure_url, type: photoInfo.resource_type, id: photoInfo.public_id})}
+  const handleUploadPhoto02 = photoInfo => {setAsset02({ url: photoInfo.secure_url, type: photoInfo.resource_type, id: photoInfo.public_id})}
+  const handleUploadPhoto03 = photoInfo => {setAsset03({ url: photoInfo.secure_url, type: photoInfo.resource_type, id: photoInfo.public_id})}
+  const handleUploadPhoto04 = photoInfo => {setAsset04({ url: photoInfo.secure_url, type: photoInfo.resource_type, id: photoInfo.public_id})}
+  const handleUploadPhoto05 = photoInfo => {setAsset05({ url: photoInfo.secure_url, type: photoInfo.resource_type, id: photoInfo.public_id})}
+  const handleUploadPhoto06 = photoInfo => {setAsset06({ url: photoInfo.secure_url, type: photoInfo.resource_type, id: photoInfo.public_id})}
   
 
   // Just for debugging to get in quickly
@@ -87,16 +97,15 @@ const Profile = props => {
           <small>(for additional support: help@grinnr.com)</small>
         </div>
         <form className="account-form" onSubmit={handleEditProfile}>
-          
-            
-        <div className="uploadImageBox">
-          {generateUploadImage()}
-          {asset01 ? <Asset asset={asset01} onChange={handleChangeAssets}></Asset> : null}
-        </div>
-
-
-
-        <div className="input-row">
+          <div className="uploadAssets">
+            <div className="uploadImageBox">{generateUploadImage01()}{asset01 ? <Asset asset={asset01} onChange={handleChangeAsset01}></Asset> : null}</div>
+            <div className="uploadImageBox">{generateUploadImage02()}{asset02 ? <Asset asset={asset02} onChange={handleChangeAsset02}></Asset> : null}</div>
+            <div className="uploadImageBox">{generateUploadImage03()}{asset03 ? <Asset asset={asset03} onChange={handleChangeAsset03}></Asset> : null}</div>
+            <div className="uploadImageBox">{generateUploadImage04()}{asset04 ? <Asset asset={asset04} onChange={handleChangeAsset04}></Asset> : null}</div>
+            <div className="uploadImageBox">{generateUploadImage05()}{asset05 ? <Asset asset={asset05} onChange={handleChangeAsset05}></Asset> : null}</div>
+            <div className="uploadImageBox">{generateUploadImage06()}{asset06 ? <Asset asset={asset06} onChange={handleChangeAsset06}></Asset> : null}</div>
+          </div>
+          <div className="input-row">
               <label>why grinnr? (select all that apply)</label>
               <div className="button-checkboxes">
                 <input type="checkbox" id="memes" checked={wantMemes} onChange={handleChangeWantMemes} />

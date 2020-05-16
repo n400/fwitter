@@ -10,7 +10,7 @@ const Uploader = props => {
       cloudName: process.env.REACT_APP_LOCAL___CLOUDINARY_CLOUDNAME,
       uploadPreset: process.env.REACT_APP_LOCAL___CLOUDINARY_TEMPLATE,
       maxFiles: 1,
-      cropping: true,
+      // cropping: true,
       // showSkipCropButton: false,
       folder: "profile-photos",
       maxFileSize: 300000,

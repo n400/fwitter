@@ -14,25 +14,28 @@ const RateMemes = props => {
   const sessionContext = useContext(SessionContext)
   const { user } = sessionContext.state
   let [meme_i, setmeme_i] = useState(1)
+
   const handleChangeRating = event => {
     console.log("handleChange", event.target.value)
     let memeRating = event.target.value
     handleSaveRating(meme_i, memeRating)
     setmeme_i(++meme_i)
-    checkForMemeRating(user.email, meme_i)
+    // checkForMemeRating(user.email, meme_i)
   };
 
-  const checkForMemeRating = (email, meme_i) => {
+  const getUnratedMemes = () => {
     faunaQueries
-      .getMemeRating(email, meme_i)
+      .getUnratedMemes()
       .then(res => {
-        console.log(res)
+        console.log(res.data[0].id)
       })
       .catch(err => {
         console.log(err)
-        toast.error('check failed')
+        toast.error('failed')
       })
   }
+//TODO: pass the result array to this outer function 
+//to use it to declare meme_i, but remove the ==count and iterate through the list instead
 
   const handleSaveRating = (meme_i, rating) => {
     console.log("handleSave", meme_i, rating)
@@ -47,7 +50,8 @@ const RateMemes = props => {
       })
   }
 
-  const renderMeme = () => {
+  const renderMeme = () => {    
+    getUnratedMemes()
       return (
         <React.Fragment>
         <div className="rate_meme_element">
