@@ -17,8 +17,8 @@ nav {
     width: 100%;
     margin: 0;
     padding-inline-start: 0;
-    background: rgba(0,0,0,.8);
-    position: fixed;
+    // background: rgba(0,0,0,.8);
+    // position: fixed;
     color:$soft-white;
     height:$nav-height;
     display: flex;
@@ -44,32 +44,3 @@ nav {
         color: white;
     }
 }
-
-
-// nav .nav-link {
-//     display: flex;
-//     border: 0px solid #18ab29;
-//     cursor: pointer;
-//     width: 100px;
-//     height: 44px;
-//     padding-left: $grid-unit;
-//     color: $hard-white;
-//     font-weight: 700;
-//     font-size: $menu-font-size;
-//     align-items: center;
-// }
-
-// nav a {
-//     text-decoration: none;
-//     color: $hard-white;
-// }
-
-// .fauna-logo {
-//     display: flex;
-//     justify-content: space-between;
-//     align-items: flex-start;
-//     height: var(--header-height);
-//     max-height: var(--header-height);
-//     color: $soft-white;
-//     margin-bottom: calc(#{$grid-unit} / 2);
-// }

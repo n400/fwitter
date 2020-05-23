@@ -49,10 +49,8 @@ const App = () => {
               {user ? <Route path="/profile/" component={Profile} /> : null}
               <Route exact path="/legal"><Legal /></Route> 
               <Route exact path="/media"><Media /></Route> 
-              {/* <Route path="/users/:authorAlias" component={User} />
-              <Route path="/tags/:tag" component={Tag} /> */}
               <Route path="/">
-                <RateMemes />
+                {user ? <RateMemes /> : <Register01 /> }
               </Route>
             </Switch>
           </Layout>

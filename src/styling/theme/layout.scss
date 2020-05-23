@@ -49,8 +49,7 @@ a{text-decoration:none;}
     flex-direction: column;
     justify-content: center;
     max-width: 100%;
-    img{
-    }
+    img{}
   }
 }
 
@@ -60,24 +59,17 @@ a{text-decoration:none;}
 }
 
 @media only screen and (min-width: $ipad-portrait){
-  
-  .body-container, .main-wrapper, .main-left, .main-right{
-    // min-height: calc(100vh);
+  .body-container {
     min-height: 100%;
+    justify-content: space-between;
   }
-  
-  .split-page-layout {
-    min-height: calc(100vh - #{$footer-height});
-  }
-
-
-  main {  flex-direction: row;}
+  .main-wrapper, .main-left, .main-right{}
   .split-page-layout{
     flex-direction: row;
     .main-left, .main-right{}
     .main-left {
       padding: 3%;
-      max-height: 100vh;
+      // max-height: 100vh;
       img {
         // max-height: 100%;
         max-height:552px; //TODO js to make it same as form-height or a  $form-01-height variable
@@ -91,25 +83,3 @@ a{text-decoration:none;}
     }
   }
 }
-
-// @media only screen and (min-width:1024px){
-//   .body-container, .main-wrapper, .main-left, .main-right{}
-
-//   main {}
-//   .split-page-layout{
-//     .main-left, .main-right{}
-//     .main-left {
-//       img {
-//         height:552px; //TODO js to make it same as form-height or a  $form-01-height variable
-//         width: auto;
-//         // max-width: 100%;
-//         border: 2px solid white;
-//       }
-//     }
-//     .form-wrapper{
-//       border:$form-border;
-//     }
-//   }
-
-
-// }

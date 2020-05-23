@@ -22,8 +22,8 @@ function SignupOrLoginOrLogout(sessionContext) {
   const { user } = sessionContext.state
   const location = useLocation();
   const linkInfo = (location.pathname === "/accounts/login")
-  ? { linkText: 'signup', link: 'register' }
-  : { linkText: 'login', link: 'login' }
+  ? { linkText: 'signup', link: '/accounts/register' }
+  : { linkText: 'login', link: '/accounts/login' }
   if (user) {
     return renderLink({ handleClick: handleLogout, label: 'logout' }, sessionContext)
   } else {
