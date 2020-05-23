@@ -3,12 +3,11 @@
     justify-content: flex-start;
     align-items: flex-start;
     text-align:left;
-    padding-top: 1rem;
 }
 
 .input-row {
-    width: 100%;
-padding-top:1rem;
+  width: 100%;
+  padding-top:1rem;
 }
 
 button, input, optgroup, select, textarea {
@@ -24,20 +23,18 @@ input, button, input[type=checkbox] + label {
 }
 
 .form-wrapper {
-  width: 400px;
   /* color: #ffffff; */
-  padding: 2rem;
   background: $form-background;
   flex-direction: column;
-  border: $form-border;
-  // border-radius:12px;
+  width: 100%;
+  padding: .5rem;
 }
 
 .form-header {
   text-align: center;
-  h1{
-    margin: 0 0 .5rem 0;
-  }
+  margin:0.5rem 0;
+  h1{margin:0;}
+  small{display:none;}
 }
 form {
   display: flex;
@@ -47,14 +44,14 @@ form {
 input{
   width: 100%;
   background: transparent;
+  background: #e8f0fe; //TODO, this is Chrome's default fill background, on Windows anyway
   border: $input-border;
 }
 label{
   display:flex;
-  font-size: .8rem;
   padding-bottom: .2rem;
   color: $input-color;
-    font-weight: 600;
+  font-weight: 600;
 }
 
 .button-cta {
@@ -77,15 +74,6 @@ label{
   }
 }
 
-.form-with-button-checkboxes{
-  input, label, button{
-    // max-width:580px;   //fix this later
-  }
-  input, input[type=checkbox] + label{
-    // background:#f3f7ff;
-    // background: transparent;
-  }
-}
 .button-row-label{
   padding-bottom:.3rem;
 }
@@ -94,6 +82,7 @@ label{
   max-width:600px;
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   width:100%;
   // padding-top:0.5rem;
   // margin-left:-20px; //fix this later
@@ -107,6 +96,12 @@ label{
     left: 26px;
     top: 1px;
   }
+  .input-group{
+    padding-right: 5px;
+    &:last-of-type{
+      padding-right:0;
+    }
+  }
   /* the actual checkbox button*/
   
   //input[type=radio]:checked + label,
@@ -114,8 +109,8 @@ label{
   {
     font-size:1rem;
     min-height: 45px;
-    min-width: 45px;
-    margin-right: 5px;
+    min-width: 45px;  
+    flex-wrap:wrap;
     &:last-child{
       margin-right:0;
     }
@@ -134,7 +129,7 @@ label{
       position: relative;
       font-family: 'Font Awesome 5 Free';
       font-weight: 400;
-      left: -10px;
+      left: -9px;
       content: "\f0c8";
     }
   } 
@@ -193,5 +188,21 @@ label{
       color: white;
       opacity: .7;
     }
+  }
+}
+
+
+@media only screen and (min-width: $ipad-portrait){
+  .form-header{
+    small {display: flex;}
+    h1{margin: 0 0 .5rem 0;}
+  }
+  .form-wrapper{
+    border: $form-border;
+    width: 400px;
+    padding: 2rem;
+  }
+  label {
+    font-size: .8rem;
   }
 }

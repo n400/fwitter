@@ -17,8 +17,7 @@ const Masonry = props => {
           <div className="flex-item"><img alt="" src="https://imgflip.com/s/meme/Is-This-A-Pigeon.jpg"/></div>
           <div className="flex-item disaster-girl"><img alt="" src="https://imgflip.com/s/meme/Disaster-Girl.jpg"/></div>
           <div className="flex-item"><img alt="" src="https://i.imgflip.com/2/24y43o.jpg"/></div>
-          <div className="flex-item"><img alt="" src="https://i.imgflip.com/2/24y43o.jpg"/></div>
-          
+
       </div>
       <div className="masonry-overlay"></div>
     </>

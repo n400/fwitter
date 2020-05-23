@@ -1,5 +1,4 @@
 footer {
-  color: rgba(255,255,225,.4);
   width: 100%;
   display: flex;
   justify-content: center;
@@ -10,7 +9,14 @@ footer {
   padding: 0 1rem;
   height: $footer-height;
   a{
-    color: rgba(255,255,225,.4);
     font-weight: normal;
+  }
+
+    
+  @media only screen and (min-width: $ipad-portrait){
+    color: rgba(255,255,225,.4);
+    a{
+      color: rgba(255,255,225,.4);
+    }
   }
 }

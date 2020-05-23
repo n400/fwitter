@@ -3,25 +3,20 @@
   box-sizing: border-box;
 }
 .body-container, .main-wrapper, .main-left, .main-right{
-  // width: 100%;
+  width: 100%;
 }
 img { object-fit: cover; width:100%; }
 a{text-decoration:none;}
 
-.split-page-layout {
-  height: calc(100vh - #{$footer-height});
-}
-
 .body-container{
-  min-height:100vh;
+  // min-height:100vh;
   position:absolute;display:flex;flex-direction:column;width:100%;}
 
 .main-wrapper {
-  min-height: 100vh;
   flex-direction:column;
-display:flex;
-align-items: center;
-justify-content: center; //needs to be  flex-start for media page and short browsers, 
+  display:flex;
+  align-items: center;
+  justify-content: center; //needs to be  flex-start for media page and short browsers, 
 //at least for now. figure out another way to center stuff on the page. 
 //maybe an extra div inside of this one could center the stuff while this one starts at the top like:
                   // height: 100%;
@@ -32,14 +27,14 @@ justify-content: center; //needs to be  flex-start for media page and short brow
 }
 
 
-div[class*="media"]{
+// div[class*="media"]{
   .main-wrapper {
     justify-content: flex-start;
     padding-top:$nav-height; //creates bug with footer when used elsewhere. 
     ///refactor layout for mobile once all else is done before wasting time 
     ///on this only to have to do it again later
   } 
-}
+// }
 
 
 .split-page-layout{
@@ -55,9 +50,6 @@ div[class*="media"]{
     justify-content: center;
     max-width: 100%;
     img{
-      // width: 100%;
-      width: 200px;
-      // border: 2px solid white;
     }
   }
 }
@@ -70,9 +62,14 @@ div[class*="media"]{
 @media only screen and (min-width: $ipad-portrait){
   
   .body-container, .main-wrapper, .main-left, .main-right{
-    min-height: calc(100vh);
-    height: 100%;
+    // min-height: calc(100vh);
+    min-height: 100%;
   }
+  
+  .split-page-layout {
+    min-height: calc(100vh - #{$footer-height});
+  }
+
 
   main {  flex-direction: row;}
   .split-page-layout{
@@ -113,5 +110,6 @@ div[class*="media"]{
 //       border:$form-border;
 //     }
 //   }
+
 
 // }

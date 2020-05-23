@@ -40,6 +40,8 @@ $menu-font-size: 20px;
 // @import "./components/asset";
 
 //NEW
+$ipad-portrait: 768px;
+
 $soft-white: rgba(255,255,255,0.8);
 $hard-white: rgba(255,255,255,0.95);
 $text-color: grey; //TODO pick good one and use it. this isnt doing anything
@@ -56,7 +58,10 @@ $footer-height: 36px;
 $nav-height: 44px;
 $generic-transition: all .5s ease-in-out;
 
-$ipad-portrait: 768px;
+//TODO: This doesnt work. forgot how to do this
+@media only screen and (min-width: $ipad-portrait){
+    $form-border: 0;
+}
 
 @import "./theme/normalize";
 @import "./theme/typ";

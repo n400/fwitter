@@ -26,6 +26,20 @@ function SaveRating(url, rating, email) {
   )
 }
 
+function GetRatedMemes(user) {
+  console.log('getting unrated memes')
+  return Let(
+    {
+      accountRef: Identity(),
+      userRef: Select(['data', 'user'], Get(Var('accountRef')))
+    },
+    Paginate(
+      Match(
+        Index("memes_rated_by_user"),  Ref(Collection("users"), "265231995802485267")
+      ), {size: 1000})
+  )
+}
+
 function GetUnratedMemes(user) {
   console.log('getting unrated memes')
   return Let(
@@ -69,4 +83,4 @@ function UploadMeme(asset ) {
 }
 
 
-export { SaveRating, GetUnratedMemes, UploadMeme }
+export { SaveRating, GetUnratedMemes, UploadMeme, GetRatedMemes }

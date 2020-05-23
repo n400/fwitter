@@ -4,6 +4,8 @@ import SessionContext from './../context/session'
 import { faunaQueries } from '../fauna/query-manager'
 import { toast } from 'react-toastify'
 
+import { flattenDataKeys } from '../fauna/helpers/util'
+
 import { Uploader } from '../components/uploader'
 import Asset from '../components/asset'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -31,9 +33,9 @@ const Profile = props => {
   const [asset06, setAsset06] = useState((user && user.asset06) ? user.asset06 : '')
 
   const handleEditProfile = event => {
-    console.log('editing profile', 
-    alias, dob, zip, wantMemes, wantFriends, wantDates, 
-    asset01)
+    // console.log('editing profile', 
+    // alias, dob, zip, wantMemes, wantFriends, wantDates, 
+    // asset01)
     // if (!asset01) {
     //   toast.warn('Please upload an image first :)')
     //   return
@@ -54,6 +56,23 @@ const Profile = props => {
     event.preventDefault()
   }
 
+  const getUsersRatedMemes = () => {
+    // console.log("callinf load", meme_i)
+    faunaQueries
+      .getRatedMemes()
+      .then(res => {
+        console.log("calling it", res.data)
+        return res.data
+      })
+      .catch(err => {
+        console.log(err)
+        toast.error('whats happening')
+      })
+  }
+
+  let memes_list = getUsersRatedMemes()
+  // console.log( "res", getUsersRatedMemes() )
+ 
   const handleChangeAlias = event => {setAlias(event.target.value)}
   const handleChangeDob = event => {setDob(event.target.value)}
   const handleChangeZip = event => {setZip(event.target.value)}
@@ -84,18 +103,18 @@ const Profile = props => {
 
   // Just for debugging to get in quickly
   useEffect(() => {
+    // console.log("res", memes_list)
+    console.log( "res", getUsersRatedMemes() )
     // For debugging, autologin to get in faster for testing, add a user and pword in the .env.local
   }, [])
 
   return (
     <React.Fragment>
-    
-      <div className="main-column">
+      <div className="form-header">
+        <h1>Edit profile</h1>
+        <small>(for additional support: help@grinnr.com)</small>
+      </div>
       <div className="form-wrapper">
-        <div className="form-header">
-          <h1>Profile settings</h1>
-          <small>(for additional support: help@grinnr.com)</small>
-        </div>
         <form className="account-form" onSubmit={handleEditProfile}>
           <div className="uploadAssets">
             <div className="uploadImageBox">{generateUploadImage01()}{asset01 ? <Asset asset={asset01} onChange={handleChangeAsset01}></Asset> : null}</div>
@@ -108,12 +127,18 @@ const Profile = props => {
           <div className="input-row">
               <label>why grinnr? (select all that apply)</label>
               <div className="button-checkboxes">
-                <input type="checkbox" id="memes" checked={wantMemes} onChange={handleChangeWantMemes} />
-                <label htmlFor="memes">memes</label>
-                <input type="checkbox" id="friends" checked={wantFriends} onChange={handleChangeWantFriends} />
-                <label htmlFor="friends">friends</label>
-                <input type="checkbox" id="dates" checked={wantDates} onChange={handleChangeWantDates} />
-                <label htmlFor="dates">dates</label>
+                <div className="input-group">
+                  <input type="checkbox" id="memes" checked={wantMemes} onChange={handleChangeWantMemes} />
+                  <label htmlFor="memes">memes</label>
+                </div>
+                <div className="input-group">
+                  <input type="checkbox" id="friends" checked={wantFriends} onChange={handleChangeWantFriends} />
+                  <label htmlFor="friends">friends</label>
+                </div>
+                <div className="input-group">
+                  <input type="checkbox" id="dates" checked={wantDates} onChange={handleChangeWantDates} />
+                  <label htmlFor="dates">dates</label>
+                </div>
               </div>
             </div>
             {renderInputField('screen name', alias, 'text', e => handleChangeAlias(e), 'alias')}
@@ -127,7 +152,6 @@ const Profile = props => {
               <button className="button-cta"> Update </button>
             </div>
           </form>
-      </div>
       </div>
     </React.Fragment>
   )

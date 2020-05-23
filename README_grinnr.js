@@ -1,3 +1,11 @@
+REACT_APP_LOCAL___ADMIN=fnADrXh4zeACE6x7m4IRfzqSExtqoaI1LtIqovpC
+REACT_APP_LOCAL___BOOTSTRAP_FAUNADB_KEY=fnADrb8WMYACE9le640bhudOWQgd-pDxZwGOki_-
+REACT_APP_LOCAL___CHILD_DB_NAME=fwitter
+
+REACT_APP_LOCAL___ADMIN=fnADsisc2jACE72GP0b5cU9MBF8KRZIoOBhHpjIu
+REACT_APP_LOCAL___BOOTSTRAP_FAUNADB_KEY=fnADsiso54ACElKnbsbRyhP4CFnqkoQstF1LAn_I
+REACT_APP_LOCAL___CHILD_DB_NAME=grinnr_dev
+
 to make the old fwitter work:
 
 1. do something with the users.name var you removed it from the db queries, but it's still in the FE code

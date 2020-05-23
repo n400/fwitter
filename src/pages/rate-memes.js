@@ -7,42 +7,46 @@ import { useHistory } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGrimace, faMehRollingEyes, faMehBlank, faSmileWink, faGrinTears } from '@fortawesome/free-solid-svg-icons'
 
-// Components
+// TODO: why is this rendering 3x ever time there is a new meme?
 
 const RateMemes = props => {
   const history = useHistory();
   const sessionContext = useContext(SessionContext)
   const { user } = sessionContext.state
-  let [meme_i, setmeme_i] = useState(1)
+  const [meme_i, setmeme_i] = useState()
 
-  const handleChangeRating = event => {
-    console.log("handleChange", event.target.value)
-    let memeRating = event.target.value
-    handleSaveRating(meme_i, memeRating)
-    setmeme_i(++meme_i)
-    // checkForMemeRating(user.email, meme_i)
-  };
 
-  const getUnratedMemes = () => {
+  const loadUnratedMemes = () => {
+    // console.log("callinf load", meme_i)
     faunaQueries
       .getUnratedMemes()
       .then(res => {
-        console.log(res.data[0].id)
+        // console.log("inside funct", res.data[0].id)
+        // console.log("inside funct", res.data)
+        // console.log("calling ti", res.data)
+        setmeme_i(res.data[0].id)
+        return res.data
       })
       .catch(err => {
         console.log(err)
-        toast.error('failed')
+        toast.error('whats happening')
       })
   }
-//TODO: pass the result array to this outer function 
-//to use it to declare meme_i, but remove the ==count and iterate through the list instead
+ 
 
+  const handleChangeRating = event => {
+    // console.log("handleChange", event.target.value)
+    let memeRating = event.target.value
+    handleSaveRating(meme_i, memeRating)
+  };
   const handleSaveRating = (meme_i, rating) => {
     console.log("handleSave", meme_i, rating)
-    console.log(user.email)
     faunaQueries
       .saveRating(meme_i, rating, user.email)
       .then(res => { // toast.success('Rating saved')
+        //TODO: Make them come from a pre-fetched list so its snappier
+        console.log("the then")
+        loadUnratedMemes()
       })
       .catch(err => {
         console.log(err)
@@ -50,8 +54,9 @@ const RateMemes = props => {
       })
   }
 
-  const renderMeme = () => {    
-    getUnratedMemes()
+  const renderMeme = () => {  
+    // const unratedMemesList = 
+    loadUnratedMemes() 
       return (
         <React.Fragment>
         <div className="rate_meme_element">

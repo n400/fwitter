@@ -54,12 +54,18 @@ const Form = props => {
             <div className="input-row">
               <label className="button-row-label">why grinnr? (select all that apply)</label>
               <div className="button-checkboxes">
-                <input type="checkbox" id="memes" checked={wantMemes} onChange={handleChangeWantMemes} />
-                <label htmlFor="memes">memes</label>
-                <input type="checkbox" id="friends" checked={wantFriends} onChange={handleChangeWantFriends} />
-                <label htmlFor="friends">friends</label>
-                <input type="checkbox" id="dates" checked={wantDates} onChange={handleChangeWantDates} />
-                <label htmlFor="dates">dates</label>
+                <div className="input-group">
+                  <input type="checkbox" id="memes" checked={wantMemes} onChange={handleChangeWantMemes} />
+                  <label htmlFor="memes">memes</label>
+                </div>
+                <div className="input-group">
+                  <input type="checkbox" id="friends" checked={wantFriends} onChange={handleChangeWantFriends} />
+                  <label htmlFor="friends">friends</label>
+                </div>
+                <div className="input-group">
+                  <input type="checkbox" id="dates" checked={wantDates} onChange={handleChangeWantDates} />
+                  <label htmlFor="dates">dates</label>
+                </div>
               </div>
             </div>
           }

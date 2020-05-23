@@ -11,7 +11,7 @@ import {
   comment
 } from './queries/fweets'
 import { UpdateUser, FinishRegistration } from './queries/users'
-import { SaveRating, GetUnratedMemes, UploadMeme } from './queries/memes'
+import { SaveRating, GetUnratedMemes, GetRatedMemes, UploadMeme } from './queries/memes'
 import { searchPeopleAndTags } from './queries/search'
 import { follow } from './queries/followers'
 
@@ -104,6 +104,10 @@ class QueryManager {
 
   getUnratedMemes() {
     return this.client.query(GetUnratedMemes())
+  }
+
+  getRatedMemes() {
+    return this.client.query(GetRatedMemes())
   }
 
   uploadMeme(asset) {
