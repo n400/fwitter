@@ -7,7 +7,8 @@ import { useHistory } from 'react-router-dom'
 // Components
 import Form from '../components/form'
 
-const handleRegister = (event, email, password, alias, wantMemes, wantFriends, wantDates, sessionContext, history) => {
+const handleRegister = (event, email, password, alias, 
+  wantMemes, wantFriends, wantDates, sessionContext, history) => {
   faunaQueries
     .register(email, password, alias, wantMemes, wantFriends, wantDates)
     .then(e => {
@@ -51,28 +52,11 @@ const handleRegister = (event, email, password, alias, wantMemes, wantFriends, w
 const Register = () => {
   const history = useHistory()
   const sessionContext = useContext(SessionContext)
-  // const memes_list = [
-  //   // '/images/memes/jim/FB_IMG_1567648753248.jpg', 
-  //   // '/images/memes/jim/FB_IMG_1567822761676.jpg', 
-  //   // '/images/memes/jim/FB_IMG_1571669594704.jpg'
-  //   'm1','m2','m3','m4','m5','m6','m7','m8','m9','m10'
-  // ];
-  // let meme_i = 0
-  // let [meme, setMeme] = useState(memes_list[meme_i])
-  // // let meme = memes_list[meme_i]
-  // function setNextMeme() {
-  //  meme =  memes_list[++meme_i] 
-  //   console.log( meme )
-  //   // setMemeRating(event.target.value)
-  //   // handleSaveRating(event.target.name, event.target.value)
-  // } 
-
-  console.log(history)
 
   return ( 
     <>
 
-    <div className="split-page-layout">
+    <div className="split-layout">
       <div className="main-left">
         <img 
         // onClick={setNextMeme}

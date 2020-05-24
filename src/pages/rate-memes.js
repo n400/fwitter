@@ -6,8 +6,6 @@ import { toast } from 'react-toastify'
 import { useHistory } from 'react-router-dom'
 
 function RateMemes () {
-  console.log("rate memes")
-  const history = useHistory();
   const sessionContext = useContext(SessionContext)
   const {user} = sessionContext.state
   const [memeData, setMemeData] = useState(undefined)
@@ -58,10 +56,11 @@ function RateMemes () {
       })
   }
 
-  async function handleSaveRating  ({currentMeme, rating}) {
+  async function handleSaveRating  ({currentMeme, rating, emoji}) {
+    console.log("emoji",emoji)
     let mId = currentMeme.id
     return faunaQueries
-      .saveRating(mId, rating, user.email)
+      .saveRating(mId, rating, emoji)
       .then(res => {console.log ('meme rating saved'); return true})
       .catch(err => {
         console.log(err)
@@ -102,8 +101,10 @@ function RateMemes () {
   function renderMeme () {
     async function clickRatingButtonEvent (evt) {
       let currentMeme = memeData.currentMeme
+      console.log("evt",evt.target.dataset["emoji"])
+      // let emoji = evt.target.dataset[emoji]
       // No await here in handleSaveRating because we want it to run at the same time as "loadNextMeme".
-      let success = handleSaveRating({currentMeme: currentMeme, rating: evt.target.value})
+      let success = handleSaveRating({currentMeme: currentMeme, rating: evt.target.value, emoji: evt.target.dataset["emoji"]})
       loadNextMeme({currentMeme: currentMeme, memeList: memeData.memeList})
     }
     if (memeData === undefined) return (<React.Fragment><div>Loading ... </div></React.Fragment>)
@@ -112,35 +113,34 @@ function RateMemes () {
     return (
       <React.Fragment>
         <div className="rate_meme_element">
-          <img className="meme_to_rate" alt="" src={"/images/memes/jim/meme (" + mId + ").jpg"} />
-          <div className="meme-radios">
-          <div className="button-radio">
-              <label htmlFor={"hate_"+mId}><img class="emoji" src="images/icons/meh-rolling-eyes-regular.svg"/></label>
+          <div className="swipeableAsset">
+            <img className="meme_to_rate" alt="" src={"/images/memes/jim/meme (" + mId + ").jpg"} />
+          </div>
+          <div className="action-bar meme-radios">
+          <div className="action-bar-button">
+              <label htmlFor={"hate_"+mId}><img className="emoji" src="images/icons/meh-rolling-eyes-regular.svg"/></label>
               <input type="radio" id={"hate_"+mId} name={mId} 
-              value="hate" onClick={clickRatingButtonEvent} />
+              value="hate" onClick={clickRatingButtonEvent} data-emoji="images/icons/meh-rolling-eyes-regular.svg"/>
             </div>
-            <div className="button-radio">
-              <label htmlFor={"dislike_"+mId}>
-              <img class="emoji" src="images/icons/meh-rolling-eyes-regular.svg"/>
-              </label>
+            <div className="action-bar-button">
+              <label htmlFor={"dislike_"+mId}><img className="emoji" src="images/icons/meh-rolling-eyes-regular.svg"/></label>
               <input type="radio" id={"dislike_"+mId} name={mId} 
-              value="dislike" onClick={clickRatingButtonEvent} />
+              value="dislike" onClick={clickRatingButtonEvent}  data-emoji="images/icons/meh-rolling-eyes-regular.svg"/>
             </div>
-            <div className="button-radio">
-              <label htmlFor={"meh_"+mId}><img class="emoji" src="images/icons/meh-rolling-eyes-regular.svg"/></label>
+            <div className="action-bar-button">
+              <label htmlFor={"meh_"+mId}><img className="emoji" src="images/icons/meh-rolling-eyes-regular.svg"/></label>
               <input type="radio" id={"meh_"+mId} name={mId} 
-              value="meh" onClick={clickRatingButtonEvent} />
+              value="meh" onClick={clickRatingButtonEvent} data-emoji="images/icons/meh-rolling-eyes-regular.svg" />
             </div>
-            <div className="button-radio">
-              <label htmlFor={"like_"+mId}>
-              <img class="emoji" src="images/icons/meh-rolling-eyes-regular.svg"/></label>
+            <div className="action-bar-button">
+              <label htmlFor={"like_"+mId}><img className="emoji" src="images/icons/meh-rolling-eyes-regular.svg"/></label>
               <input type="radio" id={"like_"+mId} name={mId} 
-              value="like" onClick={clickRatingButtonEvent} />
+              value="like" onClick={clickRatingButtonEvent} data-emoji="images/icons/meh-rolling-eyes-regular.svg" />
             </div>
-            <div className="button-radio">
-              <label htmlFor={"love_"+mId}><img class="emoji" src="images/icons/meh-rolling-eyes-regular.svg"/></label>
+            <div className="action-bar-button">
+              <label htmlFor={"love_"+mId}><img className="emoji" src="images/icons/meh-rolling-eyes-regular.svg"/></label>
               <input type="radio" id={"love_"+mId} name={mId} 
-              value="love" onClick={clickRatingButtonEvent} />
+              value="love" onClick={clickRatingButtonEvent}  data-emoji="images/icons/meh-rolling-eyes-regular.svg"/>
             </div>
           </div>
       </div>  

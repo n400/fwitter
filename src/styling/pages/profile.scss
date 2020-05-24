@@ -1,0 +1,29 @@
+.profile-text{
+  padding: 0;
+}
+.profile-detes{
+  width: 100%;display:flex;
+  flex-direction:row;justify-content:space-between;
+}
+
+
+section {
+ padding: 1.25rem 1.5rem;
+//  box-shadow: $button-box-shadow; 
+ border-radius: $border-radius;
+ background:$white;
+ margin:1rem 0;
+ .section-header,p{margin:0;}
+ p{margin-top:0.5rem;}
+}
+
+.memeGrid{
+  display: flex;
+  flex-wrap: wrap;
+  .ratedMeme{
+    width: 33.33%;
+    position:relative;
+    img{}
+    .memeRating{position:absolute;}
+  }
+}

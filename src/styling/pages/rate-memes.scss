@@ -1,55 +1,32 @@
-$meme-radios-height: 72px;
+
 
 .rate_meme_element{
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  // padding-bottom: $footer-height;
   max-width: 100%;
-  height: calc(100vh - #{$nav-height});
-  padding-top: $nav-height;
   justify-content: space-between;
-  background:white;
   .meme-radios{
-    // height: $meme-radios-height;
-    // background: #4e4949;
-    border-radius:100px;
-    padding:1%;
-    // margin:2%;
     input{display:none;}
-    display:flex;
-    flex-direction:row;
-    justify-content:space-evenly;
-    height: 16%;
   }
   .emoji{
     width:100%;
-    height: auto;
+    // height: auto;
     padding: 1%;
     object-fit: contain;
   }
-  .button-radio label{
+  .action-bar-button label{
     border-radius:200px;
     background:transparent;
     border:0;
     padding: 0;
     margin: 0;
-    cursor: pointer;
-    max-height:100%;
-    transition:all ease-in-out .3s;
-    &:focus, 
-    &:active {
-      // box-shadow: none;
-      transform:scale(1.3);
-      // background-color: red;
-    }
+    height: 100%;
   }
   .meme_to_rate{
     background:white;
-    // max-height: calc(100vh - #{$nav-height} - #{$footer-height} - #{$meme-radios-height});
     width: 100%;
-    height:80%;
     max-width: 100%;
     object-fit:contain;
   }
@@ -59,24 +36,14 @@ $meme-radios-height: 72px;
   .meme_to_rate{
     background:black;
     border:2px solid white;
-    max-height: 100%;
+    // max-height: 100%;
     width: auto;
     max-width: 100%;
   }
   .meme-radios{
     background: #4e4949;
-    height: 16%;
+    // height: 16%;
     border: $form-border;
-    .button-radio label{
-      &:hover{
-        box-shadow: none;
-        transform:scale(1.3);
-      }
-      &:focus, 
-      &:active {
-        transform:scale(2);
-      }
-    }
   }
   .rate_meme_element{
     background: transparent;

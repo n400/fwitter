@@ -25,7 +25,7 @@ const Asset = props => {
     const cloudName = asset.cloudName || process.env.REACT_APP_LOCAL___CLOUDINARY_CLOUDNAME // name of Cloudinary account
 
     return (
-      <div className="fweet-asset">
+      <div className="asset-wrap">
         <Image publicId={publicId} cloudName={cloudName} fetchFormat="auto" quality="auto" secure="true" />
       </div>
     )
@@ -40,7 +40,7 @@ const Asset = props => {
        * <Transformation audioCodec="none" would remove the sound, saving valueble kbs
        *
        * */
-      <div className="fweet-asset">
+      <div className="asset-wrap">
         <Video playsInline autoPlay loop={true} controls={true} cloudName={cloudName} publicId={publicId}>
           <Transformation width="600" fetchFormat="auto" crop="scale" />
         </Video>

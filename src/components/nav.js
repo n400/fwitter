@@ -4,8 +4,8 @@ import { NavLink, Link, useLocation } from 'react-router-dom'
 import SessionContext from './../context/session'
 import { faunaQueries } from '../fauna/query-manager'
 import { isFunction } from '../fauna/helpers/util'
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-// import { faPaperPlane } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faGrin, faGrinHeart, faUser, faUserEdit, faComments, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 
 // const renderLogo = sessionContext => {
 //   return (
@@ -30,15 +30,6 @@ function SignupOrLoginOrLogout(sessionContext) {
     return  <li key=''><Link className="button" to={linkInfo.link}> {linkInfo.linkText}</Link></li>
   }
 }
-
-// const renderLoginLink = sessionContext => {
-//   const { user } = sessionContext.state
-//   if (user) {
-//     return renderLink({ handleClick: handleLogout, label: 'Logout' }, sessionContext)
-//   } else {
-//     return renderLink({ href: '/accounts/login', label: 'skip' }, sessionContext)
-//   }
-// }
 
 const renderProtectedLink = (sessionContext, linkData) => {
   if (sessionContext.state && sessionContext.state.user) {
@@ -67,21 +58,16 @@ const links = [
   // s => renderProtectedLink(s, { href: '/messages', label: 'Messages' }),
   s => renderProtectedLink(s, { href: '/', label: 'memes' }),
   s => renderProtectedLink(s, { href: '/matches', label: 'matches' }),
-  s => renderProtectedLink(s, { href: '/profile', label: 'profile' }),
+  s => renderProtectedLink(s, { href: '/profile-edit', label: 'profile' }),
   SignupOrLoginOrLogout
   // ,renderLoginLink
 ]
 
-const renderLink = (
-  link, sessionContext, 
-  // props
-  ) => {
+const renderLink = ( link, sessionContext ) => {
   if (link.handleClick) {
     return (
       <li onClick={event => handleLogout(event, sessionContext)} key={`nav-link-${link.label}`}>
         <Link to={link.href}>{link.label}</Link>
-      {/* <li className="nav-link" onClick={event => handleLogout(event, sessionContext)} key={`nav-link-${link.label}`}>
-        <div key={'link_' + link.label}>{link.label}</div> */}
       </li>
     )
   } else {
@@ -95,6 +81,46 @@ const renderLink = (
   }
 }
 
+const NavMobile = () => {
+  const sessionContext = useContext(SessionContext)
+
+
+  const { user } = sessionContext.state
+  const location = useLocation();
+  const linkInfo = (location.pathname === "/accounts/login")
+  ? { linkText: 'signup', link: '/accounts/register' }
+  : { linkText: 'login', link: '/accounts/login' }
+  if (user) {
+    return (
+      <nav>
+        <NavLink to='/profile-edit' exact={true}>
+          <FontAwesomeIcon icon={faUserEdit} />
+        </NavLink>
+        <NavLink to='/profile' exact={true}>
+          <FontAwesomeIcon icon={faUser} />
+        </NavLink>
+        <NavLink to='/' exact={true}>
+          <FontAwesomeIcon icon={faGrin} />
+        </NavLink>
+        <NavLink to='/matches' exact={true}>
+          <FontAwesomeIcon icon={faComments} />
+        </NavLink>
+
+      </nav>
+    ) 
+  } else {
+    return(
+      <nav>
+        <NavLink className="logo" to='/' exact={true}>
+        <FontAwesomeIcon icon={faGrin} />
+        </NavLink>
+        <Link className="button" to={linkInfo.link}> {linkInfo.linkText}</Link>
+      </nav>
+    )
+  }
+
+
+}
 const Nav = () => {
   const sessionContext = useContext(SessionContext)
   return (
@@ -116,4 +142,4 @@ const Nav = () => {
   )
 }
 
-export default Nav
+export { NavMobile, Nav }

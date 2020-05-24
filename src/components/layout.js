@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { ToastContainer, toast } from 'react-toastify'
-import Nav from './../components/nav'
+import {NavMobile, Nav} from './../components/nav'
 import { useLocation } from 'react-router-dom'
 import { Masonry } from './../components/masonry'
 import { Footer } from './../components/footer'
@@ -39,13 +39,13 @@ const useViewport = () => {
 const MobileComponent = function (props) {
     return (
     <>
-      <div className={"page " + useLocation().pathname}>
+      <div className={"mobile-layout " + useLocation().pathname}>
         <ToastContainer position={toast.POSITION.BOTTOM_RIGHT} />
         <div className="body-container">
-          <Nav/>
-          <div className="main-wrapper">
+          <NavMobile />
+          <main className="main-wrapper">
             {props.children}
-          </div>
+          </main>
           
         </div>
       </div>
@@ -57,7 +57,7 @@ const DesktopComponent = function (props) {
   return (
   <>
     <Masonry /> 
-    <div className={"page " + useLocation().pathname}>
+    <div className={"desktop-layout " + useLocation().pathname}>
       <ToastContainer position={toast.POSITION.BOTTOM_RIGHT} />
       <div className="body-container">
         <Nav/>

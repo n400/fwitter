@@ -2,84 +2,70 @@
 *{
   box-sizing: border-box;
 }
-.body-container, .main-wrapper, .main-left, .main-right{
+.body-container, main.main-wrapper, .main-left, .main-right{
   width: 100%;
 }
 img { object-fit: cover; width:100%; }
 a{text-decoration:none;}
 
 .body-container{
-  // min-height:100vh;
+  background: $background-color;
   position:absolute;display:flex;flex-direction:column;width:100%;}
 
-.main-wrapper {
+main.main-wrapper {
+  // background:black;
   flex-direction:column;
   display:flex;
   align-items: center;
-  justify-content: center; //needs to be  flex-start for media page and short browsers, 
-//at least for now. figure out another way to center stuff on the page. 
-//maybe an extra div inside of this one could center the stuff while this one starts at the top like:
-                  // height: 100%;
-                  //     display: flex;
-                  //     justify-content: center;
-                  //     flex-direction: column;
-
+  justify-content: flex-start;
+  padding: 0 4%;
 }
-
-
-// div[class*="media"]{
-  .main-wrapper {
-    justify-content: flex-start;
-    padding-top:$nav-height; //creates bug with footer when used elsewhere. 
-    ///refactor layout for mobile once all else is done before wasting time 
-    ///on this only to have to do it again later
-  } 
-// }
-
-
-.split-page-layout{
+.split-layout{
   display: flex;
   flex-direction: column;
   width: 100%;
-  .main-left, .main-right{
-    display: flex;
-    flex: 1;
-    // width: 50%;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
-    max-width: 100%;
-    img{}
-  }
-}
-
-.form-wrapper{
-  border:0;
+  justify-content: center;
   max-width: 400px;
 }
+.main-left, .main-right{
+  display: flex;
+  // flex: 1;
+  // width: 50%;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 100%;
+  img{}
+}
 
-@media only screen and (min-width: $ipad-portrait){
+@media only screen and (min-width: $small-bp){
   .body-container {
     min-height: 100%;
     justify-content: space-between;
   }
-  .main-wrapper, .main-left, .main-right{}
-  .split-page-layout{
+  main.main-wrapper { background:transparent;}
+  .split-layout{
     flex-direction: row;
-    .main-left, .main-right{}
-    .main-left {
-      padding: 3%;
-      // max-height: 100vh;
-      img {
-        // max-height: 100%;
-        max-height:552px; //TODO js to make it same as form-height or a  $form-01-height variable
-        width: auto;
-        // max-width: 100%;
-        border: 2px solid white;
-      }
+    max-width:100%;
+    height: calc(100vh - #{$nav-height} - #{$footer-height})
+  }
+  .main-right{
+    .profile-description{
+      overflow:scroll;
+      padding: 0;
     }
-    .form-wrapper{
-      border:$form-border;
+  }
+  .main-left {
+    img {
+      max-height: 100%;
+      // max-height:552px; //TODO js to make it same as form-height or a  $form-01-height variable
+      width: auto;
+      max-width: 100%;
+      border: 2px solid white;
     }
+  }
+
+  .form-wrapper{
+    border:$form-border;
   }
 }

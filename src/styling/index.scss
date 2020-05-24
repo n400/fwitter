@@ -29,7 +29,6 @@ $hard-white: rgba(255,255,255,0.95);
 $grid-unit: 30px;
 $touch-target-min: 36px;
 $touch-target: 44px;
-$border-radius: calc( #{$grid-unit} / 4);
 $border-radius-round: calc( #{$grid-unit} / 1.5);
 $menu-font-size: 20px;
 // @import "./components/layout";
@@ -40,10 +39,13 @@ $menu-font-size: 20px;
 // @import "./components/asset";
 
 //NEW
+$small-bp: 768px;
 $ipad-portrait: 768px;
 
+$padding: 2vw;
+$background-color: #f7f7f7;
 $soft-white: rgba(255,255,255,0.8);
-$hard-white: rgba(255,255,255,0.95);
+$white: rgba(255,255,255,0.98);
 $text-color: grey; //TODO pick good one and use it. this isnt doing anything
 $link-color: #172ff0;
 $primary-cta: #FF0AF7;
@@ -54,8 +56,10 @@ $input-border:  2px solid $input-color;
 $button-box-shadow: 2px 2px 4px rgba(0,0,0,.5);
 $form-background: white;
 $form-border: 2px solid $primary-cta;
+$border-radius: 8px;
 $footer-height: 36px;
 $nav-height: 44px;
+$action-bar-height: 92px;
 $generic-transition: all .5s ease-in-out;
 
 //TODO: This doesnt work. forgot how to do this
@@ -74,6 +78,7 @@ $generic-transition: all .5s ease-in-out;
 @import "./components/masonry";
 @import "./pages/page-specific-styles";
 @import "./pages/rate-memes";
+@import "./pages/profile";
 
 
 // CSS from libraries  

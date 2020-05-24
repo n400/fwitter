@@ -64,7 +64,7 @@ const Register02 = (props) => {
   return (
     <React.Fragment>
       {/* <h1 className="jim-slogan">Jim writes something funny here!</h1> */}
-      <div className="split-page-layout">
+      <div className="split-layout">
         <div className="main-left">
           <img 
           // onClick={setNextMeme}

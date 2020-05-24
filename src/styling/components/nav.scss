@@ -1,25 +1,8 @@
-// nav.nav-hidden {
-//     display: none;
-// }
-
-// nav.nav-shown {
-//     display: flex;
-//     flex-direction: column;
-//     text-align: center;
-//     width: 25%;
-//     min-width: 250px;
-//     background: $chetwode;
-//     border-right: 1px solid $soft-border;
-//     background-color: $bluenav;
-// }
 
 nav {
     width: 100%;
     margin: 0;
     padding-inline-start: 0;
-    // background: rgba(0,0,0,.8);
-    // position: fixed;
-    color:$soft-white;
     height:$nav-height;
     display: flex;
     justify-content: space-between;
@@ -36,11 +19,7 @@ nav {
     a {
         display: flex;
         align-items: center;
-        padding: 0 1rem;
-        color: $soft-white;
+        padding: 0 2vw;
         font-weight: normal;
-    }
-    .active {
-        color: white;
     }
 }

@@ -98,8 +98,8 @@ class QueryManager {
     return this.client.query(FinishRegistration(dob, zip))
   }
 
-  saveRating(meme, rating, email) {
-    return this.client.query(SaveRating(meme, rating, email))
+  saveRating(meme, rating, emoji) {
+    return this.client.query(SaveRating(meme, rating, emoji))
   }
 
   getUnratedMemes() {

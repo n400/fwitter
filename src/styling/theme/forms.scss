@@ -18,7 +18,7 @@ button, input, optgroup, select, textarea {
 input, button, input[type=checkbox] + label {
   border:none; 
   min-height: 44px; 
-  padding: 0 1rem;
+  padding: 0 0.5rem;
   cursor: pointer;
 }
 
@@ -191,7 +191,9 @@ label{
   }
 }
 
-
+@media only screen and (min-width: $small-bp){
+  .form-wrapper{width: auto;}
+}
 @media only screen and (min-width: $ipad-portrait){
   .form-header{
     small {display: flex;}
@@ -199,8 +201,8 @@ label{
   }
   .form-wrapper{
     border: $form-border;
-    width: 400px;
-    padding: 2rem;
+    width: auto;
+    padding: 2vw;
   }
   label {
     font-size: .8rem;

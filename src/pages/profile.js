@@ -4,15 +4,12 @@ import SessionContext from './../context/session'
 import { faunaQueries } from '../fauna/query-manager'
 import { toast } from 'react-toastify'
 
-import { flattenDataKeys } from '../fauna/helpers/util'
 
 import { Uploader } from '../components/uploader'
 import Asset from '../components/asset'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPaperPlane } from '@fortawesome/free-solid-svg-icons'
+import { faSearch, faEye, faIcons, faHeadSideVirus, faLaugh, faHeart, faImages, faUserFriends, faBirthdayCake, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons'
 
-// Components
-import {renderInputField} from './../components/input'
 
 const Profile = props => {
   const sessionContext = useContext(SessionContext)
@@ -27,134 +24,142 @@ const Profile = props => {
   const [zip, setZip] = useState ((user && user.zip) ? user.zip : '')
   const [asset01, setAsset01] = useState((user && user.asset01) ? user.asset01 : '')
   const [asset02, setAsset02] = useState((user && user.asset02) ? user.asset02 : '')
-  const [asset03, setAsset03] = useState((user && user.asset03) ? user.asset03 : '')
-  const [asset04, setAsset04] = useState((user && user.asset04) ? user.asset04 : '')
-  const [asset05, setAsset05] = useState((user && user.asset05) ? user.asset05 : '')
-  const [asset06, setAsset06] = useState((user && user.asset06) ? user.asset06 : '')
 
-  const handleEditProfile = event => {
-    // console.log('editing profile', 
-    // alias, dob, zip, wantMemes, wantFriends, wantDates, 
-    // asset01)
-    // if (!asset01) {
-    //   toast.warn('Please upload an image first :)')
-    //   return
-    // }
-    faunaQueries
-      .updateUser(
-        alias, dob, zip, wantMemes, wantFriends, wantDates, 
-        asset01, asset02, asset03, asset04, asset05, asset06)
-      // .uploadMeme(asset01)
-      .then(res => {
-        toast.success('Profile updated')
-        console.log(res)
-      })
-      .catch(err => {
-        console.log(err)
-        toast.error('Profile update failed')
-      })
-    event.preventDefault()
-  }
+  const [memeData, setMemeData] = useState(undefined)
 
-  const getUsersRatedMemes = () => {
-    // console.log("callinf load", meme_i)
-    faunaQueries
-      .getRatedMemes()
-      .then(res => {
-        console.log("calling it", res.data)
-        return res.data
-      })
-      .catch(err => {
-        console.log(err)
-        toast.error('whats happening')
-      })
-  }
-
-  let memes_list = getUsersRatedMemes()
-  // console.log( "res", getUsersRatedMemes() )
- 
-  const handleChangeAlias = event => {setAlias(event.target.value)}
-  const handleChangeDob = event => {setDob(event.target.value)}
-  const handleChangeZip = event => {setZip(event.target.value)}
-  const handleChangeWantMemes = event => {setWantMemes(event.target.checked)}
-  const handleChangeWantFriends = event => {setWantFriends(event.target.checked)}
-  const handleChangeWantDates = event => {setWantDates(event.target.checked)}
-  const handleChangeAsset01 = event => {setAsset01(event.target.value)}
-  const handleChangeAsset02 = event => {setAsset02(event.target.value)}
-  const handleChangeAsset03 = event => {setAsset03(event.target.value)}
-  const handleChangeAsset04 = event => {setAsset04(event.target.value)}
-  const handleChangeAsset05 = event => {setAsset05(event.target.value)}
-  const handleChangeAsset06 = event => {setAsset06(event.target.value)}
-
-  const generateUploadImage01 = () => {return <Uploader onPhotosUploaded={handleUploadPhoto01}></Uploader>}
-  const generateUploadImage02 = () => {return <Uploader onPhotosUploaded={handleUploadPhoto02}></Uploader>}
-  const generateUploadImage03 = () => {return <Uploader onPhotosUploaded={handleUploadPhoto03}></Uploader>}
-  const generateUploadImage04 = () => {return <Uploader onPhotosUploaded={handleUploadPhoto04}></Uploader>}
-  const generateUploadImage05 = () => {return <Uploader onPhotosUploaded={handleUploadPhoto05}></Uploader>}
-  const generateUploadImage06 = () => {return <Uploader onPhotosUploaded={handleUploadPhoto06}></Uploader>}
-
-  const handleUploadPhoto01 = photoInfo => {setAsset01({ url: photoInfo.secure_url, type: photoInfo.resource_type, id: photoInfo.public_id})}
-  const handleUploadPhoto02 = photoInfo => {setAsset02({ url: photoInfo.secure_url, type: photoInfo.resource_type, id: photoInfo.public_id})}
-  const handleUploadPhoto03 = photoInfo => {setAsset03({ url: photoInfo.secure_url, type: photoInfo.resource_type, id: photoInfo.public_id})}
-  const handleUploadPhoto04 = photoInfo => {setAsset04({ url: photoInfo.secure_url, type: photoInfo.resource_type, id: photoInfo.public_id})}
-  const handleUploadPhoto05 = photoInfo => {setAsset05({ url: photoInfo.secure_url, type: photoInfo.resource_type, id: photoInfo.public_id})}
-  const handleUploadPhoto06 = photoInfo => {setAsset06({ url: photoInfo.secure_url, type: photoInfo.resource_type, id: photoInfo.public_id})}
-  
-
-  // Just for debugging to get in quickly
   useEffect(() => {
-    // console.log("res", memes_list)
-    console.log( "res", getUsersRatedMemes() )
-    // For debugging, autologin to get in faster for testing, add a user and pword in the .env.local
+    let didCancel = false
+    async function fetchData () {
+      if (didCancel) return
+      let memeList = await getNextMemeList()
+      // let currentMeme = 1
+      // let currentMeme = (memeList.size != 0) ? memeList[Symbol.iterator]().next().value[1] : undefined // I don't like this.
+      setMemeData({
+        // currentMeme: currentMeme,
+        memeList: memeList,
+      })
+    }
+    fetchData()
+    return function () {didCancel = true}
   }, [])
 
-  return (
-    <React.Fragment>
-      <div className="form-header">
-        <h1>Edit profile</h1>
-        <small>(for additional support: help@grinnr.com)</small>
-      </div>
-      <div className="form-wrapper">
-        <form className="account-form" onSubmit={handleEditProfile}>
-          <div className="uploadAssets">
-            <div className="uploadImageBox">{generateUploadImage01()}{asset01 ? <Asset asset={asset01} onChange={handleChangeAsset01}></Asset> : null}</div>
-            <div className="uploadImageBox">{generateUploadImage02()}{asset02 ? <Asset asset={asset02} onChange={handleChangeAsset02}></Asset> : null}</div>
-            <div className="uploadImageBox">{generateUploadImage03()}{asset03 ? <Asset asset={asset03} onChange={handleChangeAsset03}></Asset> : null}</div>
-            <div className="uploadImageBox">{generateUploadImage04()}{asset04 ? <Asset asset={asset04} onChange={handleChangeAsset04}></Asset> : null}</div>
-            <div className="uploadImageBox">{generateUploadImage05()}{asset05 ? <Asset asset={asset05} onChange={handleChangeAsset05}></Asset> : null}</div>
-            <div className="uploadImageBox">{generateUploadImage06()}{asset06 ? <Asset asset={asset06} onChange={handleChangeAsset06}></Asset> : null}</div>
-          </div>
-          <div className="input-row">
-              <label>why grinnr? (select all that apply)</label>
-              <div className="button-checkboxes">
-                <div className="input-group">
-                  <input type="checkbox" id="memes" checked={wantMemes} onChange={handleChangeWantMemes} />
-                  <label htmlFor="memes">memes</label>
-                </div>
-                <div className="input-group">
-                  <input type="checkbox" id="friends" checked={wantFriends} onChange={handleChangeWantFriends} />
-                  <label htmlFor="friends">friends</label>
-                </div>
-                <div className="input-group">
-                  <input type="checkbox" id="dates" checked={wantDates} onChange={handleChangeWantDates} />
-                  <label htmlFor="dates">dates</label>
-                </div>
-              </div>
-            </div>
-            {renderInputField('screen name', alias, 'text', e => handleChangeAlias(e), 'alias')}
-            {renderInputField('dob (you must be over 18 to view profiles)', dob, 'date', e => handleChangeDob(e), 'dob')}
-            {renderInputField('zip code', zip, 'text', e => handleChangeZip(e), 'zip')}
-            {/* {renderInputField('email', email, 'text', e => handleChangeEmail(e), 'email')} */}
-            {/*{renderInputField('password', password, 'password', e => handleChangePassword(e), 'current-password')} */}
+  async function getNextMemeList (options = {}) {
+    // let excludeMeme = options.excludeMeme
+    return faunaQueries
+      .getRatedMemes()
+      .then(res => {
+        let memeList = res.data
+        return memeList
+      })
+      .catch(err => {
+        console.log(err)
+        toast.error('What\'s happeniiing???')
+      })
+  }
 
-  
-            <div className="input-row align-right">
-              <button className="button-cta"> Update </button>
+  async function handleSaveRating  ({currentMeme, rating}) {
+    let mId = currentMeme.id
+    return faunaQueries
+      .saveRating(mId, rating, user.email)
+      .then(res => {console.log ('meme rating saved'); return true})
+      .catch(err => {
+        console.log(err)
+        toast.error('Rating save failed.')
+      })
+  }
+
+  const nextPhoto = event => {console.log("change photo", event)}
+
+  return renderProfile()
+  function renderProfile () {
+    // async function clickRatingButtonEvent (evt) {
+    //   let currentMeme = memeData.memeList
+    // }
+    if (memeData === undefined) return (<React.Fragment><div>Loading ... </div></React.Fragment>)
+    // if (memeData.currentMeme === undefined) return (<React.Fragment><div>Ran out of memes!</div></React.Fragment>)
+    let mId = "url.jpg"
+    console.log("memeData", memeData.memeList)
+
+    // const elements = ['one', 'two', 'three'];
+    const ratedMemes = []
+    console.log("length: ", memeData.memeList.length > 0)
+    for (const [index, value] of memeData.memeList.entries()) {
+      let mId = value[0]
+      let mRating = value[1]
+      let mUrl = value[2]
+      let emojiUrl = value[4]
+      console.log("values",value)
+      // if( memeData.memeList.length > 0 ){
+        ratedMemes.push(<><div className="ratedMeme">
+        <img src={mUrl}/><img src={emojiUrl} />
+      </div></>)
+      // }else{
+      //   ratedMemes.push(<button className="ratedMeme">rate memes to see them here</button>)
+      // }
+    }
+
+    return (
+      <React.Fragment>
+      <div className="split-layout">
+        <div className="main-left">
+          <div className="profilePhotos">
+            <div className="swipeableAsset" onClick={nextPhoto}>
+            {asset01 ? <Asset asset={asset01}></Asset> : null}
             </div>
-          </form>
+          </div>
+          <h1>{user.alias}</h1>
+          <section className="profile-detes">
+              <div><FontAwesomeIcon icon={faUserFriends} /><span>{wantMemes ? "memes" : ""}{wantFriends ? "friends" : ""}{wantDates ? "dates" : ""} </span></div>
+              <div><FontAwesomeIcon icon={faBirthdayCake} /><span>{dob}</span></div>
+              <div><FontAwesomeIcon icon={faMapMarkerAlt} /><span>{zip}</span></div>
+            </section>
+        </div>
+        <div className="memeGrid">{memeData.memeList.length > 0 ? ratedMemes : "button: rate memes"}</div>
+        <div className="main-right profile-text">
+          <div className="profile-description">
+            <section>
+              <h5 className="section-header">Lorem ipsum dolor sit amet</h5> 
+              <p>consectetur adipiscing elit, sed do eiusmod tempor 
+                incididunt ut labore et dolore magna aliqua. Morbi enim 
+                nunc faucibus a pellentesque sit amet porttitor. Posuere 
+                sollicitudin aliquam ultrices sagittis orci a. Justo 
+                eget magna fermentum iaculis eu non diam. Pharetra diam 
+                sit amet nisl. Nibh sed pulvinar proin gravida hendrerit 
+              </p>
+            </section>
+            <section>
+              <h5 className="section-header">Lorem ipsum dolor sit amet</h5> 
+              <p>consectetur adipiscing elit, sed do eiusmod tempor 
+                incididunt ut labore et dolore magna aliqua. Morbi enim 
+                nunc faucibus a pellentesque sit amet porttitor. Posuere 
+                sollicitudin aliquam ultrices sagittis orci a. Justo 
+                eget magna fermentum iaculis eu non diam. Pharetra diam 
+                sit amet nisl. Nibh sed pulvinar proin gravida hendrerit 
+              </p>
+            </section>
+            <section>
+              <h5 className="section-header">Lorem ipsum dolor sit amet</h5> 
+              <p>consectetur adipiscing elit, sed do eiusmod tempor 
+                incididunt ut labore et dolore magna aliqua. Morbi enim 
+                nunc faucibus a pellentesque sit amet porttitor. Posuere 
+                sollicitudin aliquam ultrices sagittis orci a. Justo 
+                eget magna fermentum iaculis eu non diam. Pharetra diam 
+                sit amet nisl. Nibh sed pulvinar proin gravida hendrerit 
+              </p>
+            </section>
+          </div>
+        </div>
       </div>
     </React.Fragment>
-  )
+    )
+  }
+
+
+
+
+
+
+
 }
 
 export default Profile

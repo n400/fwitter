@@ -5,6 +5,7 @@ import RateMemes from './pages/rate-memes'
 import Login from './pages/login'
 // import User from './pages/user'
 // import Tag from './pages/tag'
+import ProfileEdit from './pages/profile-edit'
 import Profile from './pages/profile'
 import Register01 from './pages/register01'
 import Register02 from './pages/register02'
@@ -31,6 +32,7 @@ const App = () => {
     loadScript('https://widget.cloudinary.com/v2.0/global/all.js')
   }, [])
 
+  // console.log("user",user)
   // Return the header and either show an error or render the loaded profiles.
   return (
     <React.Fragment>
@@ -44,8 +46,10 @@ const App = () => {
               <Route exact path="/accounts/register">
                 <Register01 />
               </Route>
+              {/* //TODO change the actual path when there is no user instead of just the content */}
               {user ? <Route exact path="/accounts/register02"><Register02 /></Route> : null}
               {user ? <Route exact path="/matches"><Matches /></Route> : null}
+              {user ? <Route path="/profile-edit/" component={ProfileEdit} /> : null}
               {user ? <Route path="/profile/" component={Profile} /> : null}
               <Route exact path="/legal"><Legal /></Route> 
               <Route exact path="/media"><Media /></Route> 

@@ -6,22 +6,23 @@ REACT_APP_LOCAL___ADMIN=fnADsisc2jACE72GP0b5cU9MBF8KRZIoOBhHpjIu
 REACT_APP_LOCAL___BOOTSTRAP_FAUNADB_KEY=fnADsiso54ACElKnbsbRyhP4CFnqkoQstF1LAn_I
 REACT_APP_LOCAL___CHILD_DB_NAME=grinnr_dev
 
-to make the old fwitter work:
+// to make the old fwitter work:
 
-1. do something with the users.name var you removed it from the db queries, but it's still in the FE code
+// 1. do something with the users.name var you removed it from the db queries, but it's still in the FE code
 
-to make grinnr work if you delete the db and npm run setup:
-1. Create meme_ratings collection
-2. create a new role that can view/rate memes
-3. add users and accounts as members (figure out later which is needed)
-4. don't forget to add the meme_Ratings collection and grant the role the required permissions
+// to make grinnr work if you delete the db and npm run setup:
+// 1. Create meme_ratings collection
+// 2. create a new role that can view/rate memes
+// 3. add users and accounts as members (figure out later which is needed)
+// 4. don't forget to add the meme_Ratings collection and grant the role the required permissions
 
-Map(Paginate(Documents(Collection('meme_ratings'))),
-Lambda(ref => Delete(ref))
+//delete all meme ratings
+Map(
+  Paginate(Documents(Collection("meme_ratings"))),
+  Lambda(ref => Delete(ref))
 )
 
 //see all previously rated memes with their ratings
-
 CreateIndex({
   name: "meme_ratings_by_user",
   source: Collection("meme_ratings"),
@@ -29,10 +30,22 @@ CreateIndex({
   values: [
     { field: ["data", "meme"] },
     { field: ["data", "rating"] },
+    { field: ["data", "url"] },
     { field: ["data", "created"] },
+    { field: ["data", "emoji_url"] },
     { field: ["ref"] }
   ]
 })
+// Get all memes the user has already rated
+CreateIndex({
+  name: "memes_rated_by_user",
+  source: Collection("meme_ratings"),
+  terms: [{field: ["data", "user"]}],
+  values: [
+    { field: ["data", "meme"] }
+  ]
+})
+
 
 Paginate(Match(
   Index("meme_ratings_by_user"), Ref(Collection("users"), "265231995802485267")
@@ -45,36 +58,6 @@ Select(
     Index("meme_ratings_by_user"), Ref(Collection("users"), "265231995802485267")
   ))
 )
-
-
-// see what a user rated a meme
-CreateIndex({
-  name: "meme_rating_by_user_and_meme",
-  source: Collection("meme_ratings"),
-  terms: [
-    {field: ["data", "user"]},
-    {field: ["data", "meme"]}
-],
-  values: [
-    { field: ["data", "rating"] },
-    { field: ["ref"] }
-  ]
-})
-Paginate(Match(
-  Index("meme_rating_by_user_and_meme"), 
-  Ref(Collection("users"), "265231995802485267"), 
-  Ref(Collection("memes"), "1")
-))
-
-// Get all memes the user has already rated
-CreateIndex({
-  name: "memes_rated_by_user",
-  source: Collection("meme_ratings"),
-  terms: [{field: ["data", "user"]}],
-  values: [
-    { field: ["data", "meme"] }
-  ]
-})
 
 Paginate(Match(
   Index("memes_rated_by_user"), Ref(Collection("users"), "265231995802485267")
@@ -90,30 +73,18 @@ Paginate(Difference(
 
 
 
-//After i get the difference, i could use a Get() to get the first one? that will probably take too long.
-
-// This does not work yet:
-
-
-
-
-
-Select(
-  ['data'],
-  Documents(Collection("memes"))
-)
-
-Select(
-  ['data'],
-  Match(
-    Index("memes_rated_by_user"), Ref(Collection("users"), "265231995802485267")
-  ),
-)
-
 
 //check timestamps of all_memes and memes_rated_by_user nidexes for #cloud-support
 
 
+
+
+
+Select(
+  [data,url],
+  
+  Get(Ref(Collection("memes"), 2))
+  )
 
 
 
@@ -139,3 +110,41 @@ Select(
   // 2. make email editable via profile (update account info when the user info gets updated)
   // 3. not a blocker for launch: password reset flow, make password editable
   // 4. not a blocker for launch: lambda to stay logged in
+
+
+
+
+
+  // //PROBABLY GARBAGE
+// //After i get the difference, i could use a Get() to get the first one? that will probably take too long.
+// // This does not work yet:
+// Select(
+//   ['data'],
+//   Documents(Collection("memes"))
+// )
+
+// Select(
+//   ['data'],
+//   Match(
+//     Index("memes_rated_by_user"), Ref(Collection("users"), "265231995802485267")
+//   ),
+// )
+// // see what a user rated a meme
+// CreateIndex({
+//   name: "meme_rating_by_user_and_meme",
+//   source: Collection("meme_ratings"),
+//   terms: [
+//     {field: ["data", "user"]},
+//     {field: ["data", "meme"]}
+// ],
+//   values: [
+//     { field: ["data", "rating"] },
+//     { field: ["ref"] }
+//   ]
+// })
+// Paginate(Match(
+//   Index("meme_rating_by_user_and_meme"), 
+//   Ref(Collection("users"), "265231995802485267"), 
+//   Ref(Collection("memes"), "1")
+// ))
+

@@ -1,50 +1,54 @@
-// .fweets {
-//     display: flex;
-//     flex: 1 1 auto;
-//     flex-direction: column;
-//     width: 100%;
-//     min-height: 500px;
-// }
-
-// .no-results-container {
-//     display: flex;
-//     flex-direction: column;
-//     width: 100%;
-//     justify-content: center;
-//     align-items: center;
-//     margin-top: 50px;
-//     text-align: center;
-// }
-
-// .no-results-image {
-//     height: 200px;
-//     margin-top: 50px;
-// }
-
-// .no-results-text {
-//     font-size: 50px;
-//     font-weight: 100;
-// }
-
-// .no-results-subtext {
-//     font-size: 30px;
-//     font-weight: 100;
-// }
+.mobile-layout{
+  nav {
+     font-size: 20px;
+  }
+  a.active {
+      // color: white;
+  }
+}
 
 
-// div[class*="register"],
-// div[class*="login"], {
-//   .main-wrapper{
-//     height:100%;
-//     flex-direction: column;
-//     align-items:center;
-//     // align-items:flex-start;
-//   }
-//   nav{
-//       background: transparent;
-//   }
-//   footer{
-//     // color: $soft-white;
-//   }
-// }
+div[class*="profile"] {
+  main.main-wrapper {
+    // background:white;
+  }
+  .main-left{}
+  &.mobile-layout{
 
+  }
+}
+.action-bar { 
+  height: $action-bar-height; 
+  &>div{height:60px;}
+  align-items: center;
+    // padding:1%;
+    display:flex;
+    flex-direction:row;
+    justify-content:space-evenly;
+}
+.action-bar-button{
+  height:100%;
+  cursor: pointer;
+  transition:all ease-in-out .3s;
+  //TODO: the last-of-type is changing 
+  //the height/width of browser, but only the last one
+  &:hover{
+    box-shadow: none;
+    transform:scale(1.3);
+  }
+  &:focus, 
+  &:active {
+    transform:scale(2);
+  }
+}
+
+.swipeableAsset{
+  // width: 100vw;
+  color:white;
+  // padding: 1rem;
+  img {    
+    border-radius: $border-radius;
+    height:calc(100vh - #{$nav-height} - #{$action-bar-height});
+    box-shadow: $button-box-shadow;
+  }
+}

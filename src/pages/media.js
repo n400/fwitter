@@ -19,13 +19,12 @@ const Media = props => {
       <div className="form-wrapper">
         <div className="form-header">
           <h1>Love for grinnr</h1>
-          <small>(media kit)</small>
         </div>
         <p>
         Here are some of the creative ways other users are helping get the word out.</p>
         <p><img src="/images/memes/jim/meme (1).jpg" /></p>
         <p><img src="/images/memes/jim/meme (3).jpg" /></p>
-        <p>If you're from the media and looking for a real "about" page, email help@grinnr.com</p>
+        <p>If you're looking for a real "about" page, email help@grinnr.com</p>
           {/* <p><strong>"Waiting for you on grinnr.com (no, not grindr)".</strong></p> */}
         <Link className="button-cta" to="/">Rate memes</Link>
 

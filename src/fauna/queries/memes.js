@@ -4,8 +4,8 @@ const q = faunadb.query
 const { Difference, Documents, Ref, Now, Paginate, Match, Index, Create, Collection, Let, Get, Identity, Var, Select } = q
 
 
-function SaveRating(url, rating, email) {
-  console.log('calling db', url, rating)
+function SaveRating(mRefId, rating, emoji) {
+  console.log('calling db', mRefId, rating, emoji)
   return Let(
     {
       accountRef: Identity(),
@@ -14,9 +14,14 @@ function SaveRating(url, rating, email) {
     Create(Collection('meme_ratings'), {
       data: {
           user: Var('userRef'),
-          meme: Ref(Collection("memes"), url), //TODO select get real ref, but for now the url is the ref
+          meme: Ref(Collection("memes"), mRefId), //TODO select get real ref, but for now the url is the ref
+          url: Select(
+            ['data','url'],
+            Get(Ref(Collection("memes"), mRefId))
+            ),
           rating: rating,
-          // emoji: emoji,
+          emoji_url: emoji,
+          // discovered: path to see alias of profile where they found it, if relevant
           created: Now()
           // user: Var('userRef'),
           // meme_id: Var('meme'),
@@ -27,7 +32,7 @@ function SaveRating(url, rating, email) {
 }
 
 function GetRatedMemes(user) {
-  console.log('getting unrated memes')
+  console.log('getting rated memes')
   return Let(
     {
       accountRef: Identity(),
@@ -35,7 +40,7 @@ function GetRatedMemes(user) {
     },
     Paginate(
       Match(
-        Index("memes_rated_by_user"),  Ref(Collection("users"), "265231995802485267")
+        Index("meme_ratings_by_user"),  Ref(Collection("users"), "265231995802485267")
       ), {size: 1000})
   )
 }
@@ -52,7 +57,7 @@ function GetUnratedMemes(user) {
       Match(
         Index("memes_rated_by_user"),  Ref(Collection("users"), "265231995802485267")
       )
-    ), {size: 1000})
+    ), {size: 3})
   )
 }
 

@@ -55,7 +55,7 @@ const Register = () => {
   return ( 
     <>
     <Masonry />
-    <div className="split-page-layout">
+    <div className="split-layout">
       <div className="main-left">
         <img src="/images/memes/grinnr-is-01.jpg" alt="grinnr is a networking and dating app that analyzes your sense of humor to find people who share your sense of humor.
 " />
