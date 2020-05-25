@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faComments, faHeart, faRetweet } from '@fortawesome/free-solid-svg-icons'
-import Asset from './asset'
+import Asset from '../components/asset'
 
 const Card = props => {
   const [state, setState] = useState(false)

@@ -1,21 +1,23 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { useParams } from 'react-router-dom'
-import { toast } from 'react-toastify'
-import SessionContext from '../context/session'
-import Feed from '../components/feed'
-import Search from './../components/search'
+import Feed from './feed'
 
+// import Nav from './../components/nav'
+import Search from './search'
+import Fweeter from './fweeter'
 import { faunaQueries } from '../fauna/query-manager'
 import { safeVerifyError } from '../fauna/helpers/errors'
+import { toast } from 'react-toastify'
+import SessionContext from '../context/session'
+import { useHistory } from 'react-router-dom'
 
-const TagPage = () => {
-  const { tag } = useParams()
 
+const Home = () => {
   const [state, setState] = useState({
     fweets: [],
     loaded: false,
     error: false
   })
+  const history = useHistory();
 
   // Fetch the fweets on first load.
   const sessionContext = useContext(SessionContext)
@@ -23,23 +25,23 @@ const TagPage = () => {
 
   useEffect(() => {
     if (user) {
+      console.log(user)
       setState({ error: null, fweets: [], loaded: false })
       faunaQueries
-        .getFweetsByTag(tag)
+        .getFweets()
         .then(result => {
-          console.log('tagresults', result)
           setState({
             fweets: result,
             loaded: true
           })
         })
         .catch(err => {
+          console.log(err)
           const rawError = safeVerifyError(err, ['requestResult', 'responseRaw'])
-          if (rawError.includes('Rate limiting')) {
+          if (rawError && rawError.includes('Rate limiting')) {
             setState({ error: { message: 'Rate-limiting' }, fweets: [], loaded: true })
             toast.warn('You are reloading too fast')
-          } else if (rawError.includes('permission denied')) {
-            console.log(err)
+          } else if (rawError && rawError.includes('permission denied')) {
             setState({ error: { message: 'Permission denied!' }, fweets: [], loaded: true })
             toast.error('No data permissions')
           } else {
@@ -47,8 +49,31 @@ const TagPage = () => {
             toast.error('Unknown error')
           }
         })
+    } else {
+      history.push('/accounts/register')
     }
-  }, [user, tag])
+  }, [user])
+
+  const handleCreateFweet = (message, asset) => {
+    return faunaQueries
+      .createFweet(message, asset)
+      .then(fweetArray => {
+        setState({
+          fweets: fweetArray.concat(state.fweets),
+          loaded: true
+        })
+        toast.success('Fweeted')
+      })
+      .catch(err => {
+        const rawError = safeVerifyError(err, ['requestResult', 'responseRaw'])
+        if (rawError.includes('Rate limiting')) {
+          toast.warn('You are fweeting too fast')
+        } else {
+          console.error('error on Fweet', err)
+          toast.error('Fweet failed')
+        }
+      })
+  }
 
   const update = (fweets, loaded, error) => {
     setState({
@@ -58,15 +83,17 @@ const TagPage = () => {
     })
   }
 
+
   return (
     <React.Fragment>
-      <div className="main-column">
-        <div className="main-title">{'#' + tag}</div>
+
+      <section className="main-column">
+        {user ? <Fweeter handleCreateFweet={handleCreateFweet}></Fweeter> : null}
         <Feed update={update} error={state.error} loaded={state.loaded} fweets={state.fweets} />
-      </div>
+      </section>
       {user ? <Search /> : null}
     </React.Fragment>
   )
 }
 
-export default TagPage
+export default Home
