@@ -15,7 +15,7 @@ function SaveRating(mRefId, rating, emoji) {
       data: {
           user: Var('userRef'),
           meme: Ref(Collection("memes"), mRefId), //TODO select get real ref, but for now the url is the ref
-          url: Select(
+          url: Select( //TODO: get the url from the rating itself to limit db calls
             ['data','url'],
             Get(Ref(Collection("memes"), mRefId))
             ),
@@ -58,22 +58,5 @@ function UploadMeme(asset ) {
     })
   )
 }
-
-//This returns only the logged in user's memes. 
-// could be faster to edit memes from the profile?
-// function GetAuthenticatedUsersRatedMemes(userAlias) { 
-//   console.log('getting rated memes')
-//   return Let(
-//     {
-//       accountRef: Identity(),
-//       userRef: Select(['data', 'user'], Get(Var('accountRef')))
-//     },
-//     Paginate(
-//       Match(
-//         Index("meme_ratings_by_user"),  Var('userRef')
-//       ), {size: 1000})
-//   )
-// }
-
 
 export { SaveRating, GetUnratedMemes, UploadMeme }

@@ -1,29 +1,41 @@
-import React, { 
-  // useEffect, useContext 
-} from 'react'
-// import SessionContext from '../context/session'
-import { Link } from 'react-router-dom'
-
-// Components
+import React, { useState, useEffect, useContext } from 'react'
+import { useParams, Link } from 'react-router-dom'
+import SessionContext from './../context/session'
+import { faunaQueries } from '../fauna/query-manager'
+import { toast } from 'react-toastify'
+import { Uploader } from '../components/uploader'
+import Asset from '../components/asset'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSearch, faEye, faIcons, faHeadSideVirus, faLaugh, faHeart, faImages, faUserFriends, faBirthdayCake, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons'
 
 const Profiles = () => {
-
-  const profiles = [
-    {alias: `jim`,},
-    { alias: `summer`,},
-    { alias: `n400`, },
-  ];
-  
+  const profiles = [{alias: `jim`,},{ alias: `summer`,},{ alias: `n400`, },];
+  getNextProfileList()
+  async function getNextProfileList (options = {}) {
+    // let excludeMeme = options.excludeMeme
+    console.log( "rjedfs" )
+    return faunaQueries
+      .getAllProfiles()
+      .then(res => {
+        let matchList = res.data
+        console.log(matchList)
+        return matchList
+      })
+      .catch(err => {
+        console.log(err)
+        toast.error('get matches failed')
+      })
+  }
   return (
     <>
       {profiles.map((user, index) => (
-        <h5 key={index}>
-          <Link to={`/profile/${user.alias}`}>{user.alias}'s Page</Link>
-        </h5>
+        <h5 key={index}><Link to={`/profile/${user.alias}`}>{user.alias}</Link></h5>
       ))}
     </>
   );
 };
+export default Profiles
+
 
 
   // const sessionContext = useContext(SessionContext)
@@ -62,4 +74,3 @@ const Profiles = () => {
   //   }
 
 
-export default Profiles

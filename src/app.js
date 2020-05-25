@@ -10,7 +10,7 @@ import User from './pages/user'
 import Profiles from './pages/profiles'
 import Register01 from './pages/register01'
 import Register02 from './pages/register02'
-import Matches from './pages/matches'
+import RateMatches from './pages/matches'
 import Media from './pages/media'
 import Legal from './pages/legal'
 import Layout from './components/layout'
@@ -50,12 +50,11 @@ const App = () => {
               {/* //TODO change the actual path when there is no user instead of just the content, 
                          changing null to a 404 will probably do this */}
               {user ? <Route exact path="/accounts/register02"><Register02 /></Route> : null}
-              {user ? <Route exact path="/matches"><Matches /></Route> : null}
               {user ? <Route path="/profile-edit/:alias" component={ProfileEdit} /> : null}
-              {/* {user ? <Route path="/profile/" component={Profile} /> : null} */}
               <Route exact path="/legal"><Legal /></Route> 
               <Route exact path="/media"><Media /></Route>
               <Route exact path="/profiles" component={Profiles} />
+              {user ? <Route exact path="/matches"><RateMatches /></Route> : null}
               {user ? <Route exact path="/profile/:userAlias" component={Profile} /> : null}
 
 

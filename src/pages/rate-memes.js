@@ -15,6 +15,7 @@ function RateMemes () {
     async function fetchData () {
       if (didCancel) return
       let memeList = await getNextMemeList()
+      //getting stuck here
       let currentMeme = (memeList.size != 0) ? memeList[Symbol.iterator]().next().value[1] : undefined // I don't like this.
       setMemeData({
         currentMeme: currentMeme,
@@ -30,6 +31,7 @@ function RateMemes () {
     return faunaQueries
       .getUnratedMemes()
       .then(res => {
+        // console.log("fetched res:", res.data)
         // Convert the array result (res.data) into a Map object.
         // E.G.:
         // [0: {13 => 'apple'}, 1: {17 => 'pear', 2: {7 => 'banana'}] converts to ...
@@ -39,6 +41,7 @@ function RateMemes () {
         // To access the values by id:
         // myMapObject.get(MyMapId)
         let excludeMemeId = !excludeMeme ? undefined : excludeMeme.id
+        // console.log("excludeMemeId:", excludeMemeId, excludeMeme.ref.id)
         // One of the memes might be already rated because of potential race conditions, ... 
         // ... so we remove it post-database-access.
         let memeList = new Map((res.data).map(function (n) {return [n.id, n]}))
@@ -48,7 +51,7 @@ function RateMemes () {
             if (mId == excludeMemeId) memeList.delete(mId)
           })
         }
-        // console.log(memeList)
+        // console.log("mapped memelist:", memeList)
         return memeList
       })
       .catch(err => {
@@ -62,7 +65,9 @@ function RateMemes () {
     let mId = currentMeme.id
     return faunaQueries
       .saveRating(mId, rating, emoji)
-      .then(res => {console.log ('meme rating saved'); return true})
+      .then(res => {
+        toast.success('__ matches unlocked.');//TODO: make this a count in the nav 
+        return true})
       .catch(err => {
         console.log(err)
         toast.error('Rating save failed.')

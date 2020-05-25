@@ -10,7 +10,8 @@ import {
   refweet,
   comment
 } from './queries/fweets'
-import { UpdateUser, FinishRegistration, GetRatedMemes, GetUserProfile } from './queries/users'
+import { UpdateUser, FinishRegistration, GetRatedMemes, GetUserProfile, 
+  SaveMatchRating, GetAllProfiles } from './queries/users'
 import { SaveRating, GetUnratedMemes, UploadMeme } from './queries/memes'
 import { searchPeopleAndTags } from './queries/search'
 import { follow } from './queries/followers'
@@ -61,30 +62,6 @@ class QueryManager {
     })
   }
 
-  getFweets() {
-    return getFweets(this.client)
-  }
-
-  getFweetsByTag(tagName) {
-    return getFweetsByTag(this.client, tagName)
-  }
-
-  getFweetsByAuthor(user) {
-    return getFweetsByAuthor(this.client, user)
-  }
-
-  createFweet(message, asset) {
-    return createFweet(this.client, message, asset)
-  }
-
-  searchPeopleAndTags(keyword) {
-    return searchPeopleAndTags(this.client, keyword)
-  }
-
-  likeFweet(fweetRef) {
-    return likeFweet(this.client, fweetRef)
-  }
-
   updateUser(
     // email, 
     alias, dob, zip, wantMemes, wantFriends, wantDates, asset01, asset02, asset03, asset04, asset05, asset06) {
@@ -101,6 +78,9 @@ class QueryManager {
   saveRating(meme, rating, emoji) {
     return this.client.query(SaveRating(meme, rating, emoji))
   }
+  saveMatchRating(match, rating) {
+    return this.client.query(SaveMatchRating(match, rating))
+  }
 
   getUserProfile(userAlias) {
     return this.client.query(GetUserProfile(userAlias))
@@ -114,21 +94,17 @@ class QueryManager {
     return this.client.query(GetUnratedMemes())
   }
 
+  getAllProfiles() {
+    return this.client.query(GetAllProfiles())
+  }
+
+
+  GetAllProfiles
+
   uploadMeme(asset) {
     return this.client.query(UploadMeme(asset))
   }
 
-  refweet(fweetRef, message) {
-    return refweet(this.client, fweetRef, message)
-  }
-
-  comment(fweetRef, message) {
-    return comment(this.client, fweetRef, message)
-  }
-
-  follow(authorRef) {
-    return follow(this.client, authorRef)
-  }
 }
 const faunaQueries = new QueryManager()
 export { faunaQueries, QueryManager }
