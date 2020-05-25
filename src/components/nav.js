@@ -81,13 +81,13 @@ const NavMobile = () => {
   if (user) {
     return (
       <nav>
-        <NavLink to='/profile-edit/summer' exact={true}>
+        <NavLink to={'/profile-edit/'+user.alias} exact={true}>
           <FontAwesomeIcon icon={faUserEdit} />
         </NavLink>
-        <NavLink to='/profile' exact={true}>
+        <NavLink to={'/profile/'+user.alias} exact={true}>
           <FontAwesomeIcon icon={faUser} />
         </NavLink>
-        <Link to="/profiles">Profiles</Link>
+        <Link to="/profiles">Matches</Link>
         <NavLink to='/' exact={true}>
           <FontAwesomeIcon icon={faGrin} />
         </NavLink>

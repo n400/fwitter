@@ -72,7 +72,7 @@ const Profile = ({ match, location, props }) => {
     //   let currentMeme = profileData.memeList
     // }
     if (profileData === undefined) return (<React.Fragment><h1>Loading ... </h1></React.Fragment>)
-
+    console.log(profileData)
     let thisProfile = profileData.profileDetails[0].data
     let alias = thisProfile.alias
     let zip = thisProfile.zip
@@ -92,7 +92,7 @@ const Profile = ({ match, location, props }) => {
       let emojiUrl = value[4]
         ratedMemes.push(<>
         <div className="grid-item">
-            <img className="rated-meme" src={"/"+mUrl}/>
+            <img className="rated-meme" src={mUrl}/>
             <div className="meme-rating">
               <img src={"/"+emojiUrl} />
             </div>

@@ -77,31 +77,31 @@ function RegisterAccountExample2(email, password) {
  * However, we also want to create a user automatically when we create an account.
  * We can use a Let to structure our query */
 // eslint-disable-next-line no-unused-vars
-function RegisterExample3(email, password, alias, wantMemes, wantFriends, wantDates, icon, rateLimiting = true) {
-  const RegisterFQLStatement = Let(
-    {
-      user: CreateUser(alias, wantMemes, wantFriends, wantDates, icon),
-      account: Select(
-        ['ref'],
-        Create(Collection('accounts'), {
-          credentials: { password: password },
-          data: {
-            email: email,
-            user: Select(['ref'], Var('user')),
-            wantMemes: wantMemes, 
-            wantFriend: wantFriends, 
-            wantDates: wantDates
-          }
-        })
-      )
-    },
-    { user: Var('user'), account: Var('account') }
-  )
+// function RegisterExample3(email, password, alias, wantMemes, wantFriends, wantDates, icon, rateLimiting = true) {
+//   const RegisterFQLStatement = Let(
+//     {
+//       user: CreateUser(alias, wantMemes, wantFriends, wantDates, icon),
+//       account: Select(
+//         ['ref'],
+//         Create(Collection('accounts'), {
+//           credentials: { password: password },
+//           data: {
+//             email: email,
+//             user: Select(['ref'], Var('user')),
+//             wantMemes: wantMemes, 
+//             wantFriend: wantFriends, 
+//             wantDates: wantDates
+//           }
+//         })
+//       )
+//     },
+//     { user: Var('user'), account: Var('account') }
+//   )
 
-  // Easily compose it and add rate-limiting with the AddRateLimiting.
-  // We do not have an identity yet here so we add a global rate limit instead of Identity based
-  return rateLimiting ? AddRateLimiting('register', RegisterFQLStatement, 'global') : RegisterFQLStatement
-}
+//   // Easily compose it and add rate-limiting with the AddRateLimiting.
+//   // We do not have an identity yet here so we add a global rate limit instead of Identity based
+//   return rateLimiting ? AddRateLimiting('register', RegisterFQLStatement, 'global') : RegisterFQLStatement
+// }
 
 /* Register Example4 - let's extend it to do e-mail validation 
    And follow ourselves at the moment we create the user 
@@ -132,7 +132,7 @@ function RegisterWithUser(email, password, alias, wantMemes, wantFriends, wantDa
 
   const RegisterFQLStatement = Let(
     {
-      user: CreateUser(email, alias, wantMemes, wantFriends, wantDates, icon),
+      user: CreateUser(alias, wantMemes, wantFriends, wantDates),
       account: Select(
         ['ref'],
         Create(Collection('accounts'), {

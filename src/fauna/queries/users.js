@@ -4,10 +4,9 @@ const q = faunadb.query
 const { Lambda, Create, Collection, Update, Let, Get, Identity, Var, Select, Now,
 Paginate,Match,Index } = q
 
-function CreateUser(email, alias, wantMemes, wantFriends, wantDates) {
+function CreateUser(alias, wantMemes, wantFriends, wantDates) {
   return Create(Collection('users'), {
     data: {
-      email: email, //TODO move the email to a settings page. edit settings that way
       alias: alias,
       wantMemes: wantMemes,
       wantFriends: wantFriends,

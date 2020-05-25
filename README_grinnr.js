@@ -1,10 +1,11 @@
 REACT_APP_LOCAL___ADMIN=fnADrXh4zeACE6x7m4IRfzqSExtqoaI1LtIqovpC
 REACT_APP_LOCAL___BOOTSTRAP_FAUNADB_KEY=fnADrb8WMYACE9le640bhudOWQgd-pDxZwGOki_-
 REACT_APP_LOCAL___CHILD_DB_NAME=fwitter
+REACT_APP_LOCAL___CLOUDINARY_CLOUDNAME=n400
+REACT_APP_LOCAL___CLOUDINARY_TEMPLATE=ml_default
+REACT_APP_LOCAL___DEBUG_AUTO_LOGIN_USER=contractparty3@gmail.com
+REACT_APP_LOCAL___DEBUG_AUTO_LOGIN_PWORD=testtest
 
-REACT_APP_LOCAL___ADMIN=fnADsisc2jACE72GP0b5cU9MBF8KRZIoOBhHpjIu
-REACT_APP_LOCAL___BOOTSTRAP_FAUNADB_KEY=fnADsiso54ACElKnbsbRyhP4CFnqkoQstF1LAn_I
-REACT_APP_LOCAL___CHILD_DB_NAME=grinnr_dev
 
 // to make the old fwitter work:
 
@@ -12,9 +13,14 @@ REACT_APP_LOCAL___CHILD_DB_NAME=grinnr_dev
 
 // to make grinnr work if you delete the db and npm run setup:
 // 1. Create meme_ratings collection
-// 2. create a new role that can view/rate memes
-// 3. add users and accounts as members (figure out later which is needed)
-// 4. don't forget to add the meme_Ratings collection and grant the role the required permissions
+// 2. create memes collection and populate it with the Map() function in public\images\memes\jim\filenames.txt
+// 3. create the following indexes:
+      // meme_ratings_by_user
+      // memes_rated_by_user
+// 4. create a new role that can view/rate memes and profiles. grant it required permissions.
+// name: view_and_rate_memes_and_view_profiles
+
+
 
 //delete all meme ratings
 Map(
@@ -46,34 +52,6 @@ CreateIndex({
   ]
 })
 
-//Index from the original fwitter app that we still need. this returns the full profile, all user data
-CreateIndex({
-  name: 'users_by_alias',
-  source: Collection('users'),
-  // We will search on the alias
-  terms: [
-    {
-      field: ['data', 'alias']
-    }
-  ],
-  // no values are added, we'll just return the reference.
-  // unique prevents that two users have the same alias!
-  unique: true,
-  serialized: true
-})
-
-//for getting the memes associated with a particular profile, 
-// we should probably instead get this as part of the call 
-// to get profile info by alias. optimize later.
-CreateIndex({
-  name: "userref_by_alias",
-  source: Collection("users"),
-  terms: [{field: ["data", "alias"]}],
-  values: [
-    { field: ["ref"] }
-  ]
-})
-
 //should we use something like this for the profiles page?
 // CreateIndex({
 //   name: "user_previews_by_alias",
@@ -89,25 +67,6 @@ CreateIndex({
 //     { field: ["ref"] }
 //   ]
 // })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 Paginate(Match(
@@ -211,3 +170,12 @@ Select(
 //   Ref(Collection("memes"), "1")
 // ))
 
+
+
+
+
+CreateFunction({
+  name: "register_with_user2",
+  role: Role("functionrole_register_with_user"),
+  body: Query()
+})
