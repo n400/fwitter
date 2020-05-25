@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
-
+import { useParams } from 'react-router-dom'
 import SessionContext from '../context/session'
 import { faunaQueries } from '../fauna/query-manager'
 import { toast } from 'react-toastify'
@@ -14,6 +14,8 @@ import { faPaperPlane } from '@fortawesome/free-solid-svg-icons'
 import {renderInputField} from '../components/input'
 
 const Profile = props => {
+  const { authorAlias } = useParams()
+
   const sessionContext = useContext(SessionContext)
   const { user } = sessionContext.state
   //TODO (techdebt): change these to useState with an array at some point: https://daveceddia.com/usestate-hook-examples/
@@ -54,20 +56,6 @@ const Profile = props => {
       })
     event.preventDefault()
   }
-
-  const getUsersRatedMemes = () => {
-    // console.log("callinf load", meme_i)
-    faunaQueries
-      .getRatedMemes()
-      .then(res => {
-        console.log("calling it", res.data)
-        return res.data
-      })
-      .catch(err => {
-        console.log(err)
-        toast.error('whats happening')
-      })
-  }
  
   const handleChangeAlias = event => {setAlias(event.target.value)}
   const handleChangeDob = event => {setDob(event.target.value)}
@@ -101,7 +89,9 @@ const Profile = props => {
   useEffect(() => {
     // console.log("res", memes_list)
     // For debugging, autologin to get in faster for testing, add a user and pword in the .env.local
-  }, [])
+  }, [
+    // user, authorAlias
+  ])
 
   return (
     <React.Fragment>

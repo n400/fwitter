@@ -9,46 +9,48 @@
   justify-content: space-between;
   .meme-radios{
     input{display:none;}
+    width:100%;
   }
   .emoji{
     width:100%;
     // height: auto;
-    padding: 1%;
+    // padding: 1%;
     object-fit: contain;
+    border-radius: 200%;
+    width: 60px;
+    background: transparent;
+    box-shadow: $button-box-shadow;
+    position: relative;
+    top: 1px;
+    left: 1px;
   }
   .action-bar-button label{
-    border-radius:200px;
-    background:transparent;
     border:0;
     padding: 0;
     margin: 0;
     height: 100%;
+    border-radius: 200%;
+    background: transparent;
+    // box-shadow: $button-box-shadow;
   }
   .meme_to_rate{
-    background:white;
+    background:black;
     width: 100%;
     max-width: 100%;
     object-fit:contain;
   }
 }
 
-@media only screen and (min-width: $ipad-portrait){
+.desktop-layout{
+  .action-bar.meme-radios{
+    width: 500px;
+  }
   .meme_to_rate{
-    background:black;
-    border:2px solid white;
-    // max-height: 100%;
     width: auto;
     max-width: 100%;
   }
-  .meme-radios{
-    background: #4e4949;
-    // height: 16%;
-    border: $form-border;
-  }
   .rate_meme_element{
     background: transparent;
-    // margin-top: calc(5px + #{$nav-height});
-    // padding-bottom: calc(80px + #{$footer-height});
-    // height: calc(100% - #{$nav-height} - #{$footer-height});
+    height: calc(100vh - #{$nav-height} - #{$footer-height});
   }
 }

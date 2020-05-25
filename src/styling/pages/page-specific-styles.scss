@@ -29,6 +29,7 @@ div[class*="profile"] {
 .action-bar-button{
   height:100%;
   cursor: pointer;
+  label{cursor: pointer;}
   transition:all ease-in-out .3s;
   //TODO: the last-of-type is changing 
   //the height/width of browser, but only the last one
@@ -50,5 +51,12 @@ div[class*="profile"] {
     border-radius: $border-radius;
     height:calc(100vh - #{$nav-height} - #{$action-bar-height});
     box-shadow: $button-box-shadow;
+  }
+}
+.desktop-layout{
+  .swipeableAsset{
+    img {    
+      height:calc(100vh - #{$nav-height} - #{$action-bar-height} - #{$footer-height});
+    }
   }
 }

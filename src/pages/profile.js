@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
-
+import { useParams } from 'react-router-dom'
 import SessionContext from './../context/session'
 import { faunaQueries } from '../fauna/query-manager'
 import { toast } from 'react-toastify'
@@ -12,6 +12,7 @@ import { faSearch, faEye, faIcons, faHeadSideVirus, faLaugh, faHeart, faImages, 
 
 
 const Profile = props => {
+  // const { authorAlias } = useParams()
   const sessionContext = useContext(SessionContext)
   const { user } = sessionContext.state
   //TODO (techdebt): change these to useState with an array at some point: https://daveceddia.com/usestate-hook-examples/
@@ -32,16 +33,16 @@ const Profile = props => {
     async function fetchData () {
       if (didCancel) return
       let memeList = await getNextMemeList()
-      // let currentMeme = 1
-      // let currentMeme = (memeList.size != 0) ? memeList[Symbol.iterator]().next().value[1] : undefined // I don't like this.
-      setMemeData({
+       setMemeData({
         // currentMeme: currentMeme,
         memeList: memeList,
       })
     }
     fetchData()
     return function () {didCancel = true}
-  }, [])
+  }, [
+    // user, authorAlias
+  ])
 
   async function getNextMemeList (options = {}) {
     // let excludeMeme = options.excludeMeme
@@ -90,9 +91,14 @@ const Profile = props => {
       let emojiUrl = value[4]
       console.log("values",value)
       // if( memeData.memeList.length > 0 ){
-        ratedMemes.push(<><div className="ratedMeme">
-        <img src={mUrl}/><img src={emojiUrl} />
-      </div></>)
+        ratedMemes.push(<>
+        <div className="grid-item">
+            <img className="rated-meme" src={mUrl}/>
+            <div className="meme-rating">
+              <img src={emojiUrl} />
+            </div>
+        </div>
+        </>)
       // }else{
       //   ratedMemes.push(<button className="ratedMeme">rate memes to see them here</button>)
       // }
@@ -100,22 +106,21 @@ const Profile = props => {
 
     return (
       <React.Fragment>
-      <div className="split-layout">
-        <div className="main-left">
+      {/* <div className="split-layout"> */}
+        {/* <div className="main-left"> */}
           <div className="profilePhotos">
             <div className="swipeableAsset" onClick={nextPhoto}>
             {asset01 ? <Asset asset={asset01}></Asset> : null}
             </div>
           </div>
           <h1>{user.alias}</h1>
-          <section className="profile-detes">
+          <section className="profile-details">
               <div><FontAwesomeIcon icon={faUserFriends} /><span>{wantMemes ? "memes" : ""}{wantFriends ? "friends" : ""}{wantDates ? "dates" : ""} </span></div>
               <div><FontAwesomeIcon icon={faBirthdayCake} /><span>{dob}</span></div>
               <div><FontAwesomeIcon icon={faMapMarkerAlt} /><span>{zip}</span></div>
-            </section>
-        </div>
-        <div className="memeGrid">{memeData.memeList.length > 0 ? ratedMemes : "button: rate memes"}</div>
-        <div className="main-right profile-text">
+          </section>
+        {/* </div> */}
+        {/* <div className="main-right"> */}
           <div className="profile-description">
             <section>
               <h5 className="section-header">Lorem ipsum dolor sit amet</h5> 
@@ -147,19 +152,13 @@ const Profile = props => {
                 sit amet nisl. Nibh sed pulvinar proin gravida hendrerit 
               </p>
             </section>
-          </div>
-        </div>
-      </div>
+          </div>{/* profile-description */}
+          <div className="grid">{memeData.memeList.length > 0 ? ratedMemes : "button: rate memes"}</div>
+      {/* </div> */}
+      {/* </div> */}
     </React.Fragment>
     )
   }
-
-
-
-
-
-
-
 }
 
 export default Profile

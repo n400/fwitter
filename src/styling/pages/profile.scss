@@ -1,9 +1,9 @@
-.profile-text{
-  padding: 0;
-}
-.profile-detes{
+.profile-details{
   width: 100%;display:flex;
   flex-direction:row;justify-content:space-between;
+  &>div{width:33.33%;text-align:center;
+  svg{margin-right:5px;}
+  }
 }
 
 
@@ -17,13 +17,35 @@ section {
  p{margin-top:0.5rem;}
 }
 
-.memeGrid{
+.grid{
   display: flex;
   flex-wrap: wrap;
-  .ratedMeme{
-    width: 33.33%;
+  justify-content:space-between;
+  width: 100%;
+  .grid-item{
+    width: 32%;
     position:relative;
-    img{}
-    .memeRating{position:absolute;}
+    margin-bottom: 2%;
+    .meme-rating{
+      position:absolute;z-index:1;height: 100%;width: 100%;display:flex;align-items:center;justify-content:center;
+      opacity:0;
+      background:rgba(0, 0, 0, 0.49);
+      border-radius: $border-radius;
+      transition:$generic-transition;
+      &:hover{opacity:1;}
+      img{width:60px;height:60px;}
+    }
+    .rated-meme{
+      border-radius: $border-radius;position:absolute;top:0;height:100%;object-fit:contain;background:black;
+      &.not-mutually-rated{
+        filter: blur(5px);
+      }
+    }
+    &:after{
+        content: "";
+        display: block;
+        padding-bottom: 100%;
+      
+    }
   }
 }

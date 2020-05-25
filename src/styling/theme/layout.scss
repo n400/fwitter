@@ -8,8 +8,8 @@
 img { object-fit: cover; width:100%; }
 a{text-decoration:none;}
 
+.mobile-layout .body-container{background: $background-color;}
 .body-container{
-  background: $background-color;
   position:absolute;display:flex;flex-direction:column;width:100%;}
 
 main.main-wrapper {

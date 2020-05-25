@@ -1,20 +1,21 @@
 import React, { useEffect } from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+// import ReactDOM from "react-dom";
+import { Link, BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import RateMemes from './pages/rate-memes'
 // import Home from './pages/home'
 import Login from './pages/login'
-// import User from './pages/user'
-// import Tag from './pages/tag'
 import ProfileEdit from './pages/profile-edit'
 import Profile from './pages/profile'
+import User from './pages/user'
+import Profiles from './pages/profiles'
 import Register01 from './pages/register01'
 import Register02 from './pages/register02'
 import Matches from './pages/matches'
 import Media from './pages/media'
 import Legal from './pages/legal'
-// import Waitlist from './pages/waitlist'
 import Layout from './components/layout'
 import { SessionProvider, sessionReducer } from './context/session'
+// TODO: // const IndexPage = () => {return <h3>Home Page</h3>;};
 
 const App = () => {
   const [state, dispatch] = React.useReducer(sessionReducer, { user: null })
@@ -49,10 +50,14 @@ const App = () => {
               {/* //TODO change the actual path when there is no user instead of just the content */}
               {user ? <Route exact path="/accounts/register02"><Register02 /></Route> : null}
               {user ? <Route exact path="/matches"><Matches /></Route> : null}
-              {user ? <Route path="/profile-edit/" component={ProfileEdit} /> : null}
+              {user ? <Route path="/profile-edit/:alias" component={ProfileEdit} /> : null}
               {user ? <Route path="/profile/" component={Profile} /> : null}
               <Route exact path="/legal"><Legal /></Route> 
-              <Route exact path="/media"><Media /></Route> 
+              <Route exact path="/media"><Media /></Route>
+              <Route exact path="/profiles" component={Profiles} />
+              <Route exact path="/user/:userAlias" component={User} />
+
+
               <Route path="/">
                 {user ? <RateMemes /> : <Register01 /> }
               </Route>
@@ -64,4 +69,11 @@ const App = () => {
   )
 }
 
+
+
+
+
 export default App
+
+
+

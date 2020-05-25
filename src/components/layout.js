@@ -60,7 +60,7 @@ const DesktopComponent = function (props) {
     <div className={"desktop-layout " + useLocation().pathname}>
       <ToastContainer position={toast.POSITION.BOTTOM_RIGHT} />
       <div className="body-container">
-        <Nav/>
+      <NavMobile />
         <main className="main-wrapper">
           {props.children}
           {/* TODO: hide footer on home page (memes page), and fix how it looks everywhere else  */}

@@ -40,7 +40,7 @@ function GetRatedMemes(user) {
     },
     Paginate(
       Match(
-        Index("meme_ratings_by_user"),  Ref(Collection("users"), "265231995802485267")
+        Index("meme_ratings_by_user"),  Var('userRef')
       ), {size: 1000})
   )
 }

@@ -118,29 +118,29 @@ function RateMemes () {
           </div>
           <div className="action-bar meme-radios">
           <div className="action-bar-button">
-              <label htmlFor={"hate_"+mId}><img className="emoji" src="images/icons/meh-rolling-eyes-regular.svg"/></label>
+              <label htmlFor={"hate_"+mId}><img className="emoji" src="images/icons/emojis_hate.svg"/></label>
               <input type="radio" id={"hate_"+mId} name={mId} 
-              value="hate" onClick={clickRatingButtonEvent} data-emoji="images/icons/meh-rolling-eyes-regular.svg"/>
+              value="hate" onClick={clickRatingButtonEvent} data-emoji="images/icons/emojis_hate.svg"/>
             </div>
             <div className="action-bar-button">
-              <label htmlFor={"dislike_"+mId}><img className="emoji" src="images/icons/meh-rolling-eyes-regular.svg"/></label>
+              <label htmlFor={"dislike_"+mId}><img className="emoji" src="images/icons/emojis_dislike.svg"/></label>
               <input type="radio" id={"dislike_"+mId} name={mId} 
-              value="dislike" onClick={clickRatingButtonEvent}  data-emoji="images/icons/meh-rolling-eyes-regular.svg"/>
+              value="dislike" onClick={clickRatingButtonEvent}  data-emoji="images/icons/emojis_dislike.svg"/>
             </div>
             <div className="action-bar-button">
-              <label htmlFor={"meh_"+mId}><img className="emoji" src="images/icons/meh-rolling-eyes-regular.svg"/></label>
+              <label htmlFor={"meh_"+mId}><img className="emoji" src="images/icons/emojis_meh.svg"/></label>
               <input type="radio" id={"meh_"+mId} name={mId} 
-              value="meh" onClick={clickRatingButtonEvent} data-emoji="images/icons/meh-rolling-eyes-regular.svg" />
+              value="meh" onClick={clickRatingButtonEvent} data-emoji="images/icons/emojis_meh.svg" />
             </div>
             <div className="action-bar-button">
-              <label htmlFor={"like_"+mId}><img className="emoji" src="images/icons/meh-rolling-eyes-regular.svg"/></label>
+              <label htmlFor={"like_"+mId}><img className="emoji" src="images/icons/emojis_like.svg"/></label>
               <input type="radio" id={"like_"+mId} name={mId} 
-              value="like" onClick={clickRatingButtonEvent} data-emoji="images/icons/meh-rolling-eyes-regular.svg" />
+              value="like" onClick={clickRatingButtonEvent} data-emoji="images/icons/emojis_like.svg" />
             </div>
             <div className="action-bar-button">
-              <label htmlFor={"love_"+mId}><img className="emoji" src="images/icons/meh-rolling-eyes-regular.svg"/></label>
+              <label htmlFor={"love_"+mId}><img className="emoji" src="images/icons/emojis_love.svg"/></label>
               <input type="radio" id={"love_"+mId} name={mId} 
-              value="love" onClick={clickRatingButtonEvent}  data-emoji="images/icons/meh-rolling-eyes-regular.svg"/>
+              value="love" onClick={clickRatingButtonEvent}  data-emoji="images/icons/emojis_love.svg"/>
             </div>
           </div>
       </div>  

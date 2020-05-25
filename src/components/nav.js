@@ -1,22 +1,11 @@
 import React, { useContext } from 'react'
 import { toast } from 'react-toastify'
-import { NavLink, Link, useLocation } from 'react-router-dom'
+import { NavLink, Link, useLocation, useHistory } from 'react-router-dom'
 import SessionContext from './../context/session'
 import { faunaQueries } from '../fauna/query-manager'
 import { isFunction } from '../fauna/helpers/util'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGrin, faGrinHeart, faUser, faUserEdit, faComments, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
-
-// const renderLogo = sessionContext => {
-//   return (
-//     <li><Link className="logo" to='/'>trash</Link></li>
-//     // <div className="fauna-logo">
-//     //   <Link className="logo-container" to="/">
-//     //     <img alt="Fauna logo" src="/images/logo-fauna-white.svg" />
-//     //   </Link>
-//     // </div>
-//   )
-// }
 
 function SignupOrLoginOrLogout(sessionContext) {
   const { user } = sessionContext.state
@@ -83,28 +72,35 @@ const renderLink = ( link, sessionContext ) => {
 
 const NavMobile = () => {
   const sessionContext = useContext(SessionContext)
-
-
   const { user } = sessionContext.state
   const location = useLocation();
+
+  // const history = useHistory()
+  // const handleTagClick = (event, searchResult) => {
+  //   history.push(`/tags/corona`)
+  //   event.stopPropagation()
+  // }
+
   const linkInfo = (location.pathname === "/accounts/login")
   ? { linkText: 'signup', link: '/accounts/register' }
   : { linkText: 'login', link: '/accounts/login' }
   if (user) {
     return (
       <nav>
-        <NavLink to='/profile-edit' exact={true}>
+        <NavLink to='/profile-edit/summer' exact={true}>
           <FontAwesomeIcon icon={faUserEdit} />
         </NavLink>
         <NavLink to='/profile' exact={true}>
           <FontAwesomeIcon icon={faUser} />
         </NavLink>
+        <Link to="/profiles">Profiles</Link>
         <NavLink to='/' exact={true}>
           <FontAwesomeIcon icon={faGrin} />
         </NavLink>
         <NavLink to='/matches' exact={true}>
           <FontAwesomeIcon icon={faComments} />
         </NavLink>
+        
 
       </nav>
     ) 
@@ -112,8 +108,9 @@ const NavMobile = () => {
     return(
       <nav>
         <NavLink className="logo" to='/' exact={true}>
-        <FontAwesomeIcon icon={faGrin} />
+          <FontAwesomeIcon icon={faGrin} />
         </NavLink>
+        <Link to="/profiles">Profiles</Link>
         <Link className="button" to={linkInfo.link}> {linkInfo.linkText}</Link>
       </nav>
     )
