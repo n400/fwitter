@@ -10,8 +10,8 @@ import {
   refweet,
   comment
 } from './queries/fweets'
-import { UpdateUser, FinishRegistration } from './queries/users'
-import { SaveRating, GetUnratedMemes, GetRatedMemes, UploadMeme } from './queries/memes'
+import { UpdateUser, FinishRegistration, GetRatedMemes, GetUserProfile } from './queries/users'
+import { SaveRating, GetUnratedMemes, UploadMeme } from './queries/memes'
 import { searchPeopleAndTags } from './queries/search'
 import { follow } from './queries/followers'
 
@@ -102,12 +102,16 @@ class QueryManager {
     return this.client.query(SaveRating(meme, rating, emoji))
   }
 
-  getUnratedMemes() {
-    return this.client.query(GetUnratedMemes())
+  getUserProfile(userAlias) {
+    return this.client.query(GetUserProfile(userAlias))
+  }
+  
+  getRatedMemes(userAlias) {
+    return this.client.query(GetRatedMemes(userAlias))
   }
 
-  getRatedMemes() {
-    return this.client.query(GetRatedMemes())
+  getUnratedMemes() {
+    return this.client.query(GetUnratedMemes())
   }
 
   uploadMeme(asset) {

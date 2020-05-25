@@ -3,105 +3,101 @@ import { useParams } from 'react-router-dom'
 import SessionContext from './../context/session'
 import { faunaQueries } from '../fauna/query-manager'
 import { toast } from 'react-toastify'
-
-
 import { Uploader } from '../components/uploader'
 import Asset from '../components/asset'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch, faEye, faIcons, faHeadSideVirus, faLaugh, faHeart, faImages, faUserFriends, faBirthdayCake, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons'
 
-
-const Profile = props => {
-  // const { authorAlias } = useParams()
+const Profile = ({ match, location, props }) => {
   const sessionContext = useContext(SessionContext)
-  const { user } = sessionContext.state
-  //TODO (techdebt): change these to useState with an array at some point: https://daveceddia.com/usestate-hook-examples/
-  const [wantMemes, setWantMemes] = useState ((user && user.wantMemes) ? user.wantMemes : '')
-  const [wantFriends, setWantFriends] = useState ((user && user.wantFriends) ? user.wantFriends : '')
-  const [wantDates, setWantDates] = useState ((user && user.wantDates) ? user.wantDates : '')
-  //TODO (need to learn this): const [email, setEmail] = useState((user && user.wantDates) ? user.email : '')
-  const [alias, setAlias] = useState(user ? user.alias : '')
-  const [dob, setDob] = useState((user && user.zip) ? user.dob : '')
-  const [zip, setZip] = useState ((user && user.zip) ? user.zip : '')
-  const [asset01, setAsset01] = useState((user && user.asset01) ? user.asset01 : '')
-  const [asset02, setAsset02] = useState((user && user.asset02) ? user.asset02 : '')
-
-  const [memeData, setMemeData] = useState(undefined)
+  //"user" refers to The logged in user, NOT the profile
+  //We will need this to filter the memes
+  const { user } = sessionContext.state 
+  const profileToFetch = match.params.userAlias
+ 
+  const [profileData, setProfileData] = useState(undefined)
+  // profileData is still undefined until the render
 
   useEffect(() => {
     let didCancel = false
     async function fetchData () {
       if (didCancel) return
+      //TODO for performance, we could make memes load after the other data?
       let memeList = await getNextMemeList()
-       setMemeData({
+      let fetchedProfile = await getUserProfile()
+       setProfileData({
         // currentMeme: currentMeme,
         memeList: memeList,
+        profileDetails: fetchedProfile
       })
+      //profileData is still undefined the first time this useEffect runs
     }
     fetchData()
     return function () {didCancel = true}
-  }, [
-    // user, authorAlias
-  ])
+  }, [])
 
   async function getNextMemeList (options = {}) {
     // let excludeMeme = options.excludeMeme
+    console.log( "gnmt:",profileToFetch )
     return faunaQueries
-      .getRatedMemes()
+      .getRatedMemes(profileToFetch)
       .then(res => {
         let memeList = res.data
         return memeList
       })
       .catch(err => {
         console.log(err)
-        toast.error('What\'s happeniiing???')
+        toast.error('get memes failed')
       })
   }
-
-  async function handleSaveRating  ({currentMeme, rating}) {
-    let mId = currentMeme.id
+  async function getUserProfile (options = {}) {
+    // let excludeMeme = options.excludeMeme
+    console.log( "gup",profileToFetch )
     return faunaQueries
-      .saveRating(mId, rating, user.email)
-      .then(res => {console.log ('meme rating saved'); return true})
+      .getUserProfile(profileToFetch)
+      .then(res => {
+        let fetchedProfile = res.data
+        return fetchedProfile
+      })
       .catch(err => {
         console.log(err)
-        toast.error('Rating save failed.')
+        toast.error('get profile failed')
       })
   }
-
   const nextPhoto = event => {console.log("change photo", event)}
 
   return renderProfile()
   function renderProfile () {
     // async function clickRatingButtonEvent (evt) {
-    //   let currentMeme = memeData.memeList
+    //   let currentMeme = profileData.memeList
     // }
-    if (memeData === undefined) return (<React.Fragment><div>Loading ... </div></React.Fragment>)
-    // if (memeData.currentMeme === undefined) return (<React.Fragment><div>Ran out of memes!</div></React.Fragment>)
-    let mId = "url.jpg"
-    console.log("memeData", memeData.memeList)
+    if (profileData === undefined) return (<React.Fragment><h1>Loading ... </h1></React.Fragment>)
 
-    // const elements = ['one', 'two', 'three'];
+    let thisProfile = profileData.profileDetails[0].data
+    let alias = thisProfile.alias
+    let zip = thisProfile.zip
+    let dob = thisProfile.dob
+    let asset01 = thisProfile.asset01
+    let wantMemes = thisProfile.wantMemes
+    let wantFriends = thisProfile.wantFriends
+    let wantDates = thisProfile.wantDates
+
+    // creates the meme element and pushes the memes into it
+    //TODO: pull into its own file so we can filter profile memes by logged in user's memes
     const ratedMemes = []
-    console.log("length: ", memeData.memeList.length > 0)
-    for (const [index, value] of memeData.memeList.entries()) {
+    for (const [index, value] of profileData.memeList.entries()) {
       let mId = value[0]
       let mRating = value[1]
       let mUrl = value[2]
       let emojiUrl = value[4]
-      console.log("values",value)
-      // if( memeData.memeList.length > 0 ){
         ratedMemes.push(<>
         <div className="grid-item">
-            <img className="rated-meme" src={mUrl}/>
+            <img className="rated-meme" src={"/"+mUrl}/>
             <div className="meme-rating">
-              <img src={emojiUrl} />
+              <img src={"/"+emojiUrl} />
             </div>
         </div>
         </>)
-      // }else{
-      //   ratedMemes.push(<button className="ratedMeme">rate memes to see them here</button>)
-      // }
     }
 
     return (
@@ -113,12 +109,13 @@ const Profile = props => {
             {asset01 ? <Asset asset={asset01}></Asset> : null}
             </div>
           </div>
-          <h1>{user.alias}</h1>
+          <h1>{alias}</h1>
           <section className="profile-details">
               <div><FontAwesomeIcon icon={faUserFriends} /><span>{wantMemes ? "memes" : ""}{wantFriends ? "friends" : ""}{wantDates ? "dates" : ""} </span></div>
               <div><FontAwesomeIcon icon={faBirthdayCake} /><span>{dob}</span></div>
               <div><FontAwesomeIcon icon={faMapMarkerAlt} /><span>{zip}</span></div>
           </section>
+         
         {/* </div> */}
         {/* <div className="main-right"> */}
           <div className="profile-description">
@@ -153,7 +150,7 @@ const Profile = props => {
               </p>
             </section>
           </div>{/* profile-description */}
-          <div className="grid">{memeData.memeList.length > 0 ? ratedMemes : "button: rate memes"}</div>
+          <div className="grid">{profileData.memeList.length > 0 ? ratedMemes : "button: rate memes"}</div>
       {/* </div> */}
       {/* </div> */}
     </React.Fragment>

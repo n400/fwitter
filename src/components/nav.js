@@ -75,12 +75,6 @@ const NavMobile = () => {
   const { user } = sessionContext.state
   const location = useLocation();
 
-  // const history = useHistory()
-  // const handleTagClick = (event, searchResult) => {
-  //   history.push(`/tags/corona`)
-  //   event.stopPropagation()
-  // }
-
   const linkInfo = (location.pathname === "/accounts/login")
   ? { linkText: 'signup', link: '/accounts/register' }
   : { linkText: 'login', link: '/accounts/login' }
@@ -110,7 +104,6 @@ const NavMobile = () => {
         <NavLink className="logo" to='/' exact={true}>
           <FontAwesomeIcon icon={faGrin} />
         </NavLink>
-        <Link to="/profiles">Profiles</Link>
         <Link className="button" to={linkInfo.link}> {linkInfo.linkText}</Link>
       </nav>
     )

@@ -9,9 +9,10 @@ import { Link } from 'react-router-dom'
 
 const User = ({ match, location }) => {
   // var {params: { userId } } = match;
-  // console.log( match.params[userId].name )
+  console.log( match.params.userAlias )
   return (
     <><section>
+      <h4>{match.params.userAlias}</h4>
           <p>
         <strong>Match Props: </strong>
         <code>{JSON.stringify(match, null, 2)}</code>

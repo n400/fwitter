@@ -46,6 +46,69 @@ CreateIndex({
   ]
 })
 
+//Index from the original fwitter app that we still need. this returns the full profile, all user data
+CreateIndex({
+  name: 'users_by_alias',
+  source: Collection('users'),
+  // We will search on the alias
+  terms: [
+    {
+      field: ['data', 'alias']
+    }
+  ],
+  // no values are added, we'll just return the reference.
+  // unique prevents that two users have the same alias!
+  unique: true,
+  serialized: true
+})
+
+//for getting the memes associated with a particular profile, 
+// we should probably instead get this as part of the call 
+// to get profile info by alias. optimize later.
+CreateIndex({
+  name: "userref_by_alias",
+  source: Collection("users"),
+  terms: [{field: ["data", "alias"]}],
+  values: [
+    { field: ["ref"] }
+  ]
+})
+
+//should we use something like this for the profiles page?
+// CreateIndex({
+//   name: "user_previews_by_alias",
+//   source: Collection("users"),
+//   terms: [{field: ["data", "alias"]}],
+//   values: [
+//     // { field: ["data", "email"] },
+//     { field: ["data", "wantMemes"] },
+//     { field: ["data", "wantFriends"] },
+//     { field: ["data", "wantDates"] },
+//     { field: ["data", "dob"] },
+//     { field: ["data", "asset01"] },
+//     { field: ["ref"] }
+//   ]
+// })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 Paginate(Match(
   Index("meme_ratings_by_user"), Ref(Collection("users"), "265231995802485267")

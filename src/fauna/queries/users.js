@@ -1,12 +1,13 @@
 import faunadb from 'faunadb'
 
 const q = faunadb.query
-const { Create, Collection, Update, Let, Get, Identity, Var, Select, Now } = q
+const { Lambda, Create, Collection, Update, Let, Get, Identity, Var, Select, Now,
+Paginate,Match,Index } = q
 
 function CreateUser(email, alias, wantMemes, wantFriends, wantDates) {
   return Create(Collection('users'), {
     data: {
-      email: email,
+      email: email, //TODO move the email to a settings page. edit settings that way
       alias: alias,
       wantMemes: wantMemes,
       wantFriends: wantFriends,
@@ -21,7 +22,7 @@ function CreateUser(email, alias, wantMemes, wantFriends, wantDates) {
  */
 
 function FinishRegistration(dob, zip) {
-  console.log('updating', dob, zip)
+  // console.log('updating', dob, zip)
   return Let(
     {
       accountRef: Identity(),
@@ -47,10 +48,10 @@ function UpdateUser(
     },
     Update(Var('userRef'), {
       data: {
-        // email: email,
+        // email: email, //TODO move the email to a settings page. edit settings that way
         alias: alias,
         dob: dob,
-        zip: zip,
+        zip: zip, //same with zip some day, but not right now
         wantMemes: wantMemes,
         wantFriends: wantFriends,
         wantDates: wantDates,
@@ -66,5 +67,42 @@ function UpdateUser(
   )
 }
 
+// console.log('getting user profile', userAlias)
+      // userRef: Select(['data', 'user'], Get(Var('accountRef')))
 
-export { CreateUser, UpdateUser, FinishRegistration }
+function GetUserProfile(userAlias) {
+  console.log('getting user profile', userAlias)
+  return Let(
+    {
+      accountRef: Identity(),
+      userAlias: userAlias
+    },
+    q.Map(
+      Paginate(
+        Match(
+          Index("users_by_alias"),  Var('userAlias')
+        ), {size: 100}),
+      Lambda("i", Get(Var("i")))
+    )
+  )
+}
+// Ask Brecht or someone: Should i be saving the meme ratings 
+// in the user collection instead of a separate meme_ratings collection?
+function GetRatedMemes(userAlias) { 
+  console.log('getting rated memes for:', userAlias)
+  return Let(
+    {
+      userRef: Select(['ref'],
+        Get(Match(
+          Index("users_by_alias"), userAlias
+        ))
+      )
+    },
+    Paginate(
+      Match(
+        Index("meme_ratings_by_user"),  Var('userRef')
+      ), {size: 1000})
+  )
+}
+
+export { CreateUser, UpdateUser, FinishRegistration, GetUserProfile, GetRatedMemes }

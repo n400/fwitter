@@ -48,6 +48,7 @@ function RateMemes () {
             if (mId == excludeMemeId) memeList.delete(mId)
           })
         }
+        // console.log(memeList)
         return memeList
       })
       .catch(err => {
@@ -55,9 +56,9 @@ function RateMemes () {
         toast.error('What\'s happeniiing???')
       })
   }
-
+  
   async function handleSaveRating  ({currentMeme, rating, emoji}) {
-    console.log("emoji",emoji)
+    // console.log("emoji",emoji)
     let mId = currentMeme.id
     return faunaQueries
       .saveRating(mId, rating, emoji)
@@ -101,7 +102,7 @@ function RateMemes () {
   function renderMeme () {
     async function clickRatingButtonEvent (evt) {
       let currentMeme = memeData.currentMeme
-      console.log("evt",evt.target.dataset["emoji"])
+      // console.log("evt",evt.target.dataset["emoji"])
       // let emoji = evt.target.dataset[emoji]
       // No await here in handleSaveRating because we want it to run at the same time as "loadNextMeme".
       let success = handleSaveRating({currentMeme: currentMeme, rating: evt.target.value, emoji: evt.target.dataset["emoji"]})

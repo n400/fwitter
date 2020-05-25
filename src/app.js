@@ -47,15 +47,16 @@ const App = () => {
               <Route exact path="/accounts/register">
                 <Register01 />
               </Route>
-              {/* //TODO change the actual path when there is no user instead of just the content */}
+              {/* //TODO change the actual path when there is no user instead of just the content, 
+                         changing null to a 404 will probably do this */}
               {user ? <Route exact path="/accounts/register02"><Register02 /></Route> : null}
               {user ? <Route exact path="/matches"><Matches /></Route> : null}
               {user ? <Route path="/profile-edit/:alias" component={ProfileEdit} /> : null}
-              {user ? <Route path="/profile/" component={Profile} /> : null}
+              {/* {user ? <Route path="/profile/" component={Profile} /> : null} */}
               <Route exact path="/legal"><Legal /></Route> 
               <Route exact path="/media"><Media /></Route>
               <Route exact path="/profiles" component={Profiles} />
-              <Route exact path="/user/:userAlias" component={User} />
+              {user ? <Route exact path="/profile/:userAlias" component={Profile} /> : null}
 
 
               <Route path="/">
