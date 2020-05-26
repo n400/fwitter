@@ -2,7 +2,7 @@ import faunadb from 'faunadb'
 
 const q = faunadb.query
 const { Lambda, Create, Collection, Documents, Update, Let, Get, Identity, Var, Select, Now,
-Paginate,Match,Index } = q
+Paginate,Match,Index, Ref } = q
 
 function CreateUser(alias, wantMemes, wantFriends, wantDates) {
   return Create(Collection('users'), {
@@ -110,14 +110,14 @@ function SaveMatchRating(matchRef, rating) {
   return Let(
     {
       accountRef: Identity(),
-      // userRef: Select(['data', 'user'], Get(Var('accountRef'))),
+      userRef: Select(['data', 'user'], Get(Var('accountRef'))),
       // matchRef: Select(['ref'],Get(Match(Index("users_by_alias"), matchAlias)))
     },
     Create(Collection('match_ratings'), {
       data: {
-          // user: Var('userRef'),
+          user: Var('userRef'),
           // match: Var('matchRef'),
-          // match: Ref(Collection("memes"), matchAlias),
+          match: Ref(Collection("users"), matchRef),
           match_rating: rating,
           // discovered: path to see alias of profile where they found it, if relevant
           created: Now()

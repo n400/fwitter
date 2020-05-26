@@ -31,7 +31,7 @@ function RateMemes () {
     return faunaQueries
       .getUnratedMemes()
       .then(res => {
-        // console.log("fetched res:", res.data)
+        console.log("fetched memes res:", res.data)
         // Convert the array result (res.data) into a Map object.
         // E.G.:
         // [0: {13 => 'apple'}, 1: {17 => 'pear', 2: {7 => 'banana'}] converts to ...
@@ -51,7 +51,7 @@ function RateMemes () {
             if (mId == excludeMemeId) memeList.delete(mId)
           })
         }
-        // console.log("mapped memelist:", memeList)
+        console.log("mapped memelist:", memeList)
         return memeList
       })
       .catch(err => {

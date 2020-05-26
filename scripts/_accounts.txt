@@ -1,0 +1,44 @@
+google sheet:
+https://docs.google.com/spreadsheets/d/1sKpUomrkZ50xiUmBG8DHAZDrysCBtlq9gVZsqgE34P0/edit#gid=0
+
+
+
+Map(
+  [
+[ "1",{email: "test1@grinnr.com",user: Ref(Collection("users"), "1")}],
+[ "2",{email: "test2@grinnr.com",user: Ref(Collection("users"), "2")}],
+[ "3",{email: "test3@grinnr.com",user: Ref(Collection("users"), "3")}],
+[ "4",{email: "test4@grinnr.com",user: Ref(Collection("users"), "4")}],
+[ "5",{email: "test5@grinnr.com",user: Ref(Collection("users"), "5")}],
+[ "6",{email: "test6@grinnr.com",user: Ref(Collection("users"), "6")}],
+[ "7",{email: "test7@grinnr.com",user: Ref(Collection("users"), "7")}],
+[ "8",{email: "test8@grinnr.com",user: Ref(Collection("users"), "8")}],
+[ "9",{email: "test9@grinnr.com",user: Ref(Collection("users"), "9")}],
+[ "10",{email: "test10@grinnr.com",user: Ref(Collection("users"), "10")}],
+[ "11",{email: "test11@grinnr.com",user: Ref(Collection("users"), "11")}],
+[ "12",{email: "test12@grinnr.com",user: Ref(Collection("users"), "12")}],
+[ "13",{email: "test13@grinnr.com",user: Ref(Collection("users"), "13")}],
+[ "14",{email: "test14@grinnr.com",user: Ref(Collection("users"), "14")}],
+[ "15",{email: "test15@grinnr.com",user: Ref(Collection("users"), "15")}],
+[ "16",{email: "test16@grinnr.com",user: Ref(Collection("users"), "16")}],
+[ "17",{email: "test17@grinnr.com",user: Ref(Collection("users"), "17")}],
+[ "18",{email: "test18@grinnr.com",user: Ref(Collection("users"), "18")}],
+[ "19",{email: "test19@grinnr.com",user: Ref(Collection("users"), "19")}],
+[ "20",{email: "test20@grinnr.com",user: Ref(Collection("users"), "20")}],
+[ "21",{email: "test21@grinnr.com",user: Ref(Collection("users"), "21")}],
+[ "22",{email: "test22@grinnr.com",user: Ref(Collection("users"), "22")}],
+[ "23",{email: "test23@grinnr.com",user: Ref(Collection("users"), "23")}],
+[ "24",{email: "test24@grinnr.com",user: Ref(Collection("users"), "24")}],
+[ "25",{email: "test25@grinnr.com",user: Ref(Collection("users"), "25")}],
+[ "26",{email: "test26@grinnr.com",user: Ref(Collection("users"), "26")}],
+[ "27",{email: "test27@grinnr.com",user: Ref(Collection("users"), "27")}],
+[ "28",{email: "test28@grinnr.com",user: Ref(Collection("users"), "28")}],
+[ "29",{email: "test29@grinnr.com",user: Ref(Collection("users"), "29")}],
+[ "30",{email: "test30@grinnr.com",user: Ref(Collection("users"), "30")}],
+],
+  Lambda(
+    ["id", "data"],
+    Create(Ref(Collection("accounts"), Var("id")), { data: Var("data") })
+  )
+)
+

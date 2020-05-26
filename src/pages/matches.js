@@ -29,8 +29,10 @@ function RateMatches () {
     let excludeMeme = options.excludeMeme
     return faunaQueries
       .getAllProfiles()
+      // .getUnratedMemes()
       .then(res => {
-        console.log("fetched res:", res.data)
+        console.log("fetched matches res:", res.data)
+        // console.log("fetched res:", res.data)
         // Convert the array result (res.data) into a Map object.
         // E.G.:
         // [0: {13 => 'apple'}, 1: {17 => 'pear', 2: {7 => 'banana'}] converts to ...
@@ -39,17 +41,23 @@ function RateMatches () {
         // Array.from(myMapObject)[index][1]
         // To access the values by id:
         // myMapObject.get(MyMapId)
+
+        //// ??TODO: this "if (excludeMemeId)" var probably doesnt work anymore. 
+        // probably needs to be excludeMeme.ref.id
         let excludeMemeId = !excludeMeme ? undefined : excludeMeme.id
+        // console.log("excludeMemeId:", excludeMemeId, excludeMeme.ref.id)
         // One of the memes might be already rated because of potential race conditions, ... 
         // ... so we remove it post-database-access.
         let memeList = new Map((res.data).map(function (n) {return [n.id, n]}))
+        //// ??TODO: this "if (excludeMemeId)" function probably doesnt work anymore because 
+        //// the match data structure is a little different from the meme data structure
         if (excludeMemeId) {
           Array.from(memeList).some(function (n) {
             let mId = n[0]
             if (mId == excludeMemeId) memeList.delete(mId)
           })
         }
-        console.log("mapped memelist:", memeList)
+        console.log("mapped matchlist:", memeList)
         return memeList
       })
       .catch(err => {
@@ -60,7 +68,8 @@ function RateMatches () {
   
   async function handleSaveRating  ({currentMeme, rating}) {
     // console.log("emoji",emoji)
-    let mId = currentMeme.id
+    let mId = currentMeme.ref.id
+    console.log(mId)
     return faunaQueries
       .saveMatchRating(mId, rating)
       .then(res => {
@@ -114,11 +123,13 @@ function RateMatches () {
     if (memeData === undefined) return (<React.Fragment><div>Loading ... </div></React.Fragment>)
     if (memeData.currentMeme === undefined) return (<React.Fragment><div>Ran out of matches!</div></React.Fragment>)
     let mId = memeData.currentMeme.ref.id
-    console.log("let memeData.currentMeme is", memeData.currentMeme)
+    // let mId = memeData.currentMeme.ref.id
+    // console.log("let memeData.currentMeme is", memeData.currentMeme)
     return (
       <React.Fragment>
         <div className="rate_meme_element">
           <div className="swipeableAsset">
+            {mId}
             <img className="meme_to_rate" alt="" src={memeData.currentMeme.data.asset01.url} />
           </div>
           <div className="action-bar meme-radios">
