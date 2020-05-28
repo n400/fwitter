@@ -67,35 +67,60 @@ CreateIndex({
 
 
 
-// correlation coefficient should be (i have not tested it):
+// correlation coefficient. i think the numbers look wrong, but it doesnt error out.
 Divide(
-  Sum(
+  Select(["data",0], Sum(
     // for each shared mid
     Map(
+      Paginate(
+        Intersection(
+          Match(Index("mid_by_uid"), Ref(Collection("users"), "1") ),
+          Match(Index("mid_by_uid"), Ref(Collection("users"), "2"))
+        )
+      ),
+      // sum the products of the standardized values of each observation
+      Lambda(
+        'mid',
+        Let(
+          { first_z: 
+                Let({ // get the rating
+                      rating: Select(["data","rating"], Get(Match(Index("rating_by_mid_and_uid"), [  Ref(Collection("memes"),"1"), Ref(Collection("users"), "1")  ]  )))
+                    },
+                    //get the z-score from the rating
+                    Select(['data', ToString(Var("rating"))],Get(Match(Index("ms_by_meme"), Ref(Collection("memes"), "1")  )))
+                ),
+            second_z: 
+                Let({ // get the rating
+                      rating: Select(["data","rating"], Get(Match(Index("rating_by_mid_and_uid"), [  Ref(Collection("memes"),"1"), Ref(Collection("users"), "1")  ]  )))
+                    },
+                    //get the z-score from the rating
+                    Select(['data', ToString(Var("rating"))],Get(Match(Index("ms_by_meme"), Ref(Collection("memes"), "1")  )))
+                ),
+          },
+          Multiply( 
+            Var("first_z"), 
+            Var("second_z") 
+          )
+        )
+      )
+    )
+  )
+  )
+  ,
+  //divide by n-1
+  Count(Subtract(
       Intersection(
         Match(Index("mid_by_uid"), Ref(Collection("users"), "1") ),
         Match(Index("mid_by_uid"), Ref(Collection("users"), "2"))
-      ), //returns list of meme refs
-      Multiply( 
-        Var("first_z"), 
-        Var("second_z") 
-      )
-    )
-  ),
-  Count(  
-    Intersection(
-      Match(Index("mid_by_uid"), Ref(Collection("users"), "1") ),
-      Match(Index("mid_by_uid"), Ref(Collection("users"), "2"))
-    )       
+      ), 1)       
   )
 )
 
 
-    
-// get the user's meme rating
-// Match(Index("rating_by_mid_and_uid"), [  Ref(Collection("memes"), "1"), Ref(Collection("users"), "1")  ]  )
-// Then get the z-score for that rating
-Select(['data', 'sd'],Get(Match(Index("ms_by_meme"), Ref(Collection("memes"), "1")  )))
+
+
+
+
 
 
 ,

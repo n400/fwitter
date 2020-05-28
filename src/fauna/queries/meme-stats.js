@@ -1,3 +1,4 @@
+// Gets mean, standard deviation, and z-scores
 
 Map(
   // for every meme (or the first 1000 anyway)
@@ -33,11 +34,11 @@ Map(
                 meme: Var("mid"),
                 mean: Var("mean"),
                 sd: Var("sd"),
-                z_1: Divide( Subtract(1,Var("mean")),Var("sd") ),
-                z_2: Divide( Subtract(2,Var("mean")),Var("sd") ),
-                z_3: Divide( Subtract(3,Var("mean")),Var("sd") ),
-                z_4: Divide( Subtract(4,Var("mean")),Var("sd") ),
-                z_5: Divide( Subtract(5,Var("mean")),Var("sd") ),
+                1: Divide( Subtract(1,Var("mean")),Var("sd") ),
+                2: Divide( Subtract(2,Var("mean")),Var("sd") ),
+                3: Divide( Subtract(3,Var("mean")),Var("sd") ),
+                4: Divide( Subtract(4,Var("mean")),Var("sd") ),
+                5: Divide( Subtract(5,Var("mean")),Var("sd") ),
               },
             },
           ),
@@ -48,11 +49,11 @@ Map(
               data: {
                 mean: Var("mean"),
                 sd: Var("sd"),
-                z_1: Divide( Subtract(1,Var("mean")),Var("sd") ),
-                z_2: Divide( Subtract(2,Var("mean")),Var("sd") ),
-                z_3: Divide( Subtract(3,Var("mean")),Var("sd") ),
-                z_4: Divide( Subtract(4,Var("mean")),Var("sd") ),
-                z_5: Divide( Subtract(5,Var("mean")),Var("sd") ),
+                1: Divide( Subtract(1,Var("mean")),Var("sd") ),
+                2: Divide( Subtract(2,Var("mean")),Var("sd") ),
+                3: Divide( Subtract(3,Var("mean")),Var("sd") ),
+                4: Divide( Subtract(4,Var("mean")),Var("sd") ),
+                5: Divide( Subtract(5,Var("mean")),Var("sd") ),
               }
             }
           )
