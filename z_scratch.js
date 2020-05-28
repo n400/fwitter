@@ -67,7 +67,8 @@ CreateIndex({
 
 
 
-// correlation coefficient. i think the numbers look wrong, but it doesnt error out.
+// TODO: correlation coefficient.  works with size: 1, but not at default.
+// needs some if isnotempty in the z definitions. figure it out
 Divide(
   Select(["data",0], Sum(
     // for each shared mid
@@ -76,25 +77,26 @@ Divide(
         Intersection(
           Match(Index("mid_by_uid"), Ref(Collection("users"), "1") ),
           Match(Index("mid_by_uid"), Ref(Collection("users"), "2"))
-        )
+        ), {size:1}
       ),
+      
       // sum the products of the standardized values of each observation
       Lambda(
         'mid',
         Let(
           { first_z: 
                 Let({ // get the rating
-                      rating: Select(["data","rating"], Get(Match(Index("rating_by_mid_and_uid"), [  Ref(Collection("memes"),"1"), Ref(Collection("users"), "1")  ]  )))
+                      rating: Select(["data","rating"], Get(Match(Index("rating_by_mid_and_uid"), [  Var("mid"), Ref(Collection("users"), "1")  ]  )))
                     },
                     //get the z-score from the rating
-                    Select(['data', ToString(Var("rating"))],Get(Match(Index("ms_by_meme"), Ref(Collection("memes"), "1")  )))
+                    Select(['data', ToString(Var("rating"))],Get(Match(Index("ms_by_meme"), Var("mid")  )))
                 ),
             second_z: 
                 Let({ // get the rating
-                      rating: Select(["data","rating"], Get(Match(Index("rating_by_mid_and_uid"), [  Ref(Collection("memes"),"1"), Ref(Collection("users"), "1")  ]  )))
+                      rating: Select(["data","rating"], Get(Match(Index("rating_by_mid_and_uid"), [  Var("mid"), Ref(Collection("users"), "1")  ]  )))
                     },
                     //get the z-score from the rating
-                    Select(['data', ToString(Var("rating"))],Get(Match(Index("ms_by_meme"), Ref(Collection("memes"), "1")  )))
+                    Select(['data', ToString(Var("rating"))],Get(Match(Index("ms_by_meme"), Var("mid")  )))
                 ),
           },
           Multiply( 
@@ -107,12 +109,12 @@ Divide(
   )
   )
   ,
-  //divide by n-1
-  Count(Subtract(
+  //divide by n... TODO: needs to be changed to n-1
+  Count(
       Intersection(
         Match(Index("mid_by_uid"), Ref(Collection("users"), "1") ),
         Match(Index("mid_by_uid"), Ref(Collection("users"), "2"))
-      ), 1)       
+      )  
   )
 )
 
