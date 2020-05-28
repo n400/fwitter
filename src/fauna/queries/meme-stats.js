@@ -65,60 +65,46 @@ Map(
 )
 
 
-
-
-
-// TODO: correlation coefficient.  works with size: 1, but not at default
-// shows this error somewhere between size: 7 - 15
-// error: instance not found
-// Set not found.
-// position: ["divide",0,"from","sum","map","expr","let",0,"first_z","in","from"]
-//
-// needs some if isnotempty in the z definitions. figure it out
-Divide(Select(["data",0], 
-    Sum(
-      // for each shared mid
-      Map(
-        Paginate(
-          Intersection(
-            Match(Index("mid_by_uid"), Ref(Collection("users"), "1") ),
-            Match(Index("mid_by_uid"), Ref(Collection("users"), "2"))
-          ), {size:17}
-        ),
-        // sum the products of the standardized values of each observation
-        Lambda(
-          'mid',
-          Let(
-            { first_z: 
-                  Let({ // get the rating
-                        rating: Select(["data","rating"], Get(Match(Index("rating_by_mid_and_uid"), [  Var("mid"), Ref(Collection("users"), "1")  ]  )))
-                      },
-                      //get the z-score from the rating
-                      Select(['data', ToString(Var("rating"))],Get(Match(Index("ms_by_meme"), Var("mid")  )))
-                  ),
-              second_z: 
-                  Let({ // get the rating
-                        rating: Select(["data","rating"], Get(Match(Index("rating_by_mid_and_uid"), [  Var("mid"), Ref(Collection("users"), "1")  ]  )))
-                      },
-                      //get the z-score from the rating
-                      Select(['data', ToString(Var("rating"))],Get(Match(Index("ms_by_meme"), Var("mid")  )))
-                  ),
-            },
-            Multiply( 
-              Var("first_z"), 
-              Var("second_z") 
-            )
-          )
-        )
-      )
-    )
-  )
-  ,
-  //divide by n... TODO: needs to be changed to n-1
-  Count(
-      Intersection(
-        Match(Index("mid_by_uid"), Ref(Collection("users"), "1") ),
-        Match(Index("mid_by_uid"), Ref(Collection("users"), "2"))
-      )  
-  )
+// calculates correlation coefficient. supposedly
+Let({
+  user_1: Ref(Collection("users"), "1")
+ ,user_2: Ref(Collection("users"), "2")
+ ,shared_memes_with_stats:
+   //new memes could have ratings, but not have stats calculated yet (because calculating the stats gets expensive as it requires reading every rating)
+   Filter( Paginate(Intersection(
+     Match(Index("mid_by_uid"), Ref(Collection("users"), "1") ),
+     Match(Index("mid_by_uid"), Ref(Collection("users"), "2") )
+   )),
+   Lambda( 'mid',
+       IsNonEmpty(  Match(Index("ms_by_meme"), Var("mid"))  )
+     ) 
+   )
+ ,products: 
+   Map( Var("shared_memes_with_stats"),
+     // for each shared mid
+     Lambda('mid',
+       Let( // (this could be refactored to make it shorter by nesting it in another let for each user)
+         { first_z: Let({ // get the rating. 
+                         rating: Select(["data","rating"], Get(Match(Index("rating_by_mid_and_uid"), [  Var("mid"),  Var("user_1") ]  )))
+                       }, //get the z-score from the rating.
+                       Select(['data', ToString(Var("rating"))],Get(Match(Index("ms_by_meme"), Var("mid")  )))
+                     ), 
+           second_z: Let({ rating: Select(["data","rating"], Get(Match(Index("rating_by_mid_and_uid"), [  Var("mid"),  Var("user_2") ]  )))
+                         }, Select(['data', ToString(Var("rating"))],Get(Match(Index("ms_by_meme"), Var("mid")  )))),
+         },
+         Multiply(  Var("first_z"),  Var("second_z") )
+       )
+     )
+   ) 
+ },
+ Divide(
+   Sum( Select(["data"], Var("products")) ),
+   //divide by n-1
+   Subtract(Select(["data",0], Count( Var("shared_memes_with_stats") )),1)
+ )
 )
+
+//////
+//////
+//////
+

@@ -12,6 +12,17 @@ CreateIndex({
   ]
 });
 CreateIndex({
+  name: "ratings_by_uid",
+  source: Collection("meme_ratings"),
+  terms: [
+    { field: ["data", "user"] }
+  ],
+  values: [
+    { field: ["data", "meme"] },
+    { field: ["data", "rating"] }
+  ]
+});
+CreateIndex({
   name: "ratings_by_mid_and_rating",
   source: Collection("meme_ratings"),
   terms: [
