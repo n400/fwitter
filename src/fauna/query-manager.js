@@ -11,7 +11,7 @@ import {
   comment
 } from './queries/fweets'
 import { UpdateUser, FinishRegistration, GetRatedMemes, GetUserProfile, 
-  SaveMatchRating, GetAllProfiles } from './queries/users'
+  SaveMatchRating, GetAllProfiles, GetAllMatches } from './queries/users'
 import { SaveRating, GetUnratedMemes, UploadMeme } from './queries/memes'
 import { searchPeopleAndTags } from './queries/search'
 import { follow } from './queries/followers'
@@ -98,8 +98,9 @@ class QueryManager {
     return this.client.query(GetAllProfiles())
   }
 
-
-  GetAllProfiles
+  getAllMatches() {
+    return this.client.query(GetAllMatches())
+  }
 
   uploadMeme(asset) {
     return this.client.query(UploadMeme(asset))

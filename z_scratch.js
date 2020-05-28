@@ -1,0 +1,176 @@
+//POST-DESIGN
+// meme ratings collections and indexes
+CreateCollection({"name": "meme_ratings", "history_days": 0});
+CreateIndex({
+  name: "ratings_by_mid",
+  source: Collection("meme_ratings"),
+  terms: [
+    { field: ["data", "meme"] }
+  ],
+  values: [
+    { field: ["data", "rating"] }
+  ]
+});
+CreateIndex({
+  name: "ratings_by_mid_and_rating",
+  source: Collection("meme_ratings"),
+  terms: [
+    { field: ["data", "meme"] },
+    { field: ["data", "rating"] },
+  ],
+  values: [
+    { field: ["data", "rating"] }
+  ]
+});
+CreateIndex({
+  name: "rating_by_mid_and_uid",
+  source: Collection("meme_ratings"),
+  terms: [
+    { field: ["data", "meme"] },
+    { field: ["data", "user"] },
+  ],
+  values: [
+    { field: ["data", "rating"] }
+  ]
+});
+
+CreateIndex({
+  name: "mid_by_uid",
+  source: Collection("meme_ratings"),
+  terms: [
+    { field: ["data", "user"] }
+  ],
+  values: [
+    { field: ["data", "meme"] }
+  ]
+});
+CreateIndex({
+  name: 'meme_by_meme',
+  source: Collection('memes'),
+  terms: [{field:  ['ref']}]
+});
+
+//meme stats collections and indexes
+CreateCollection({"name": "meme_stats", "history_days": 0});
+CreateIndex({
+  name: 'ms_by_meme',
+  source: Collection('meme_stats'),
+  terms: [{field:  ["data", "meme"]}],
+  values: [{field:  ["ref"]}]
+});
+CreateIndex({
+  name: 'ms_by_ms',
+  source: Collection('meme_stats'),
+  terms: [{field:  ['ref']}]
+});
+
+
+
+
+// correlation coefficient should be (i have not tested it):
+Divide(
+  Sum(
+    // for each shared mid
+    Map(
+      Intersection(
+        Match(Index("mid_by_uid"), Ref(Collection("users"), "1") ),
+        Match(Index("mid_by_uid"), Ref(Collection("users"), "2"))
+      ), //returns list of meme refs
+      Multiply( 
+        Var("first_z"), 
+        Var("second_z") 
+      )
+    )
+  ),
+  Count(  
+    Intersection(
+      Match(Index("mid_by_uid"), Ref(Collection("users"), "1") ),
+      Match(Index("mid_by_uid"), Ref(Collection("users"), "2"))
+    )       
+  )
+)
+
+
+    
+// get the user's meme rating
+// Match(Index("rating_by_mid_and_uid"), [  Ref(Collection("memes"), "1"), Ref(Collection("users"), "1")  ]  )
+// Then get the z-score for that rating
+Select(['data', 'sd'],Get(Match(Index("ms_by_meme"), Ref(Collection("memes"), "1")  )))
+
+
+,
+second_z: 'Select(Get(     ) )',
+
+
+// TODO
+// THEN get the z-score of each meme rating
+Select(['ref'],Get(Match(Index("ms_by_meme"), Var("mid"))))
+
+
+// Let({
+//     user1:  Ref(Collection("users"), "1"),
+//     user2:  Ref(Collection("users"), "2")
+//   },
+Divide(
+  Sum(
+    // now we have to multiple the zscore tuples for each user to get an array here that we can sum
+    
+  ),
+  //the list of memes both users have rated:
+  Count(Intersection(
+    Match(Index("mid_by_uid"), Ref(Collection("users"), "1") ),
+    Match(Index("mid_by_uid"), Ref(Collection("users"), "2"))
+  ))
+)
+// )
+
+// OK. we need to iterate through the above set for every user pair
+// we then need to use the mid to get 
+// rating_by_uid_and_mid from meme_ratings collection
+// THEN, we need 
+// z_by_uid_and_mid from the memes collection
+// also, what happens when a user rates more memes? can we calculate how many new matches they've unlocked?
+// calculate the sample size needed to get a statsig r
+
+
+
+///////////////////////////////////////////////////
+///////////////////////////////////////////////////
+///////////////////////////////////////////////////
+///////////////////////////////////////////////////
+///////////////////////////////////////////////////
+///////////////////////////////////////////////////
+///////////////////////////////////////////////////
+///////////////////////////////////////////////////
+///////////////////////////////////////////////////
+///////////////////////////////////////////////////
+
+
+// step #1
+// this provides a list of all memes they've both rated.
+// iterate through this
+Intersection(
+  Match(Index("mid_by_uid"), Ref(Collection("users"), "1") ),
+  Match(Index("mid_by_uid"), Ref(Collection("users"), "2"))
+)
+
+[
+  Ref(Collection("memes"), "1"),
+  Ref(Collection("memes"), "2"),
+  Ref(Collection("memes"), "3"),
+  Ref(Collection("memes"), "4"),
+  Ref(Collection("memes"), "5"),
+  Ref(Collection("memes"), "6"),
+  Ref(Collection("memes"), "7"),
+  Ref(Collection("memes"), "7"),
+  Ref(Collection("memes"), "8"),
+  Ref(Collection("memes"), "9"),
+  Ref(Collection("memes"), "10"),
+  Ref(Collection("memes"), "11"),
+  Ref(Collection("memes"), "12"),
+  Ref(Collection("memes"), "13"),
+  Ref(Collection("memes"), "14"),
+  Ref(Collection("memes"), "15"),
+  Ref(Collection("memes"), "16"),
+  Ref(Collection("memes"), "17")
+]

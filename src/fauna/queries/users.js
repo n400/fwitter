@@ -134,21 +134,30 @@ function GetAllProfiles() {
     Lambda("i", Get(Var("i")))
   )
 }
-// TODO #1
+
 // get all users and their meme ratings
-// only return the users who have the same meme ratings
-// function GetMatches(userRef) { 
-//   console.log('getting matches for:', userRef)
-//   return Let(
-//     {
-//       userRef: Ref(Collection("users"), "266526604073632275")
-//     },
-//     Paginate(
-//       Match(
-//         Index("meme_ratings_by_user"),  Var('userRef')
-//       ), {size: 1000})
-//   )
-// }
+function GetAllMatches() {
+  // console.log('getting user profile')
+  return Let(
+    { 
+      meme: Ref(Collection("memes"), "2"),
+      rating: "4",
+      user: Ref(Collection("users"), "1")
+    },
+    q.Map(
+      Paginate(Match(
+        Index("meme_ratings_by_user"),Var('user')
+      ), {size: 1000}), 
+      Lambda(
+        ['x','y'], 
+        Paginate(
+          Match(
+            Index("users_by_meme_and_rating"), [ Var('meme'), Var('rating') ]
+          ), {size: 1000})
+      )
+    )
+  )
+}
 
 
 
@@ -182,4 +191,5 @@ function GetAllProfiles() {
 
 
 
-export { CreateUser, UpdateUser, FinishRegistration, GetUserProfile, GetRatedMemes, GetAllProfiles, SaveMatchRating }
+export { CreateUser, UpdateUser, FinishRegistration, GetUserProfile, 
+  GetRatedMemes, GetAllProfiles, SaveMatchRating, GetAllMatches }

@@ -48,7 +48,9 @@ const App = () => {
                 <Register01 />
               </Route>
               {/* //TODO change the actual path when there is no user instead of just the content, 
-                         changing null to a 404 will probably do this */}
+                         changing null to a 404 will probably do this. also have a non-JS fallback 
+                         page in case the app breaks b your queries suck or something. research 
+                         techniques for js fallback and 404 with cra */}
               {user ? <Route exact path="/accounts/register02"><Register02 /></Route> : null}
               {user ? <Route path="/profile-edit/:alias" component={ProfileEdit} /> : null}
               <Route exact path="/legal"><Legal /></Route> 

@@ -66,7 +66,7 @@ function RateMemes () {
     return faunaQueries
       .saveRating(mId, rating, emoji)
       .then(res => {
-        toast.success('__ matches unlocked.');//TODO: make this a count in the nav 
+        console.log('__ matches unlocked.');//TODO: make this a count in the nav 
         return true})
       .catch(err => {
         console.log(err)
@@ -126,27 +126,27 @@ function RateMemes () {
           <div className="action-bar-button">
               <label htmlFor={"hate_"+mId}><img className="emoji" src="images/icons/emojis_hate.svg"/></label>
               <input type="radio" id={"hate_"+mId} name={mId} 
-              value="hate" onClick={clickRatingButtonEvent} data-emoji="images/icons/emojis_hate.svg"/>
+              value="1" onClick={clickRatingButtonEvent} data-emoji="images/icons/emojis_hate.svg"/>
             </div>
             <div className="action-bar-button">
               <label htmlFor={"dislike_"+mId}><img className="emoji" src="images/icons/emojis_dislike.svg"/></label>
               <input type="radio" id={"dislike_"+mId} name={mId} 
-              value="dislike" onClick={clickRatingButtonEvent}  data-emoji="images/icons/emojis_dislike.svg"/>
+              value="2" onClick={clickRatingButtonEvent}  data-emoji="images/icons/emojis_dislike.svg"/>
             </div>
             <div className="action-bar-button">
               <label htmlFor={"meh_"+mId}><img className="emoji" src="images/icons/emojis_meh.svg"/></label>
               <input type="radio" id={"meh_"+mId} name={mId} 
-              value="meh" onClick={clickRatingButtonEvent} data-emoji="images/icons/emojis_meh.svg" />
+              value="3" onClick={clickRatingButtonEvent} data-emoji="images/icons/emojis_meh.svg" />
             </div>
             <div className="action-bar-button">
               <label htmlFor={"like_"+mId}><img className="emoji" src="images/icons/emojis_like.svg"/></label>
               <input type="radio" id={"like_"+mId} name={mId} 
-              value="like" onClick={clickRatingButtonEvent} data-emoji="images/icons/emojis_like.svg" />
+              value="4" onClick={clickRatingButtonEvent} data-emoji="images/icons/emojis_like.svg" />
             </div>
             <div className="action-bar-button">
               <label htmlFor={"love_"+mId}><img className="emoji" src="images/icons/emojis_love.svg"/></label>
               <input type="radio" id={"love_"+mId} name={mId} 
-              value="love" onClick={clickRatingButtonEvent}  data-emoji="images/icons/emojis_love.svg"/>
+              value="5" onClick={clickRatingButtonEvent}  data-emoji="images/icons/emojis_love.svg"/>
             </div>
           </div>
       </div>  

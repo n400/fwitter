@@ -69,8 +69,8 @@ const Login = props => {
           } else {
             // toast.success('Login successful')
             sessionContext.dispatch({ type: 'login', data: e })
-            history.push('/matches')
-            // history.push('/')
+            // history.push('/matches')
+            history.push('/')//memes
             // history.push('/')          
           }
         })

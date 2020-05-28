@@ -4,6 +4,7 @@ import SessionContext from '../context/session'
 import { faunaQueries } from '../fauna/query-manager'
 import { toast } from 'react-toastify'
 import { useHistory } from 'react-router-dom'
+import { flattenDataKeys } from '../fauna/helpers/util'
 
 function RateMatches () {
   const sessionContext = useContext(SessionContext)
@@ -28,10 +29,12 @@ function RateMatches () {
   async function getNextMemeList (options = {}) {
     let excludeMeme = options.excludeMeme
     return faunaQueries
-      .getAllProfiles()
+      // .getAllProfiles()
+      .getAllMatches()
       // .getUnratedMemes()
       .then(res => {
-        console.log("fetched matches res:", res.data)
+        console.log("mtch res:", res)
+        console.log("mtch res flattened:",flattenDataKeys(res))
         // console.log("fetched res:", res.data)
         // Convert the array result (res.data) into a Map object.
         // E.G.:
@@ -122,15 +125,18 @@ function RateMatches () {
     }
     if (memeData === undefined) return (<React.Fragment><div>Loading ... </div></React.Fragment>)
     if (memeData.currentMeme === undefined) return (<React.Fragment><div>Ran out of matches!</div></React.Fragment>)
-    let mId = memeData.currentMeme.ref.id
     // let mId = memeData.currentMeme.ref.id
-    // console.log("let memeData.currentMeme is", memeData.currentMeme)
+    // let profilePhoto = memeData.currentMeme.data.asset01.url
+    let mId = "1"
+    let profilePhoto = "url.jpg"
+
+
     return (
       <React.Fragment>
         <div className="rate_meme_element">
           <div className="swipeableAsset">
             {mId}
-            <img className="meme_to_rate" alt="" src={memeData.currentMeme.data.asset01.url} />
+            <img className="meme_to_rate" alt="" src={profilePhoto} />
           </div>
           <div className="action-bar meme-radios">
           <div className="action-bar-button">

@@ -89,12 +89,12 @@ const Profile = ({ match, location, props }) => {
       let mId = value[0]
       let mRating = value[1]
       let mUrl = value[2]
-      let emojiUrl = value[4]
+      // let emojiUrl = value[4]
         ratedMemes.push(<>
         <div className="grid-item">
             <img className="rated-meme" src={mUrl}/>
             <div className="meme-rating">
-              <img src={"/"+emojiUrl} />
+              {/* <img src={"/"+emojiUrl} /> */}
             </div>
         </div>
         </>)

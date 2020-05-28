@@ -20,8 +20,6 @@ REACT_APP_LOCAL___DEBUG_AUTO_LOGIN_PWORD=testtest
 // 4. create a new role that can view/rate memes and profiles. grant it required permissions.
 // name: view_and_rate_memes_and_view_profiles
 
-
-
 //delete all meme ratings
 Map(
   Paginate(Documents(Collection("meme_ratings"))),
@@ -35,13 +33,10 @@ CreateIndex({
   terms: [{field: ["data", "user"]}],
   values: [
     { field: ["data", "meme"] },
-    { field: ["data", "rating"] },
-    { field: ["data", "url"] },
-    { field: ["data", "created"] },
-    { field: ["data", "emoji_url"] },
-    { field: ["ref"] }
+    { field: ["data", "rating"] }
   ]
 })
+
 // Get all memes the user has already rated
 CreateIndex({
   name: "memes_rated_by_user",
@@ -51,6 +46,48 @@ CreateIndex({
     { field: ["data", "meme"] }
   ]
 })
+
+// For each meme/rating combo, i need to run this:
+CreateIndex({
+  name: "users_by_meme_and_rating",
+  source: Collection("meme_ratings"),
+  terms: [
+    { field: ["data", "meme"] },
+    { field: ["data", "rating"] },
+  ],
+  values: [
+    {field: ["data", "user"]}
+  ]
+})
+
+// For each meme/rating combo, i need to run this:
+CreateIndex({
+  name: "user_and_meme_ratings_by_meme_and_rating",
+  source: Collection("meme_ratings"),
+  terms: [
+    { field: ["data", "meme"] },
+    { field: ["data", "rating"] },
+  ],
+  values: [
+    {field: ["data", "user"]},
+    { field: ["data", "meme"] },
+    { field: ["data", "rating"] }
+  ]
+})
+
+//POST-DESIGN
+CreateIndex({
+  name: "scores_by_mid",
+  source: Collection("meme_ratings"),
+  terms: [
+    { field: ["data", "meme"] }
+  ],
+  values: [
+    { field: ["data", "rating"] }
+  ]
+})
+
+
 
 //should we use something like this for the profiles page?
 // CreateIndex({
@@ -93,23 +130,9 @@ Paginate(Difference(
   )
 ))
 
-
-
-
-//check timestamps of all_memes and memes_rated_by_user nidexes for #cloud-support
-
-
-
-
-
 Select(
-  [data,url],
-  
-  Get(Ref(Collection("memes"), 2))
+  [data,url], Get(Ref(Collection("memes"), 2))
   )
-
-
-
 
   //TODO: 
 //  1. zeit or netlify?
@@ -136,39 +159,119 @@ Select(
 
 
 
+// iterate through all of the users' meme ratings
+q.Reduce(
+  q.Lambda((acc, value) => q.Let(
+    {
+      count: q.Add(q.Select('count', acc), 1),
+      total: q.Add(q.Select('total', acc), value),
+      min: q.Select('min', acc),
+      max: q.Select('max', acc),
+    },
+    {
+      count: q.Var('count'),
+      total: q.Var('total'),
+      min: q.If(q.LTE(value, q.Var('min')), value, q.Var('min')),
+      max: q.If(q.GTE(value, q.Var('max')), value, q.Var('max')),
+      avg: q.Divide(q.Var('total'), q.Var('count')),
+    }
+  )),
+  {
+    count: 0,
+    total: 0,
+    min: 999999,
+    max: -999999,
+    avg: 0,
+  },
+  [ 1, 2, 3, 4, 5 ]
+)
 
-  // //PROBABLY GARBAGE
-// //After i get the difference, i could use a Get() to get the first one? that will probably take too long.
-// // This does not work yet:
-// Select(
-//   ['data'],
-//   Documents(Collection("memes"))
-// )
+// then, for all of a user's meme/rating tuples,
+// ask the lambda which other users have had the same ratings
 
-// Select(
-//   ['data'],
-//   Match(
-//     Index("memes_rated_by_user"), Ref(Collection("users"), "265231995802485267")
-//   ),
-// )
-// // see what a user rated a meme
-// CreateIndex({
-//   name: "meme_rating_by_user_and_meme",
-//   source: Collection("meme_ratings"),
-//   terms: [
-//     {field: ["data", "user"]},
-//     {field: ["data", "meme"]}
-// ],
-//   values: [
-//     { field: ["data", "rating"] },
-//     { field: ["ref"] }
-//   ]
-// })
-// Paginate(Match(
-//   Index("meme_rating_by_user_and_meme"), 
-//   Ref(Collection("users"), "265231995802485267"), 
-//   Ref(Collection("memes"), "1")
-// ))
+
+// everyone who gave meme1 a 5
+Let(
+  { 
+    meme: Ref(Collection("memes"), "1"),
+    rating: "5"
+  },
+  Paginate(Match(
+    Index("users_by_meme_and_rating"), [ Var('meme'), Var('rating') ]
+  ), {size: 1000})
+)
+
+Map(
+  Paginate(Match(
+    Index("meme_ratings_by_user"), Ref(Collection("users"), "266526604073632275")
+  ), {size: 1000}), 
+  Lambda(
+    ['x','y'], 
+    Paginate(
+      Match(
+        Index("user_and_meme_ratings_by_meme_and_rating"), [ 'x', 'y']
+      ), {size: 1000})
+  )
+)
+
+
+
+//START HERE
+// This works but not to provide what i want yet
+// need to remove user's own ratings also somehow, or just do that on the FE
+Map(
+  Paginate(Match(
+      Index("meme_ratings_by_user"), Ref(Collection("users"), "266526604073632275")
+    ), {size: 1000}), 
+  Lambda(
+    ['x','y'], 
+    Paginate(
+      Match(
+        //maybe it makes more sense to make a different collection for every rating?
+        Index("user_and_meme_ratings_by_meme_and_rating"), [Var('x'), Var('y')]
+      ), {size: 1000})
+  )
+)
+
+//DOESNT WORK
+// RETURNS SET. READ ABOUT THAT
+Map(
+  Paginate(Match(
+    Index("meme_ratings_by_user"), Ref(Collection("users"), "266526604073632275")
+  ), {size: 1000}), 
+  Lambda(
+    ['x','y'], 
+
+      Match(
+        Index("user_and_meme_ratings_by_meme_and_rating"), [Var('x'), Var('y')]
+      )
+  )
+)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
