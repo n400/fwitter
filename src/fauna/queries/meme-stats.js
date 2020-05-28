@@ -59,6 +59,17 @@ Map(
           )
         ),
       ),
+      // TODO (Phase 2 when we improve the algorithm for sorting the memes): 
+      // because the meme deck will eventually be sorted by the following, which the user can configure:
+      // (e.g., only show: "most polarizing", "most loved","most hated","newest" )
+      //    n: number of "weights" in this list
+      //    f1: best (highest mean) - 10 of these, then let the user filter them
+      //    f2: worst (lowest mean)
+      //    f2: most controversial - meme_polarity (highest spread/sd)
+      //    f3: creation date (newest) - one every nth meme
+      //    f4: one every nth meme
+      // if the meme has no ratings yet, we need to calculate some kind of "default mean" 
+      // to make sure they get peppered into the meme deck.
       'pepper this into the deck' 
     )
   )
