@@ -18,7 +18,7 @@ REACT_APP_LOCAL___DEBUG_AUTO_LOGIN_PWORD=testtest
       // meme_ratings_by_user
       // memes_rated_by_user
 // 4. create a new role that can view/rate memes and profiles. grant it required permissions.
-// name: view_and_rate_memes_and_view_profiles
+
 
 //delete all meme ratings
 Map(
@@ -75,9 +75,9 @@ CreateIndex({
   ]
 })
 
-//POST-DESIGN
+CreateCollection({"name": "meme_ratings", "history_days": 0});
 CreateIndex({
-  name: "scores_by_mid",
+  name: "ratings_by_mid",
   source: Collection("meme_ratings"),
   terms: [
     { field: ["data", "meme"] }
@@ -85,54 +85,72 @@ CreateIndex({
   values: [
     { field: ["data", "rating"] }
   ]
-})
+});
+CreateIndex({
+  name: "ratings_by_uid",
+  source: Collection("meme_ratings"),
+  terms: [
+    { field: ["data", "user"] }
+  ],
+  values: [
+    { field: ["data", "meme"] },
+    { field: ["data", "rating"] }
+  ]
+});
+CreateIndex({
+  name: "ratings_by_mid_and_rating",
+  source: Collection("meme_ratings"),
+  terms: [
+    { field: ["data", "meme"] },
+    { field: ["data", "rating"] },
+  ],
+  values: [
+    { field: ["data", "rating"] }
+  ]
+});
+CreateIndex({
+  name: "rating_by_mid_and_uid",
+  source: Collection("meme_ratings"),
+  terms: [
+    { field: ["data", "meme"] },
+    { field: ["data", "user"] },
+  ],
+  values: [
+    { field: ["data", "rating"] }
+  ]
+});
+
+CreateIndex({
+  name: "mid_by_uid",
+  source: Collection("meme_ratings"),
+  terms: [
+    { field: ["data", "user"] }
+  ],
+  values: [
+    { field: ["data", "meme"] }
+  ]
+});
+CreateIndex({
+  name: 'meme_by_meme',
+  source: Collection('memes'),
+  terms: [{field:  ['ref']}]
+});
+
+//meme stats collections and indexes
+CreateCollection({"name": "meme_stats", "history_days": 0});
+CreateIndex({
+  name: 'ms_by_meme',
+  source: Collection('meme_stats'),
+  terms: [{field:  ["data", "meme"]}],
+  values: [{field:  ["ref"]}]
+});
+CreateIndex({
+  name: 'ms_by_ms',
+  source: Collection('meme_stats'),
+  terms: [{field:  ['ref']}]
+});
 
 
-
-//should we use something like this for the profiles page?
-// CreateIndex({
-//   name: "user_previews_by_alias",
-//   source: Collection("users"),
-//   terms: [{field: ["data", "alias"]}],
-//   values: [
-//     // { field: ["data", "email"] },
-//     { field: ["data", "wantMemes"] },
-//     { field: ["data", "wantFriends"] },
-//     { field: ["data", "wantDates"] },
-//     { field: ["data", "dob"] },
-//     { field: ["data", "asset01"] },
-//     { field: ["ref"] }
-//   ]
-// })
-
-
-Paginate(Match(
-  Index("meme_ratings_by_user"), Ref(Collection("users"), "265231995802485267")
-))
-
-//get single meme ref from result of one result of the meme_ratings_by_user index 
-Select(
-  ['data','meme'],
-  Get(Match(
-    Index("meme_ratings_by_user"), Ref(Collection("users"), "265231995802485267")
-  ))
-)
-
-Paginate(Match(
-  Index("memes_rated_by_user"), Ref(Collection("users"), "265231995802485267")
-))
-
-// Get all memes user has not rated yet
-Paginate(Difference(
-  Documents(Collection("memes")),
-  Match(
-    Index("memes_rated_by_user"), Ref(Collection("users"), "265231995802485267")
-  )
-))
-
-Select(
-  [data,url], Get(Ref(Collection("memes"), 2))
-  )
 
   //TODO: 
 //  1. zeit or netlify?
@@ -186,99 +204,4 @@ q.Reduce(
   [ 1, 2, 3, 4, 5 ]
 )
 
-// then, for all of a user's meme/rating tuples,
-// ask the lambda which other users have had the same ratings
 
-
-// everyone who gave meme1 a 5
-Let(
-  { 
-    meme: Ref(Collection("memes"), "1"),
-    rating: "5"
-  },
-  Paginate(Match(
-    Index("users_by_meme_and_rating"), [ Var('meme'), Var('rating') ]
-  ), {size: 1000})
-)
-
-Map(
-  Paginate(Match(
-    Index("meme_ratings_by_user"), Ref(Collection("users"), "266526604073632275")
-  ), {size: 1000}), 
-  Lambda(
-    ['x','y'], 
-    Paginate(
-      Match(
-        Index("user_and_meme_ratings_by_meme_and_rating"), [ 'x', 'y']
-      ), {size: 1000})
-  )
-)
-
-
-
-//START HERE
-// This works but not to provide what i want yet
-// need to remove user's own ratings also somehow, or just do that on the FE
-Map(
-  Paginate(Match(
-      Index("meme_ratings_by_user"), Ref(Collection("users"), "266526604073632275")
-    ), {size: 1000}), 
-  Lambda(
-    ['x','y'], 
-    Paginate(
-      Match(
-        //maybe it makes more sense to make a different collection for every rating?
-        Index("user_and_meme_ratings_by_meme_and_rating"), [Var('x'), Var('y')]
-      ), {size: 1000})
-  )
-)
-
-//DOESNT WORK
-// RETURNS SET. READ ABOUT THAT
-Map(
-  Paginate(Match(
-    Index("meme_ratings_by_user"), Ref(Collection("users"), "266526604073632275")
-  ), {size: 1000}), 
-  Lambda(
-    ['x','y'], 
-
-      Match(
-        Index("user_and_meme_ratings_by_meme_and_rating"), [Var('x'), Var('y')]
-      )
-  )
-)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-CreateFunction({
-  name: "register_with_user2",
-  role: Role("functionrole_register_with_user"),
-  body: Query()
-})

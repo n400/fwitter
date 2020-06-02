@@ -24,9 +24,13 @@ $form-background: white;
 $form-border: 2px solid $primary-cta;
 $border-radius: 8px;
 $footer-height: 36px;
-$nav-height: 44px;
+$nav-height: 50px;
+$min-touch: 36px;
 $action-bar-height: 92px;
 $generic-transition: all .5s ease-in-out;
+$grey-gradient: linear-gradient(160.49deg, #C0C9D2 12.86%, #B0C0CF 84.67%);
+$teal-gradient: linear-gradient(161.3deg, #04A7C9 14.59%, #00BDB2 81.6%);
+$pink-gradient: linear-gradient(86.74deg, #FF1800 11.09%, #FF009B 87.91%);
 
 //TODO: This doesnt work. forgot how to do this
 @media only screen and (min-width: $ipad-portrait){

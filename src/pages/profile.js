@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { useParams } from 'react-router-dom'
-import SessionContext from './../context/session'
+import SessionContext from '../context/session'
 import { faunaQueries } from '../fauna/query-manager'
 import { toast } from 'react-toastify'
 import { Uploader } from '../components/uploader'

@@ -21,8 +21,47 @@ nav {
         align-items: center;
         padding: 0 2vw;
         font-weight: normal;
+        // gradients not working on fa icons. try this:
+        // https://codepen.io/ismailfarooq/pen/wewNxx
+        color: $grey-gradient;
     }
 }
 .desktop-layout{
     a{color: $soft-white;}
 }
+
+.oval{
+    display: flex;
+    flex-direction: row;
+    height: $min-touch;
+    width: calc( (#{$min-touch}*2) - 2);
+    border-radius: 100px;
+    background: $grey-gradient;
+}
+.circle{
+    height: $min-touch;
+    width: $min-touch;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    // transitions not supported with gradients;
+    // try this at some point if you need to:
+    // https://joshwcomeau.com/react/rainbow-button/
+    // transition: $generic-transition;
+}
+.circle-friends{
+    margin-left:-1px;
+    transition: all 2s ease-out;
+    &:hover{
+        background: $teal-gradient;
+    }
+}
+.circle-dates{
+    margin-right:-1px;
+    &:hover{
+        background: $pink-gradient;
+    }
+}
+

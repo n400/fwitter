@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 // import ReactDOM from "react-dom";
 import { Link, BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import RateMemes from './pages/rate-memes'
+import RateMemes from './pages/meme-deck'
 // import Home from './pages/home'
 import Login from './pages/login'
 import ProfileEdit from './pages/profile-edit'
@@ -10,7 +10,7 @@ import User from './pages/user'
 import Profiles from './pages/profiles'
 import Register01 from './pages/register01'
 import Register02 from './pages/register02'
-import RateMatches from './pages/matches'
+import RateMatches from './pages/match-deck'
 import Media from './pages/media'
 import Legal from './pages/legal'
 import Layout from './components/layout'
@@ -56,7 +56,7 @@ const App = () => {
               <Route exact path="/legal"><Legal /></Route> 
               <Route exact path="/media"><Media /></Route>
               <Route exact path="/profiles" component={Profiles} />
-              {user ? <Route exact path="/matches"><RateMatches /></Route> : null}
+              {user ? <Route exact path="/match-deck"><RateMatches /></Route> : null}
               {user ? <Route exact path="/profile/:userAlias" component={Profile} /> : null}
 
 

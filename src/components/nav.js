@@ -5,7 +5,7 @@ import SessionContext from './../context/session'
 import { faunaQueries } from '../fauna/query-manager'
 import { isFunction } from '../fauna/helpers/util'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faGrin, faGrinHeart, faUser, faUserEdit, faComments, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
+import { faGrin, faHeart, faComment, faImages, faUser, faUserEdit, faComments  } from '@fortawesome/free-solid-svg-icons'
 
 function SignupOrLoginOrLogout(sessionContext) {
   const { user } = sessionContext.state
@@ -81,18 +81,27 @@ const NavMobile = () => {
   if (user) {
     return (
       <nav>
-        <NavLink to={'/profile-edit/'+user.alias} exact={true}>
+        {/* <NavLink to={'/profile-edit/'+user.alias} exact={true}>
           <FontAwesomeIcon icon={faUserEdit} />
-        </NavLink>
+        </NavLink> */}
         <NavLink to={'/profile/'+user.alias} exact={true}>
           <FontAwesomeIcon icon={faUser} />
         </NavLink>
-        <Link to="/profiles">Matches</Link>
         <NavLink to='/' exact={true}>
-          <FontAwesomeIcon icon={faGrin} />
+          <FontAwesomeIcon icon={faImages} />
         </NavLink>
-        <NavLink to='/matches' exact={true}>
-          <FontAwesomeIcon icon={faComments} />
+        <NavLink to={'/match-deck'} exact={true}>
+          <FontAwesomeIcon icon={faHeart} />
+        </NavLink>
+        <NavLink to='/profiles' exact={true}>
+          <span className="oval">
+            <span className="circle circle-dates">
+              <FontAwesomeIcon icon={faComment} />
+            </span>
+            <span className="circle circle-friends">
+              <FontAwesomeIcon className="fa-flip-horizontal" icon={faComment} />
+            </span>
+          </span>
         </NavLink>
         
 
@@ -104,7 +113,17 @@ const NavMobile = () => {
         <NavLink className="logo" to='/' exact={true}>
           <FontAwesomeIcon icon={faGrin} />
         </NavLink>
-        <Link className="button" to={linkInfo.link}> {linkInfo.linkText}</Link>
+        <NavLink to='/match-deck' exact={true}>
+          <span className="oval">
+            <span className="circle circle-dates">
+              <FontAwesomeIcon icon={faComment} />
+            </span>
+            <span className="circle circle-friends">
+              <FontAwesomeIcon className="fa-flip-horizontal" icon={faComment} />
+            </span>
+          </span>
+        </NavLink>
+        <Link className="button" to={linkInfo.link}><FontAwesomeIcon icon={faUser} /></Link>
       </nav>
     )
   }
