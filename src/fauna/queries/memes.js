@@ -1,7 +1,7 @@
 import faunadb from 'faunadb'
 
 const q = faunadb.query
-const { Difference, Documents, Ref, Now, Paginate, Match, Index, Create, Collection, Let, Get, Identity, Var, Select } = q
+const { Difference, Documents, Ref, Now, Paginate, Lambda, Match, Index, Intersection, Create, Collection, Let, Get, Identity, Var, Union, Select } = q
 
 
 function SaveRating(mRefId, rating, emoji) {
@@ -44,6 +44,47 @@ function GetUnratedMemes(user) {
   )
 }
 
+function GetMemesRatedMutually(profileAlias,rating1,rating2) {
+  console.log("db call:",profileAlias,rating1,rating2)
+  return Let(
+    {
+      accountRef: Identity(),
+      userRef: Select(['data', 'user'], Get(Var('accountRef'))),
+      profileRef: Select(['ref'],
+        Get(Match(
+          Index("users_by_alias"), profileAlias
+        ))
+      ),
+      rating1: rating1,
+      rating2: rating2
+    },
+    q.Map(
+      Paginate(
+        Union(
+          Intersection(
+            Match(Index("meme_by_uid_and_r"), [Var("userRef"), Var("rating1")] ),
+            Match(Index("meme_by_uid_and_r"), [Var("profileRef"), Var("rating1")]  )
+          ),          
+          Intersection(
+            Match(Index("meme_by_uid_and_r"), [Var("userRef"), Var("rating2")] ),
+            Match(Index("meme_by_uid_and_r"), [Var("profileRef"), Var("rating2")]  )
+          ),
+          Intersection(
+            Match(Index("meme_by_uid_and_r"), [Var("userRef"), Var("rating2")] ),
+            Match(Index("meme_by_uid_and_r"), [Var("profileRef"), Var("rating1")]  )
+          ),
+          Intersection(
+            Match(Index("meme_by_uid_and_r"), [Var("userRef"), Var("rating1")] ),
+            Match(Index("meme_by_uid_and_r"), [Var("profileRef"), Var("rating2")]  )
+          )
+        )
+      ),
+      Lambda("i", Get(Var("i")))
+    )
+  )
+}
+
+
 function UploadMeme(asset ) {
   // console.log('saving meme to db', asset)
   return Let(
@@ -59,4 +100,4 @@ function UploadMeme(asset ) {
   )
 }
 
-export { SaveRating, GetUnratedMemes, UploadMeme }
+export { SaveRating, GetUnratedMemes, GetMemesRatedMutually, UploadMeme }

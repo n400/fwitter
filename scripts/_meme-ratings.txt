@@ -1,9 +1,3 @@
-google sheet:
-https://docs.google.com/spreadsheets/d/1sKpUomrkZ50xiUmBG8DHAZDrysCBtlq9gVZsqgE34P0/edit#gid=0
-
-
-CreateCollection({"name": "meme_ratings", "history_days": 0});
-
 
 Map(
   [

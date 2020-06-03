@@ -16,9 +16,9 @@ const Form = props => {
   const [password, setPassword] = useState('')
   // const [name, setName] = useState('')
   const [alias, setAlias] = useState('')
-  const [wantMemes, setWantMemes] =useState('')
-  const [wantFriends, setWantFriends] = useState('')
-  const [wantDates, setWantDates] = useState('')
+  // const [wantMemes, setWantMemes] =useState('')
+  // const [wantFriends, setWantFriends] = useState('')
+  // const [wantDates, setWantDates] = useState('')
 
   const handleChangeEmail = event => {
     setEmail(event.target.value)
@@ -29,15 +29,15 @@ const Form = props => {
   const handleChangeAlias = event => {
     setAlias(event.target.value)
   }
-  const handleChangeWantMemes = event => {
-    setWantMemes(event.target.checked)
-  }
-  const handleChangeWantFriends = event => {
-    setWantFriends(event.target.checked)
-  }
-  const handleChangeWantDates = event => {
-    setWantDates(event.target.checked)
-  }
+  // const handleChangeWantMemes = event => {
+  //   setWantMemes(event.target.checked)
+  // }
+  // const handleChangeWantFriends = event => {
+  //   setWantFriends(event.target.checked)
+  // }
+  // const handleChangeWantDates = event => {
+  //   setWantDates(event.target.checked)
+  // }
 
 
 
@@ -49,8 +49,8 @@ const Form = props => {
         <h1>{props.isLogin ? "welcome to grinnr" : "sign up today"}</h1>
         <small>{props.isLogin ? "(the end is near... if you know what i mean)" : "(or stay sad forever)"}</small>
       </div>
-      <form className="account-form form-with-button-checkboxes" onSubmit={e => props.handleSubmit(e, email, password, alias, wantMemes, wantFriends, wantDates)}>
-        {props.isLogin ? null : 
+      <form className="account-form form-with-button-checkboxes" onSubmit={e => props.handleSubmit(e, email, password, alias )}>
+        {/* {props.isLogin ? null : 
             <div className="input-row">
               <label className="button-row-label">why grinnr? (select all that apply)</label>
               <div className="button-checkboxes">
@@ -68,7 +68,7 @@ const Form = props => {
                 </div>
               </div>
             </div>
-          }
+          } */}
           
           {renderInputField('email', email, 'text', e => handleChangeEmail(e), 'email')}
           {props.isLogin ? null : renderInputField('handle (you can change this later)', alias, 'text', e => handleChangeAlias(e))}

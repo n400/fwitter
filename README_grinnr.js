@@ -19,6 +19,8 @@ REACT_APP_LOCAL___DEBUG_AUTO_LOGIN_PWORD=testtest
       // memes_rated_by_user
 // 4. create a new role that can view/rate memes and profiles. grant it required permissions.
 
+// example ref
+Ref(Collection('users'), '1')
 
 //delete all meme ratings
 Map(
@@ -130,6 +132,19 @@ CreateIndex({
     { field: ["data", "meme"] }
   ]
 });
+
+CreateIndex({
+  name: "meme_by_uid_and_r",
+  source: Collection("meme_ratings"),
+  terms: [
+    { field: ["data", "user"] },
+    { field: ["data", "rating"] }
+  ],
+  values: [
+    { field: ["data", "meme"] }
+  ]
+});
+
 CreateIndex({
   name: 'meme_by_meme',
   source: Collection('memes'),

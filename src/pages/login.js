@@ -71,6 +71,7 @@ const Login = props => {
             sessionContext.dispatch({ type: 'login', data: e })
             // history.push('/matches')
             history.push('/profiles')//memes
+            history.push('/profile/meredith')//memes
             // history.push('/')          
           }
         })

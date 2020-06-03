@@ -66,11 +66,8 @@ function UpdateUser(
   )
 }
 
-// console.log('getting user profile', userAlias)
-      // userRef: Select(['data', 'user'], Get(Var('accountRef')))
-
 function GetUserProfile(userAlias) {
-  console.log('getting user profile', userAlias)
+  // console.log('getting user profile', userAlias)
   return Let(
     {
       accountRef: Identity(),
@@ -104,6 +101,10 @@ function GetRatedMemes(userAlias) {
       ), {size: 1000})
   )
 }
+
+
+
+
 
 function SaveMatchRating(matchRef, rating) {
   console.log('saving match rating', matchRef, rating)
@@ -158,35 +159,6 @@ function GetAllMatches() {
     )
   )
 }
-
-
-
-
-
-// TODO #2
-//after you click on a profile preview, then you need:
-//get 2 lists of meme_ratings by user
-//get the intersection of them
-//display list of meme ratings you've both rated the same.
-//sort them with conditional rendering on the frontend to limit db latency
-
-
-
-//This returns only the logged in user's memes. 
-// could be faster to edit memes from the profile?
-// function GetAuthenticatedUsersRatedMemes(userAlias) { 
-//   console.log('getting rated memes')
-//   return Let(
-//     {
-//       accountRef: Identity(),
-//       userRef: Select(['data', 'user'], Get(Var('accountRef')))
-//     },
-//     Paginate(
-//       Match(
-//         Index("meme_ratings_by_user"),  Var('userRef')
-//       ), {size: 1000})
-//   )
-// }
 
 
 

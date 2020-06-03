@@ -1,156 +1,111 @@
-Query(
-  Lambda(
-    [
-      "email",
-      "password",
-      "alias",
-      "wantMemes",
-      "wantFriends",
-      "wantDates",
-      "icon"
-    ],
-    If(
-      GTE(Length(Var("password")), 8),
-      If(
-        ContainsStrRegex(
-          Var("email"),
-          "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
+// get memes that match
+// Ref(Collection('users'), '1')
+
+Let(
+  {
+    me: Ref(Collection('users'), '1'),
+    you: Ref(Collection('users'), '2'),
+  },
+  Paginate(Intersection(
+    Match(Index("mid_by_uid"), Var("me") ),
+    Match(Index("mid_by_uid"), Var("you") )
+  ))
+)
+
+// {
+//   data: [
+//     Ref(Collection("memes"), "1"),
+//     Ref(Collection("memes"), "2"),
+//     Ref(Collection("memes"), "3"),
+//     Ref(Collection("memes"), "4"),
+//     Ref(Collection("memes"), "5"),
+//     Ref(Collection("memes"), "6"),
+//     Ref(Collection("memes"), "7"),
+//     Ref(Collection("memes"), "7"),
+//     Ref(Collection("memes"), "8"),
+//     Ref(Collection("memes"), "9"),
+//     Ref(Collection("memes"), "10"),
+//     Ref(Collection("memes"), "11"),
+//     Ref(Collection("memes"), "12"),
+//     Ref(Collection("memes"), "13"),
+//     Ref(Collection("memes"), "14"),
+//     Ref(Collection("memes"), "15"),
+//     Ref(Collection("memes"), "16"),
+//     Ref(Collection("memes"), "17")
+//   ]
+// }
+
+CreateIndex({
+  name: "meme_by_uid_and_r",
+  source: Collection("meme_ratings"),
+  terms: [
+    { field: ["data", "user"] },
+    { field: ["data", "rating"] }
+  ],
+  values: [
+    { field: ["data", "meme"] }
+  ]
+});
+
+
+//get memes we've both liked
+Let(
+  {
+    // accountRef: Identity(),
+    // userRef: Select(['data', 'user'], Get(Var('accountRef'))),
+    // profileRef: Select(['ref'],
+    //   Get(Match(
+    //     Index("users_by_alias"), profileAlias
+    //   )),
+      
+    userRef: Ref(Collection("users"), "267178220599640596"),
+    profileRef: Ref(Collection("users"), "267178323714507284"),
+    rating1: "1",
+    rating2: "2"
+  },
+  q.Map(
+    Paginate(
+      Union(
+        Intersection(
+          Match(Index("meme_by_uid_and_r"), [Var("userRef"), Var("rating1")] ),
+          Match(Index("meme_by_uid_and_r"), [Var("profileRef"), Var("rating1")]  )
+        ),          
+        Intersection(
+          Match(Index("meme_by_uid_and_r"), [Var("userRef"), Var("rating2")] ),
+          Match(Index("meme_by_uid_and_r"), [Var("profileRef"), Var("rating2")]  )
         ),
-        Let(
-          {
-            rateLimitingPage: Paginate(
-              Match(Index("rate_limiting_by_action_and_identity"), [
-                "register",
-                "global"
-              ])
-            )
-          },
-          If(
-            IsEmpty(Var("rateLimitingPage")),
-            Do(
-              Create(Collection("rate_limiting"), {
-                data: { action: "register", identity: "global" }
-              }),
-              Let(
-                {
-                  user: Create(Collection("users"), {
-                    data: {
-                      alias: Var("alias"),
-                      wantMemes: Var("wantMemes"),
-                      wantFriends: Var("wantFriends"),
-                      wantDates: Var("wantDates")
-                    }
-                  }),
-                  account: Select(
-                    ["ref"],
-                    Create(Collection("accounts"), {
-                      credentials: { password: Var("password") },
-                      data: {
-                        email: Var("email"),
-                        user: Select(["ref"], Var("user"))
-                      }
-                    })
-                  ),
-                  secret: Login(Var("account"), { password: Var("password") })
-                },
-                Do(
-                  Let(
-                    {
-                      followerstats: Create(Collection("followerstats"), {
-                        data: {
-                          postlikes: 0,
-                          postrefweets: 0,
-                          author: Select(["ref"], Var("user")),
-                          follower: Select(["ref"], Var("user"))
-                        }
-                      })
-                    },
-                    Var("followerstats")
-                  ),
-                  {
-                    user: Var("user"),
-                    account: Var("account"),
-                    secret: Var("secret")
-                  }
-                )
-              )
-            ),
-            Let(
-              {
-                eventsPage: Paginate(
-                  Events(Select(["data", 0], Var("rateLimitingPage"))),
-                  null,
-                  10
-                ),
-                page: Select(["data"], Var("eventsPage")),
-                firstEventOfPage: Select([0], Var("page")),
-                timestamp: Select(["ts"], Var("firstEventOfPage")),
-                time: Epoch(Var("timestamp"), "microseconds"),
-                ageInMs: TimeDiff(Var("time"), Now(null), "milliseconds")
-              },
-              If(
-                Or(
-                  LT(Count(Var("page")), 10),
-                  And(Not(Equals(0, 10000)), GTE(Var("ageInMs"), 10000))
-                ),
-                Do(
-                  Update(Select(["document"], Var("firstEventOfPage")), {
-                    data: { action: "register", identity: "global" }
-                  }),
-                  Let(
-                    {
-                      user: Create(Collection("users"), {
-                        data: {
-                          alias: Var("alias"),
-                          wantMemes: Var("wantMemes"),
-                          wantFriends: Var("wantFriends"),
-                          wantDates: Var("wantDates")
-                        }
-                      }),
-                      account: Select(
-                        ["ref"],
-                        Create(Collection("accounts"), {
-                          credentials: { password: Var("password") },
-                          data: {
-                            email: Var("email"),
-                            user: Select(["ref"], Var("user"))
-                          }
-                        })
-                      ),
-                      secret: Login(Var("account"), {
-                        password: Var("password")
-                      })
-                    },
-                    Do(
-                      Let(
-                        {
-                          followerstats: Create(Collection("followerstats"), {
-                            data: {
-                              postlikes: 0,
-                              postrefweets: 0,
-                              author: Select(["ref"], Var("user")),
-                              follower: Select(["ref"], Var("user"))
-                            }
-                          })
-                        },
-                        Var("followerstats")
-                      ),
-                      {
-                        user: Var("user"),
-                        account: Var("account"),
-                        secret: Var("secret")
-                      }
-                    )
-                  )
-                ),
-                Abort("Rate limiting exceeded for this user/action")
-              )
-            )
-          )
+        Intersection(
+          Match(Index("meme_by_uid_and_r"), [Var("userRef"), Var("rating2")] ),
+          Match(Index("meme_by_uid_and_r"), [Var("profileRef"), Var("rating1")]  )
         ),
-        Abort("Invalid e-mail provided")
-      ),
-      Abort("Invalid password, please provided at least 8 chars")
-    )
+        Intersection(
+          Match(Index("meme_by_uid_and_r"), [Var("userRef"), Var("rating1")] ),
+          Match(Index("meme_by_uid_and_r"), [Var("profileRef"), Var("rating2")]  )
+        )
+      )
+    ),
+    Lambda("i", Get(Var("i")))
   )
 )
+
+
+
+
+// CreateIndex({
+//   name: "meme_by_uid_and_l_or_d",
+//   source: {
+//     collection: Collection("meme_ratings"),
+//     fields: {
+//       like_or_dislike: Query(Lambda(
+//           "doc",
+//           SubString(Select(["data", "rating"], Var("doc")), 0, 1)
+//         ))
+//     }
+//   },
+//   terms: [ { binding: "rolodex" }],
+//   values: [
+//     { binding: "like_or_dislike" },
+//     { field: ["data", "last"] },
+//     { field: ["ref"] }
+//   ]
+// })
