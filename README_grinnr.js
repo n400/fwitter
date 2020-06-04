@@ -24,7 +24,7 @@ Ref(Collection('users'), '1')
 
 //delete all meme ratings
 Map(
-  Paginate(Documents(Collection("meme_ratings")),{size:10000}),
+  Paginate(Documents(Collection("match_scores")),{size:10000}),
   Lambda(ref => Delete(ref))
 )
 
@@ -164,6 +164,20 @@ CreateIndex({
   source: Collection('meme_stats'),
   terms: [{field:  ['ref']}]
 });
+
+//matching users
+CreateIndex({
+  name: "rs_by_user",
+  source: Collection("match_scores"),
+  terms: [
+    { field: ["data", "users"] }
+  ],
+  values: [
+    { field: ["data", "r"] },
+    { field: ["ref"] },
+  ]
+})
+
 
 
 

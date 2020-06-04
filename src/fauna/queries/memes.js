@@ -5,7 +5,7 @@ const { Difference, Documents, Ref, Now, Paginate, Lambda, Match, Index, Interse
 
 
 function SaveRating(mRefId, rating, emoji) {
-  console.log('calling db', mRefId, rating, emoji)
+  // console.log('calling db', mRefId, rating, emoji)
   return Let(
     {
       accountRef: Identity(),
