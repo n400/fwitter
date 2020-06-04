@@ -37,6 +37,9 @@ section {
     }
     .rated-meme{
       border-radius: $border-radius;position:absolute;top:0;height:100%;object-fit:contain;background:black;
+      box-shadow: $button-box-shadow;
+    // clip: rect(0px,40px,20px,0px);
+    // overflow: hidden;
       &.not-mutually-rated{
         filter: blur(5px);
       }

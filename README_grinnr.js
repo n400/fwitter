@@ -24,7 +24,7 @@ Ref(Collection('users'), '1')
 
 //delete all meme ratings
 Map(
-  Paginate(Documents(Collection("meme_ratings"))),
+  Paginate(Documents(Collection("meme_ratings")),{size:10000}),
   Lambda(ref => Delete(ref))
 )
 

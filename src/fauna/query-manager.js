@@ -12,7 +12,7 @@ import {
 } from './queries/fweets'
 import { UpdateUser, FinishRegistration, GetRatedMemes, GetUserProfile, 
   SaveMatchRating, GetAllProfiles, GetAllMatches } from './queries/users'
-import { SaveRating, GetUnratedMemes, GetMemesRatedMutually, UploadMeme } from './queries/memes'
+import { SaveRating, GetUnratedMemes, GetMemesRatedMutually, GetUnratedMemesFromProfile, UploadMeme } from './queries/memes'
 import { searchPeopleAndTags } from './queries/search'
 import { follow } from './queries/followers'
 
@@ -92,6 +92,10 @@ class QueryManager {
 
   getUnratedMemes() {
     return this.client.query(GetUnratedMemes())
+  }
+
+  getUnratedMemesFromProfile(profileAlias){
+    return this.client.query(GetUnratedMemesFromProfile(profileAlias))
   }
 
   getMemesRatedMutually(profileAlias, rating1, rating2) {

@@ -15,6 +15,29 @@ const MemeGrid = (passedData) => {
       .getMemesRatedMutually(profileToFetch,options.rating1,options.rating2)
       .then(res => {
         let memeList = res.data
+        //TODO: load the other lists in the background so they load faster on click.
+        // might want to lod them in their own divs instead of using the same div for all of them
+        // that was the unrated ones can be obscured more easily
+        //TODO: refactor setData out of this function so the component doesnt render
+        /// twice on fist load after the data is there, but still re-renders on clicking the tabs
+        // make a new function that rerenders the component, or figure out how to call the useEffect
+        setData({ memeList })
+        return memeList
+      })
+      .catch(err => {
+        console.log(err)
+        toast.error('get memes failed')
+      })
+  }
+
+  async function getUnratedMemesFromProfile (options = {}) {
+    console.log("gettin it")
+    return faunaQueries
+      .getUnratedMemesFromProfile(profileToFetch)
+      .then(res => {
+        let memeList = res.data
+        console.log(memeList)
+        //TODO: load the other lists in the background so they load faster on click
         //TODO: refactor setData out of this function so the component doesnt render
         /// twice on fist load after the data is there, but still re-renders on clicking the tabs
         // make a new function that rerenders the component, or figure out how to call the useEffect
@@ -42,12 +65,16 @@ const MemeGrid = (passedData) => {
   }, [])
 
   function handleMemeTabs(evt){
+    console.log(evt.target.className)
     switch ( evt.target.dataset.memebatch ) {
       case 'likes':      
         getNextMemeList({ rating1: "4", rating2: "5" })
         break;
       case 'dislikes':
         getNextMemeList({ rating1: "1", rating2: "2" })
+        break;
+      case 'findout':
+        getUnratedMemesFromProfile(profileToFetch)
         break;
     }
   }
@@ -65,9 +92,9 @@ const MemeGrid = (passedData) => {
     return (
       <>
             <div className="tabs">
-              <div data-memebatch="likes" onClick={handleMemeTabs} className="tab">You both liked</div>
+              <div data-memebatch="likes" onClick={handleMemeTabs} className="tab active">You both liked</div>
               <div data-memebatch="dislikes" onClick={handleMemeTabs} className="tab">You both disliked</div>
-              <div className="tab">find out!</div>
+              <div data-memebatch="findout" onClick={handleMemeTabs} className="tab">Find out!</div>
             </div>
             <div className="grid">
               {data.memeList.map(( meme,index ) => (

@@ -1,11 +1,11 @@
 import faunadb from 'faunadb'
 
 const q = faunadb.query
-const { Difference, Documents, Ref, Now, Paginate, Lambda, Match, Index, Intersection, Create, Collection, Let, Get, Identity, Var, Union, Select } = q
+const { Difference, Documents, Ref, Now, Paginate, Lambda, Match, Index, Intersection, Create, Collection, Let, Get, Identity, Var, Union, ToDouble, Select } = q
 
 
 function SaveRating(mRefId, rating, emoji) {
-  // console.log('calling db', mRefId, rating, emoji)
+  console.log('calling db', mRefId, rating, emoji)
   return Let(
     {
       accountRef: Identity(),
@@ -19,7 +19,7 @@ function SaveRating(mRefId, rating, emoji) {
           //   ['data','url'],
           //   Get(Ref(Collection("memes"), mRefId))
           //   ),
-          rating: rating,
+          rating: ToDouble(rating),
           // emoji_url: emoji,
           // discovered: path to see alias of profile where they found it, if relevant
           created: Now()
@@ -84,6 +84,33 @@ function GetMemesRatedMutually(profileAlias,rating1,rating2) {
   )
 }
 
+function GetUnratedMemesFromProfile (profileAlias){
+  console.log("db call:",profileAlias)
+  return Let(
+    {
+      accountRef: Identity(),
+      userRef: Select(['data', 'user'], Get(Var('accountRef'))),
+      profileRef: Select(['ref'],
+        Get(Match(
+          Index("users_by_alias"), profileAlias
+        ))
+      )
+    },
+    q.Map(
+      
+    Paginate(Difference(
+      Match(
+        Index("memes_rated_by_user"),  Var('profileRef')
+      ),
+      Match(
+        Index("memes_rated_by_user"),  Var('userRef')
+      )
+    )),
+      Lambda("i", Get(Var("i")))
+    )
+  )
+}
+
 
 function UploadMeme(asset ) {
   // console.log('saving meme to db', asset)
@@ -100,4 +127,4 @@ function UploadMeme(asset ) {
   )
 }
 
-export { SaveRating, GetUnratedMemes, GetMemesRatedMutually, UploadMeme }
+export { SaveRating, GetUnratedMemes, GetMemesRatedMutually, GetUnratedMemesFromProfile, UploadMeme }
