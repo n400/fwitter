@@ -20,12 +20,21 @@ section {
 .grid{
   display: flex;
   flex-wrap: wrap;
-  justify-content:space-between;
+  justify-content:flex-start;
   width: 100%;
-  .grid-item{
-    width: 32%;
+  .grid-item-wrap{
+    width: 33.333%;
     position:relative;
-    margin-bottom: 2%;
+    padding:2px;
+    // margin-bottom: 2%;
+    .grid-item{
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+    }
     .meme-rating{
       position:absolute;z-index:1;height: 100%;width: 100%;display:flex;align-items:center;justify-content:center;
       opacity:0;

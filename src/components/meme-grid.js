@@ -99,8 +99,10 @@ const MemeGrid = (passedData) => {
             </div>
             <div className="grid">
               {data.memeList.map(( meme,index ) => (
-                <div key={index} className="grid-item">
-                    <img className="rated-meme" src={meme.data.url}/>
+                <div className="grid-item-wrap">
+                    <div key={index} className="grid-item">
+                      <img className="rated-meme" src={meme.data.url}/>
+                  </div>
                 </div>
               ))}
             </div>
