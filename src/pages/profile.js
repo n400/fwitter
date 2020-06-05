@@ -20,6 +20,7 @@ const Profile = ({ match, location, props }) => {
       .getUserProfile(profileToFetch)
       .then(res => {
         let fetchedProfile = res.data
+        console.log("fetchedProfile",fetchedProfile)
         return fetchedProfile
       })
       .catch(err => {

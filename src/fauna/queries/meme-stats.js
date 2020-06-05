@@ -78,10 +78,57 @@ Map(
 
 // calculates correlation coefficient. supposedly
 
+CreateFunction({
+  name: "calc_r",
+  body: Query(Lambda(['user_1',"user_2"],
+  Let({
+    user_1: Var("user_1"),
+    user_2: Var("user_2"),
+    shared_memes_with_stats:
+     //new memes could have ratings, but not have stats calculated yet (because calculating the stats gets expensive as it requires reading every rating)
+     Filter( Paginate(Intersection(
+       Match(Index("mid_by_uid"),  Var("user_1")  ),
+       Match(Index("mid_by_uid"),  Var("user_2") )
+     ), {size:100000}),
+     Lambda( 'mid',
+         IsNonEmpty(  Match(Index("ms_by_meme"), Var("mid"))  )
+       ) 
+     ),
+     products: 
+     Map( Var("shared_memes_with_stats"),
+       // for each shared mid
+       Lambda('mid',
+         Let( // (this could be refactored to make it shorter by nesting it in another let for each user)
+           { first_z: Let({ // get the rating. 
+                           rating: Select(["data","rating"], Get(Match(Index("rating_by_mid_and_uid"), [  Var("mid"),  Var("user_1") ]  )))
+                         }, //get the z-score from the rating.
+                         Select(['data', ToString(
+                           ToInteger( Var("rating") )
+                           )],Get(Match(Index("ms_by_meme"), Var("mid")  )))
+                       ), 
+             second_z: Let({ rating: Select(["data","rating"], Get(Match(Index("rating_by_mid_and_uid"), [  Var("mid"),  Var("user_2") ]  )))
+                           }, Select(['data', ToString( ToInteger( Var("rating") ) )],Get(Match(Index("ms_by_meme"), Var("mid")  )))),
+           },
+           Multiply(  Var("first_z"),  Var("second_z") )
+         )
+       )
+     ) 
+   },
+   Divide(
+     Sum( Select(["data"], Var("products")) ),
+     //divide by n-1
+     Subtract(Select(["data",0], Count( Var("shared_memes_with_stats") )),1)
+   )
+  )
+  ))
+})
+
+
+
 Let({
-  user_1: Ref(Collection("users"), "267178323714507284") 
- ,user_2: Ref(Collection("users"), "267178220599640596")
- ,shared_memes_with_stats:
+  user_1: Ref(Collection("users"), "267178323714507284"),
+  user_2: Ref(Collection("users"), "267178220599640596"),
+  shared_memes_with_stats:
    //new memes could have ratings, but not have stats calculated yet (because calculating the stats gets expensive as it requires reading every rating)
    Filter( Paginate(Intersection(
      Match(Index("mid_by_uid"),  Var("user_1")  ),
@@ -90,8 +137,8 @@ Let({
    Lambda( 'mid',
        IsNonEmpty(  Match(Index("ms_by_meme"), Var("mid"))  )
      ) 
-   )
- ,products: 
+   ),
+   products: 
    Map( Var("shared_memes_with_stats"),
      // for each shared mid
      Lambda('mid',

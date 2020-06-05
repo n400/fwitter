@@ -134,7 +134,7 @@ CreateIndex({
 });
 
 CreateIndex({
-  name: "meme_by_uid_and_r",
+  name: "meme_by_user_and_rating",
   source: Collection("meme_ratings"),
   terms: [
     { field: ["data", "user"] },
@@ -144,6 +144,8 @@ CreateIndex({
     { field: ["data", "meme"] }
   ]
 });
+
+// Get(Match(Index("meme_by_user_and_rating"),[ Ref(Collection("users"), "267178323714507284"), 5]))
 
 CreateIndex({
   name: 'meme_by_meme',
@@ -178,6 +180,54 @@ CreateIndex({
   ]
 })
 
+// calculate r
+CreateFunction({
+  name: "calc_r",
+  body: Query(Lambda(['user_1',"user_2"],
+  Let({
+    user_1: Var("user_1"),
+    user_2: Var("user_2"),
+    shared_memes_with_stats:
+     //new memes could have ratings, but not have stats calculated yet (because calculating the stats gets expensive as it requires reading every rating)
+     Filter( Paginate(Intersection(
+       Match(Index("mid_by_uid"),  Var("user_1")  ),
+       Match(Index("mid_by_uid"),  Var("user_2") )
+     ), {size:100000}),
+     Lambda( 'mid',
+         IsNonEmpty(  Match(Index("ms_by_meme"), Var("mid"))  )
+       ) 
+     ),
+     products: 
+     Map( Var("shared_memes_with_stats"),
+       // for each shared mid
+       Lambda('mid',
+         Let( // (this could be refactored to make it shorter by nesting it in another let for each user)
+           { first_z: Let({ // get the rating. 
+                           rating: Select(["data","rating"], Get(Match(Index("rating_by_mid_and_uid"), [  Var("mid"),  Var("user_1") ]  )))
+                         }, //get the z-score from the rating.
+                         Select(['data', ToString(
+                           ToInteger( Var("rating") )
+                           )],Get(Match(Index("ms_by_meme"), Var("mid")  )))
+                       ), 
+             second_z: Let({ rating: Select(["data","rating"], Get(Match(Index("rating_by_mid_and_uid"), [  Var("mid"),  Var("user_2") ]  )))
+                           }, Select(['data', ToString( ToInteger( Var("rating") ) )],Get(Match(Index("ms_by_meme"), Var("mid")  )))),
+           },
+           Multiply(  Var("first_z"),  Var("second_z") )
+         )
+       )
+     ) 
+   },
+   Divide(
+     Sum( Select(["data"], Var("products")) ),
+     //divide by n-1
+     Subtract(Select(["data",0], Count( Var("shared_memes_with_stats") )),1)
+   )
+  )
+  ))
+})
+
+// to call it:
+// Call(Function("calc_r"),[Ref(Collection("users"), "1"), Ref(Collection("users"), "2")])
 
 
 
@@ -202,35 +252,3 @@ CreateIndex({
   // 2. make email editable via profile (update account info when the user info gets updated)
   // 3. not a blocker for launch: password reset flow, make password editable
   // 4. not a blocker for launch: lambda to stay logged in
-
-
-
-
-// iterate through all of the users' meme ratings
-q.Reduce(
-  q.Lambda((acc, value) => q.Let(
-    {
-      count: q.Add(q.Select('count', acc), 1),
-      total: q.Add(q.Select('total', acc), value),
-      min: q.Select('min', acc),
-      max: q.Select('max', acc),
-    },
-    {
-      count: q.Var('count'),
-      total: q.Var('total'),
-      min: q.If(q.LTE(value, q.Var('min')), value, q.Var('min')),
-      max: q.If(q.GTE(value, q.Var('max')), value, q.Var('max')),
-      avg: q.Divide(q.Var('total'), q.Var('count')),
-    }
-  )),
-  {
-    count: 0,
-    total: 0,
-    min: 999999,
-    max: -999999,
-    avg: 0,
-  },
-  [ 1, 2, 3, 4, 5 ]
-)
-
-

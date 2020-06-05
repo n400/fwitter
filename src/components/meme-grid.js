@@ -21,7 +21,7 @@ const MemeGrid = (passedData) => {
         //TODO: refactor setData out of this function so the component doesnt render
         /// twice on fist load after the data is there, but still re-renders on clicking the tabs
         // make a new function that rerenders the component, or figure out how to call the useEffect
-        console.log("memegridmemelist", memeList)
+        console.log("getNextMemeList res", res)
         setData({ memeList })
         return memeList
       })
@@ -37,7 +37,7 @@ const MemeGrid = (passedData) => {
       .getUnratedMemesFromProfile(profileToFetch)
       .then(res => {
         let memeList = res.data
-        console.log("memegridmemelist", memeList)
+        console.log("res", res)
         //TODO: load the other lists in the background so they load faster on click
         //TODO: refactor setData out of this function so the component doesnt render
         /// twice on fist load after the data is there, but still re-renders on clicking the tabs
