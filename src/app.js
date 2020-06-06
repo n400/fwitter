@@ -56,7 +56,7 @@ const App = () => {
               <Route exact path="/legal"><Legal /></Route> 
               <Route exact path="/media"><Media /></Route>
               <Route exact path="/profiles" component={Profiles} />
-              {user ? <Route exact path="/match-deck"><RateMatches /></Route> : null}
+              {user ? <Route exact path="/matches"><RateMatches /></Route> : null}
               {user ? <Route exact path="/profile/:userAlias" component={Profile} /> : null}
 
 

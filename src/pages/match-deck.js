@@ -33,17 +33,8 @@ function RateMatches () {
       .getAllMatches()
       // .getUnratedMemes()
       .then(res => {
-        console.log("mtch res:", res)
-        console.log("mtch res flattened:",flattenDataKeys(res))
-        // console.log("fetched res:", res.data)
-        // Convert the array result (res.data) into a Map object.
-        // E.G.:
-        // [0: {13 => 'apple'}, 1: {17 => 'pear', 2: {7 => 'banana'}] converts to ...
-        // ... {13 => 'apple', 17 => 'pear', 7 => 'banana'}
-        // To access the values by index:
-        // Array.from(myMapObject)[index][1]
-        // To access the values by id:
-        // myMapObject.get(MyMapId)
+        // console.log("mtch res:", res)
+        // console.log("mtch res flattened:",flattenDataKeys(res))
 
         //// ??TODO: this "if (excludeMemeId)" var probably doesnt work anymore. 
         // probably needs to be excludeMeme.ref.id
@@ -51,7 +42,7 @@ function RateMatches () {
         // console.log("excludeMemeId:", excludeMemeId, excludeMeme.ref.id)
         // One of the memes might be already rated because of potential race conditions, ... 
         // ... so we remove it post-database-access.
-        let memeList = new Map((res.data).map(function (n) {return [n.id, n]}))
+        let memeList = res.data
         //// ??TODO: this "if (excludeMemeId)" function probably doesnt work anymore because 
         //// the match data structure is a little different from the meme data structure
         if (excludeMemeId) {
@@ -60,7 +51,7 @@ function RateMatches () {
             if (mId == excludeMemeId) memeList.delete(mId)
           })
         }
-        console.log("mapped matchlist:", memeList)
+        console.log("matchlist:", memeList)
         return memeList
       })
       .catch(err => {

@@ -5,7 +5,7 @@ import SessionContext from './../context/session'
 import { faunaQueries } from '../fauna/query-manager'
 import { isFunction } from '../fauna/helpers/util'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faGrin, faHeart, faComment, faImages, faUser, faUserEdit, faComments  } from '@fortawesome/free-solid-svg-icons'
+import { faGrin, faHeart, faStar, faComment, faImages, faUser, faUserEdit, faComments  } from '@fortawesome/free-solid-svg-icons'
 
 function SignupOrLoginOrLogout(sessionContext) {
   const { user } = sessionContext.state
@@ -90,9 +90,19 @@ const NavMobile = () => {
         <NavLink to='/' exact={true}>
           <FontAwesomeIcon icon={faImages} />
         </NavLink>
-        <NavLink to={'/match-deck'} exact={true}>
-          <FontAwesomeIcon icon={faHeart} />
+
+        <NavLink to={'/matches'} exact={true}>
+          <span className="oval">
+            <span className="circle circle-dates">
+              <FontAwesomeIcon icon={faHeart} />
+            </span>
+            <span className="circle circle-friends">
+              <FontAwesomeIcon className="fa-flip-horizontal" icon={faStar} />
+            </span>
+          </span>
         </NavLink>
+
+
         <NavLink to='/profiles' exact={true}>
           <span className="oval">
             <span className="circle circle-dates">
@@ -112,16 +122,6 @@ const NavMobile = () => {
       <nav>
         <NavLink className="logo" to='/' exact={true}>
           <FontAwesomeIcon icon={faGrin} />
-        </NavLink>
-        <NavLink to='/match-deck' exact={true}>
-          <span className="oval">
-            <span className="circle circle-dates">
-              <FontAwesomeIcon icon={faComment} />
-            </span>
-            <span className="circle circle-friends">
-              <FontAwesomeIcon className="fa-flip-horizontal" icon={faComment} />
-            </span>
-          </span>
         </NavLink>
         <Link className="button" to={linkInfo.link}><FontAwesomeIcon icon={faUser} /></Link>
       </nav>
