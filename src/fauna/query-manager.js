@@ -10,9 +10,9 @@ import {
   refweet,
   comment
 } from './queries/fweets'
-import { UpdateUser, FinishRegistration, GetRatedMemes, GetUserProfile, 
-  SaveMatchRating, GetAllProfiles, GetAllMatches } from './queries/users'
-import { SaveRating, GetUnratedMemes, GetMemesRatedMutually, GetUnratedMemesFromProfile, UploadMeme } from './queries/memes'
+import { UpdateUser, FinishRegistration, GetRatedMemes, GetUserProfile } from './queries/users'
+import { GetMemesRatedMutually, GetUnratedMemesFromProfile, UploadMeme } from './queries/memes'
+import { SaveMemeRating, GetUnratedMemes, GetAllProfiles, GetAllMatches, SaveMatchRating } from './queries/decks'
 import { searchPeopleAndTags } from './queries/search'
 import { follow } from './queries/followers'
 
@@ -75,8 +75,8 @@ class QueryManager {
     return this.client.query(FinishRegistration(dob, zip))
   }
 
-  saveRating(meme, rating, emoji) {
-    return this.client.query(SaveRating(meme, rating, emoji))
+  saveMemeRating(meme, rating, emoji) {
+    return this.client.query(SaveMemeRating(meme, rating, emoji))
   }
   saveMatchRating(match, rating) {
     return this.client.query(SaveMatchRating(match, rating))

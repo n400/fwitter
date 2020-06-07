@@ -64,7 +64,7 @@ function RateMemes () {
     // console.log("emoji",emoji)
     let mId = currentMeme.id
     return faunaQueries
-      .saveRating(mId, rating, emoji)
+      .saveMemeRating(mId, rating, emoji)
       .then(res => {
         console.log('__ matches unlocked.');//TODO: make this a count in the nav 
         return true})
