@@ -8,9 +8,9 @@ import { useHistory } from 'react-router-dom'
 import Form from '../components/form'
 
 const handleRegister = (event, email, password, alias, 
-  wantMemes, wantFriends, wantDates, sessionContext, history) => {
+  wantFriends, wantDates, sessionContext, history) => {
   faunaQueries
-    .register(email, password, alias, wantMemes, wantFriends, wantDates)
+    .register(email, password, alias, wantFriends, wantDates)
     .then(e => {
       toast.success('User registered')
       sessionContext.dispatch({ type: 'register', data: e })
@@ -66,8 +66,8 @@ const Register = () => {
       <div className="main-right">
           <Form
             isLogin={false}
-            handleSubmit={(event, email, password, alias, wantMemes, wantFriends, wantDates) =>
-              handleRegister(event, email, password, alias, wantMemes, wantFriends, wantDates, sessionContext, history)
+            handleSubmit={(event, email, password, alias, wantFriends, wantDates) =>
+              handleRegister(event, email, password, alias, wantFriends, wantDates, sessionContext, history)
             }
           ></Form>
       </div>

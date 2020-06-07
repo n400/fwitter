@@ -1,7 +1,7 @@
 import faunadb from 'faunadb'
 
 const q = faunadb.query
-const { Lambda, Create, Collection, Documents, Update, Let, Get, Identity, Var, Select, Now,
+const { Lambda, Create, Collection, Difference, Documents, Update, Let, Get, Identity, Var, Select, Now,
 Paginate,Match,Index, Ref } = q
 
 function CreateUser(alias, wantMemes, wantFriends, wantDates) {
@@ -138,27 +138,28 @@ function GetAllProfiles() {
 
 // get all users and their meme ratings
 function GetAllMatches() {
-  // console.log('getting user profile')
+  console.log('getting user profile')
   return Let(
     { 
-      meme: Ref(Collection("memes"), "2"),
-      rating: "4",
-      user: Ref(Collection("users"), "1")
+      user: Ref(Collection("users"), "267178323714507284")
+      // accountRef: Identity(),
+      // user: Select(['data', 'user'], Get(Var('accountRef'))),
     },
     q.Map(
-      Paginate(Match(
-        Index("meme_ratings_by_user"),Var('user')
-      ), {size: 1000}), 
+      Paginate(Match(Index("r_and_ref_by_user"), Var("user") )),
       Lambda(
-        ['x','y'], 
-        Paginate(
-          Match(
-            Index("users_by_meme_and_rating"), [ Var('meme'), Var('rating') ]
-          ), {size: 1000})
+        "r_doc",
+        Get(Select(0,Difference(
+          Select(["data", "users"], Get(Select([1],Var("r_doc")))),
+          [Ref(Collection("users"), "267178323714507284")]
+        )))
       )
     )
   )
 }
+
+
+
 
 
 

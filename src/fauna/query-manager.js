@@ -42,10 +42,10 @@ class QueryManager {
     })
   }
 
-  register(email, password, alias, wantMemes, wantFriends, wantDates) {
+  register(email, password, alias, wantFriends, wantDates) {
     // const icon = 'person' + (Math.round(Math.random() * 22) + 1) // randomly choose an icon
     //ok the order of the vars here dictates the orders of the values
-    return registerWithUser(this.client, email, password, alias, wantMemes, wantFriends, wantDates).then(res => {
+    return registerWithUser(this.client, email, password, alias, wantFriends, wantDates).then(res => {
       if (res) {
         this.client = new faunadb.Client({ secret: res.secret.secret })
       }

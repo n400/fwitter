@@ -1,4 +1,4 @@
-
+// TODO: make this run async as a user logs in
 
 Let({ //TODO: these should be filtered by friends/matches
     user_1: Ref(Collection("users"), "267178323714507284"),

@@ -17,8 +17,8 @@ const Form = props => {
   // const [name, setName] = useState('')
   const [alias, setAlias] = useState('')
   // const [wantMemes, setWantMemes] =useState('')
-  // const [wantFriends, setWantFriends] = useState('')
-  // const [wantDates, setWantDates] = useState('')
+  const [wantFriends, setWantFriends] = useState('')
+  const [wantDates, setWantDates] = useState('')
 
   const handleChangeEmail = event => {
     setEmail(event.target.value)
@@ -32,12 +32,12 @@ const Form = props => {
   // const handleChangeWantMemes = event => {
   //   setWantMemes(event.target.checked)
   // }
-  // const handleChangeWantFriends = event => {
-  //   setWantFriends(event.target.checked)
-  // }
-  // const handleChangeWantDates = event => {
-  //   setWantDates(event.target.checked)
-  // }
+  const handleChangeWantFriends = event => {
+    setWantFriends(event.target.checked)
+  }
+  const handleChangeWantDates = event => {
+    setWantDates(event.target.checked)
+  }
 
 
 
@@ -49,15 +49,11 @@ const Form = props => {
         <h1>{props.isLogin ? "welcome to grinnr" : "sign up today"}</h1>
         <small>{props.isLogin ? "(the end is near... if you know what i mean)" : "(or stay sad forever)"}</small>
       </div>
-      <form className="account-form form-with-button-checkboxes" onSubmit={e => props.handleSubmit(e, email, password, alias )}>
-        {/* {props.isLogin ? null : 
+      <form className="account-form form-with-button-checkboxes" onSubmit={e => props.handleSubmit(e, email, password, alias, wantFriends, wantDates )}>
+        {props.isLogin ? null : 
             <div className="input-row">
               <label className="button-row-label">why grinnr? (select all that apply)</label>
               <div className="button-checkboxes">
-                <div className="input-group">
-                  <input type="checkbox" id="memes" checked={wantMemes} onChange={handleChangeWantMemes} />
-                  <label htmlFor="memes">memes</label>
-                </div>
                 <div className="input-group">
                   <input type="checkbox" id="friends" checked={wantFriends} onChange={handleChangeWantFriends} />
                   <label htmlFor="friends">friends</label>
@@ -68,7 +64,7 @@ const Form = props => {
                 </div>
               </div>
             </div>
-          } */}
+          }
           
           {renderInputField('email', email, 'text', e => handleChangeEmail(e), 'email')}
           {props.isLogin ? null : renderInputField('handle (you can change this later)', alias, 'text', e => handleChangeAlias(e))}

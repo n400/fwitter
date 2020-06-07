@@ -16,11 +16,14 @@ function RateMatches () {
     async function fetchData () {
       if (didCancel) return
       let memeList = await getNextMemeList()
+      console.log("ml1", memeList)
       let currentMeme = (memeList.size != 0) ? memeList[Symbol.iterator]().next().value[1] : undefined // I don't like this.
+      // let currentMeme = (memeList != undefined) ? memeList[0]: undefined
       setMemeData({
         currentMeme: currentMeme,
         memeList: memeList,
       })
+      console.log("matchlist1:", memeData)
     }
     fetchData()
     return function () {didCancel = true}
@@ -29,9 +32,7 @@ function RateMatches () {
   async function getNextMemeList (options = {}) {
     let excludeMeme = options.excludeMeme
     return faunaQueries
-      // .getAllProfiles()
       .getAllMatches()
-      // .getUnratedMemes()
       .then(res => {
         // console.log("mtch res:", res)
         // console.log("mtch res flattened:",flattenDataKeys(res))
@@ -42,7 +43,7 @@ function RateMatches () {
         // console.log("excludeMemeId:", excludeMemeId, excludeMeme.ref.id)
         // One of the memes might be already rated because of potential race conditions, ... 
         // ... so we remove it post-database-access.
-        let memeList = res.data
+        let memeList = new Map((res.data).map(function (n) {return [n.id, n]}))
         //// ??TODO: this "if (excludeMemeId)" function probably doesnt work anymore because 
         //// the match data structure is a little different from the meme data structure
         if (excludeMemeId) {
@@ -51,7 +52,7 @@ function RateMatches () {
             if (mId == excludeMemeId) memeList.delete(mId)
           })
         }
-        console.log("matchlist:", memeList)
+        console.log("mapped cardlist:", memeList)
         return memeList
       })
       .catch(err => {
@@ -118,9 +119,10 @@ function RateMatches () {
     if (memeData.currentMeme === undefined) return (<React.Fragment><div>Ran out of matches!</div></React.Fragment>)
     // let mId = memeData.currentMeme.ref.id
     // let profilePhoto = memeData.currentMeme.data.asset01.url
+
     let mId = "1"
     let profilePhoto = "url.jpg"
-
+    console.log("matchlist:", memeData)
 
     return (
       <React.Fragment>

@@ -77,10 +77,10 @@ function RegisterAccountExample2(email, password) {
  * However, we also want to create a user automatically when we create an account.
  * We can use a Let to structure our query */
 // eslint-disable-next-line no-unused-vars
-// function RegisterExample3(email, password, alias, wantMemes, wantFriends, wantDates, icon, rateLimiting = true) {
+// function RegisterExample3(email, password, alias, wantFriends, wantDates, icon, rateLimiting = true) {
 //   const RegisterFQLStatement = Let(
 //     {
-//       user: CreateUser(alias, wantMemes, wantFriends, wantDates, icon),
+//       user: CreateUser(alias, wantFriends, wantDates, icon),
 //       account: Select(
 //         ['ref'],
 //         Create(Collection('accounts'), {
@@ -88,7 +88,6 @@ function RegisterAccountExample2(email, password) {
 //           data: {
 //             email: email,
 //             user: Select(['ref'], Var('user')),
-//             wantMemes: wantMemes, 
 //             wantFriend: wantFriends, 
 //             wantDates: wantDates
 //           }
@@ -106,7 +105,7 @@ function RegisterAccountExample2(email, password) {
 /* Register Example4 - let's extend it to do e-mail validation 
    And follow ourselves at the moment we create the user 
    since you only see the feed of the people you follow */
-function RegisterWithUser(email, password, alias, wantMemes, wantFriends, wantDates, icon, rateLimiting = true) {
+function RegisterWithUser(email, password, alias, wantFriends, wantDates, rateLimiting = true) {
   // It's always a good idea to use If for such validations compared to Do since Do is not short-circuited at this point
   // at the read-phase, which means that you will incur more reads.
   const ValidateEmail = FqlStatement =>
@@ -132,7 +131,7 @@ function RegisterWithUser(email, password, alias, wantMemes, wantFriends, wantDa
 
   const RegisterFQLStatement = Let(
     {
-      user: CreateUser(alias, wantMemes, wantFriends, wantDates),
+      user: CreateUser(alias, wantFriends, wantDates),
       account: Select(
         ['ref'],
         Create(Collection('accounts'), {
@@ -264,9 +263,9 @@ function register(client, email, password) {
 
 // THIS PUTS THE VAR IN THE UDF????!!! no. memes still arent there.
 //moving icon to the end?
-function registerWithUser(client, email, password, alias, icon, wantMemes, wantFriends, wantDates) {
+function registerWithUser(client, email, password, alias, wantFriends, wantDates) {
   return client
-    .query(Call(q.Function('register_with_user'), email, password, alias, icon, wantMemes, wantFriends, wantDates))
+    .query(Call(q.Function('register_with_user'), email, password, alias, wantFriends, wantDates))
     .then(res => flattenDataKeys(res))
 }
 

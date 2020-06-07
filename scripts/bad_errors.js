@@ -45,3 +45,35 @@ Map(
 // position: ["map"]
 
 
+Difference(
+  Match(Index("user_by_user"), Ref(Collection("users"), "267178323714507284")),
+  Select(["data","users"], Get(Ref(Collection("match_scores"), "267542498619949568")))
+)
+
+// error: invalid argument
+// Arguments cannot be of different types, expected Set or Array.
+// position: ["difference"]
+
+
+Map(
+  Map(
+    Paginate(Match(Index("users_and_r_by_users2"), Ref(Collection("users"), "267178323714507284") )),
+    Lambda(
+      "r_doc",
+      Get( Var("r_doc"))
+    )
+  ),
+  Difference(
+    Select(["data","users"], Get(Var("r_doc"))),
+    [Ref(Collection("users"), "267178323714507284")]
+  )
+
+
+
+)
+
+
+// error: invalid expression
+// No form/function found, or invalid argument keys: { difference }.
+// position: ["map"]
+

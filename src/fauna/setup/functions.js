@@ -60,7 +60,7 @@ const CreateAccountWithUserUDF = CreateOrUpdateFunction({
   body: Query(
     Lambda(
       ['email', 'password', 'alias', 'wantMemes', 'wantFriends', 'wantDates', 'icon'],
-      RegisterWithUser(Var('email'), Var('password'), Var('alias'), Var('wantMemes'), Var('wantFriends'),Var('wantDates'), Var('icon'))
+      RegisterWithUser(Var('email'), Var('password'), Var('alias'), Var('wantFriends'),Var('wantDates') )
     )
   ),
   role: Role('functionrole_register_with_user')
