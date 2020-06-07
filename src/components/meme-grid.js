@@ -21,8 +21,7 @@ const MemeGrid = (passedData) => {
         //TODO: refactor setData out of this function so the component doesnt render
         /// twice on fist load after the data is there, but still re-renders on clicking the tabs
         // make a new function that rerenders the component, or figure out how to call the useEffect
-        console.log("getNextMemeList res", res)
-        setData({ memeList })
+        // console.log("getNextMemeList res", res)
         return memeList
       })
       .catch(err => {
@@ -37,12 +36,12 @@ const MemeGrid = (passedData) => {
       .getUnratedMemesFromProfile(profileToFetch)
       .then(res => {
         let memeList = res.data
-        console.log("res", res)
         //TODO: load the other lists in the background so they load faster on click
         //TODO: refactor setData out of this function so the component doesnt render
         /// twice on fist load after the data is there, but still re-renders on clicking the tabs
         // make a new function that rerenders the component, or figure out how to call the useEffect
-        setData({ memeList })
+
+        // setData({ memeList })
         return memeList
       })
       .catch(err => {
@@ -56,46 +55,52 @@ const MemeGrid = (passedData) => {
     let didCancel = false
     async function fetchData () {
       if (didCancel) return
-      
       let memeList = await getNextMemeList({ rating1: "4", rating2: "5" })
-
-      setData({ memeList })
+      let tabState = 'likes'
+      setData({
+        tabState: tabState,
+        memeList: memeList
+      })
     }
     fetchData()
     return function () {didCancel = true}
   }, [])
 
-  function handleMemeTabs(evt){
-    console.log(evt.target.className)
-    switch ( evt.target.dataset.memebatch ) {
+  async function handleMemeTabs(evt) {
+    // console.log(evt.target.className)
+    let memeList = undefined
+    let tabState = evt.target.dataset.memebatch
+    switch (tabState) {
       case 'likes':      
-        getNextMemeList({ rating1: "4", rating2: "5" })
-        break;
+        memeList = await getNextMemeList({ rating1: "4", rating2: "5" })
+      break;
       case 'dislikes':
-        getNextMemeList({ rating1: "1", rating2: "2" })
-        break;
+        memeList = await getNextMemeList({ rating1: "1", rating2: "2" })
+      break;
       case 'findout':
-        getUnratedMemesFromProfile(profileToFetch)
-        break;
+        memeList =await getUnratedMemesFromProfile(profileToFetch)
+      break;
     }
-  }
-
-  async function renderData(){
-    let memeList = await getNextMemeList({ rating1: "4", rating2: "5" })
-    setData({ memeList })
-
+    setData({
+      tabState: tabState,
+      memeList: memeList
+    })
   }
 
   return renderMemeGrid()
+  
   function renderMemeGrid () {
     // console.log("1",data)
+
     if (data === undefined) return (<React.Fragment><h1>Loading ... </h1></React.Fragment>)
+    console.log(data)
+    console.log('tab ' + (data.tabState == 'likes' ? 'active' : ''))
     return (
       <>
             <div className="tabs">
-              <div data-memebatch="likes" onClick={handleMemeTabs} className="tab active">You both liked</div>
-              <div data-memebatch="dislikes" onClick={handleMemeTabs} className="tab">You both disliked</div>
-              <div data-memebatch="findout" onClick={handleMemeTabs} className="tab">Find out!</div>
+              <div data-memebatch="likes" onClick={handleMemeTabs} className={'tab ' + (data.tabState == 'likes' ? 'active' : '')}>You both liked</div>
+              <div data-memebatch="dislikes" onClick={handleMemeTabs} className={'tab ' + (data.tabState == 'dislikes' ? 'active' : '')}>You both disliked</div>
+              <div data-memebatch="findout" onClick={handleMemeTabs} className={'tab '+ (data.tabState == 'findout' ? 'active' : '')}>Find out!</div>
             </div>
             <div className="grid">
               {data.memeList.map(( meme,index ) => (

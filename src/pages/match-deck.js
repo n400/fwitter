@@ -43,7 +43,9 @@ function RateMatches () {
         // console.log("excludeMemeId:", excludeMemeId, excludeMeme.ref.id)
         // One of the memes might be already rated because of potential race conditions, ... 
         // ... so we remove it post-database-access.
-        let memeList = new Map((res.data).map(function (n) {return [n.id, n]}))
+
+        let memeList = new Map((res.data).map(function (n) {return [n.ref.value.id, n]}))
+
         //// ??TODO: this "if (excludeMemeId)" function probably doesnt work anymore because 
         //// the match data structure is a little different from the meme data structure
         if (excludeMemeId) {
@@ -52,7 +54,7 @@ function RateMatches () {
             if (mId == excludeMemeId) memeList.delete(mId)
           })
         }
-        console.log("mapped cardlist:", memeList)
+        // console.log("mapped cardlist:", memeList)
         return memeList
       })
       .catch(err => {
@@ -117,18 +119,18 @@ function RateMatches () {
     }
     if (memeData === undefined) return (<React.Fragment><div>Loading ... </div></React.Fragment>)
     if (memeData.currentMeme === undefined) return (<React.Fragment><div>Ran out of matches!</div></React.Fragment>)
-    // let mId = memeData.currentMeme.ref.id
+    let mId = memeData.currentMeme.ref.value.id
     // let profilePhoto = memeData.currentMeme.data.asset01.url
 
-    let mId = "1"
+    // let mId = "1"
     let profilePhoto = "url.jpg"
     console.log("matchlist:", memeData)
 
     return (
       <React.Fragment>
         <div className="rate_meme_element">
+        <h1>            {mId}</h1>
           <div className="swipeableAsset">
-            {mId}
             <img className="meme_to_rate" alt="" src={profilePhoto} />
           </div>
           <div className="action-bar meme-radios">
