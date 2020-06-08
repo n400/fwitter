@@ -85,13 +85,10 @@ const NavMobile = () => {
 
 {/* <h5 key={index}><Link to={`/profile/${match.data.alias}`}>{match.data.alias}</Link></h5> */}
 
-        <Link to={'/profile/'+user.alias} exact={true}>
-          greg
-        </Link>
-        <Link to={'/profile/'+user.alias} exact={true}>
-          meredith
-        </Link>
-        <NavLink to='/' exact={true}>
+        <NavLink to={'/settings'} exact={true}>
+          <FontAwesomeIcon icon={faUser} />
+        </NavLink>
+        <NavLink to='/memes'>
           <FontAwesomeIcon icon={faImages} />
         </NavLink>
 
@@ -127,7 +124,7 @@ const NavMobile = () => {
         <NavLink className="logo" to='/' exact={true}>
           <FontAwesomeIcon icon={faGrin} />
         </NavLink>
-        <Link className="button" to={linkInfo.link}><FontAwesomeIcon icon={faUser} /></Link>
+        <Link className="button" to={linkInfo.link}>login</Link>
       </nav>
     )
   }

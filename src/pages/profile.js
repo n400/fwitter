@@ -35,10 +35,7 @@ const Profile = ({ match, location, props }) => {
     let didCancel = false
     async function fetchData () {
       if (didCancel) return
-      
-      // let memeList = await getNextMemeList({ rating1: "4", rating2: "5" })
       let fetchedProfile = await getUserProfile()
-      
        setProfileData({
         // memeList: memeList,
         profileDetails: fetchedProfile
@@ -49,43 +46,14 @@ const Profile = ({ match, location, props }) => {
     return function () {didCancel = true}
   }, [])
 
-  // async function getNextMemeList (options = { rating1: "1", rating2: "2" }) {
-  //   return faunaQueries
-  //     .getMemesRatedMutually(profileToFetch,options.rating1,options.rating2)
-  //     .then(res => {
-  //       let memeList = res.data
-  //       console.log( "result: ", res.data )
-  //       return memeList
-  //     })
-  //     .catch(err => {
-  //       console.log(err)
-  //       toast.error('get memes failed')
-  //     })
-  // }
-
   return renderProfile()
   function renderProfile () {
     // async function clickRatingButtonEvent (evt) {
     //   let currentMeme = profileData.memeList
     // }
     if (profileData === undefined) return (<React.Fragment><h1>Loading ... </h1></React.Fragment>)
-    // console.log("pd", profileData)
     let thisProfile = profileData.profileDetails[0].data
-    let alias = thisProfile.alias
-    let zip = thisProfile.zip
-    let dob = thisProfile.dob
-    let asset01 = thisProfile.asset01
-
-    // function switchMemeList(evt){
-    //   switch ( evt.target.dataset.memebatch ) {
-    //     case 'likes':      
-    //       getNextMemeList({ rating1: "4", rating2: "5" })
-    //       break;
-    //     case 'dislikes':
-    //       getNextMemeList({ rating1: "1", rating2: "2" })
-    //       break;
-    //   }
-    // }
+    console.log("pd", thisProfile.asset01)
 
     return (
       <React.Fragment>
@@ -93,14 +61,15 @@ const Profile = ({ match, location, props }) => {
         {/* <div className="main-left"> */}
           <div className="profilePhotos">
             <div className="swipeableAsset" onClick={nextPhoto}>
-            {asset01 ? <Asset asset={asset01}></Asset> : null}
+            <img src= {thisProfile.asset01 ? thisProfile.asset01.url : null}></img>
+          
             </div>
           </div>
-          <h1>{alias}</h1>
+          <h1>{thisProfile.alias}</h1>
           <section className="profile-details">
               {/* <div><FontAwesomeIcon icon={faUserFriends} /><span>{wantMemes ? "memes" : ""}{wantFriends ? "friends" : ""}{wantDates ? "dates" : ""} </span></div> */}
-              <div><FontAwesomeIcon icon={faBirthdayCake} /><span>{dob}</span></div>
-              <div><FontAwesomeIcon icon={faMapMarkerAlt} /><span>{zip}</span></div>
+              <div><FontAwesomeIcon icon={faBirthdayCake} /><span>{thisProfile.dob}</span></div>
+              <div><FontAwesomeIcon icon={faMapMarkerAlt} /><span>{thisProfile.zip}</span></div>
           </section>
          
         {/* </div> */}

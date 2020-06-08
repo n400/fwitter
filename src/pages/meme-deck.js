@@ -15,7 +15,6 @@ function RateMemes () {
     async function fetchData () {
       if (didCancel) return
       let memeList = await getNextMemeList()
-      //getting stuck here
       let currentMeme = (memeList.size != 0) ? memeList[Symbol.iterator]().next().value[1] : undefined // I don't like this.
       setMemeData({
         currentMeme: currentMeme,
@@ -31,7 +30,6 @@ function RateMemes () {
     return faunaQueries
       .getUnratedMemes()
       .then(res => {
-        console.log("fetched memes res:", res.data)
         // Convert the array result (res.data) into a Map object.
         // E.G.:
         // [0: {13 => 'apple'}, 1: {17 => 'pear', 2: {7 => 'banana'}] converts to ...

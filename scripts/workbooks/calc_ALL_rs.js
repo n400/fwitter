@@ -1,10 +1,15 @@
 // TODO: make this run async as a user logs in
 
-Let({ //TODO: these should be filtered by friends/matches
+// This updates r scores for all of the users who have not already been rated and want friends
+Let({ 
     user_1: Ref(Collection("users"), "267178323714507284"),
-    users: Paginate(Difference(Documents(Collection("users")),
-            Match(Index("user_by_user"), Var("user_1"))), 
-            {size: 100000}
+    users: Paginate(
+              Difference(
+                Match(Index("users_by_wantFriends"),  true ),
+                Match(Index("matches_rated_by_user"),  Var("user_1")),
+                Match(Index("user_by_user"), Var("user_1"))
+              ), 
+            {size: 4}
           )
   },
   Map(
@@ -16,7 +21,30 @@ Let({ //TODO: these should be filtered by friends/matches
   )
 )
 
-// Call(Function("update_r"),[Ref(Collection("users"), "1"), Ref(Collection("users"), "2")])
 
-
-
+Let({
+    user: Ref(Collection("users"), "3" )
+  },
+  Map(
+    Paginate(Filter(
+      Difference(
+        Match(Index("users_by_wantFriends"), true ),
+        Match(Index("matches_rated_by_user"), Var("user") ),
+        Match(Index("user_by_user"), Var("user") )
+      ),
+      Lambda(
+        "i",
+        Exists(
+            Intersection(
+                Match(Index("r_and_ref_by_user"), Var("user") ),
+                Match(Index("r_and_ref_by_user"), Var("i") )
+            )
+        )
+      )
+    ), {size: 100}),
+    Lambda(
+      "match",
+      Get(Var("match"))
+    )
+  )  
+)

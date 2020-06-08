@@ -9,7 +9,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch, faEye, faIcons, faHeadSideVirus, faLaugh, faHeart, faImages, faUserFriends, faBirthdayCake, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons'
 
 const Profiles = () => {
-  // const profiles = [{alias: `jim`,},{ alias: `greg`,},{ alias: `meredith`, },];
   const [data, setData] = useState(undefined)
   useEffect(() => {
     async function fetchData () {

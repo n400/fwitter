@@ -1,29 +1,102 @@
+// 1. if there is a uniqueindex constraint, we should tell the user. 
+// also, how do you tell what index is causing this?
+// or to list all indexes with unique set to true?
+// in the interim, tell users to check for index w/ unique constraint if hey get an error that looks like this
 
-// error: invalid argument
-// Integer expected, Unresolved Transaction Time provided.
-// position: ["map","expr","in","else","if","gte",0,"time_diff","epoch"]
+Let({ user_1: Ref(Collection("users"), "1"),
+user_2: Ref(Collection("users"), "2"),},
+  Create(Collection('match_scores'),{
+    data: {
+      r: Call(Function("calc_r"),[ Var("user_1"), Var("user_2") ]),
+      users:[ Var("user_2")]
+    },
+  },
+  )
+)
 
+// error: instance not unique
+// document is not unique.
+// position: ["in","else","create"]
 
+///
+///
+
+// 2. if you get "instance not found", check for its existence first
+Map(
+  Paginate(Difference(
+    Match(Index("users_by_wantFriends"), true ),
+    Match(Index("matches_rated_by_user"), Ref(Collection("users"), "3" )),
+    Match(Index("user_by_user"), Ref(Collection("users"), "3" ))
+  )),
+  Lambda(
+    "match",
+    Get(
+      Intersection(
+          Match(Index("r_and_ref_by_user"), Ref(Collection("users"), "3") ),
+          Match(Index("r_and_ref_by_user"), Var("match") )
+      )
+    )
+  )
+)
+
+// error: instance not found
+// Set not found.
+// position: ["map","expr"]
+
+// check if it exists first
+
+Map(
+  Paginate(Difference(
+    Match(Index("users_by_wantFriends"), true ),
+    Match(Index("matches_rated_by_user"), Ref(Collection("users"), "3" )),
+    Match(Index("user_by_user"), Ref(Collection("users"), "3" ))
+  )),
+  Lambda(
+    "match",
+    If(
+      Exists(
+        Intersection(
+            Match(Index("r_and_ref_by_user"), Ref(Collection("users"), "3") ),
+            Match(Index("r_and_ref_by_user"), Var("match") )
+        )
+      ),
+      Get(Intersection(
+        Match(Index("r_and_ref_by_user"), Ref(Collection("users"), "3") ),
+        Match(Index("r_and_ref_by_user"), Var("match") )
+      )),
+      ["no r for",Var("match")]
+    )
+  )
+)
+
+///
+///
+
+// 3. UDF call errors still not appearing. make sure this gets done.
 
 Map( 
-   Paginate(Intersection(
-    Match(Index("mid_by_uid"), Ref(Collection("users"), "267178323714507284") ),
-    Match(Index("mid_by_uid"), Ref(Collection("users"), "267178220599640596") )
-  ), {size:100000}),
-  Lambda(
-    "meme",
-    Call(Function("get_z"),
-    [Var("meme"), Ref(Collection("users"), "267178323714507284")]
-  )
-  )
- ) 
+  Paginate(Intersection(
+   Match(Index("mid_by_uid"), Ref(Collection("users"), "267178323714507284") ),
+   Match(Index("mid_by_uid"), Ref(Collection("users"), "267178220599640596") )
+ ), {size:100000}),
+ Lambda(
+   "meme",
+   Call(Function("get_z"),
+   [Var("meme"), Ref(Collection("users"), "267178323714507284")]
+ )
+ )
+) 
 
 //  error: call error
 // Calling the function resulted in an error.
 // position: ["map","expr"]
 
 
+/////////////////////////
+/////////////////////////
+/////////////////////////
 
+///forgot what all these are...
 
 
  //i wrote a bad query copy/pasting from another query. forgot to remove the Filter and Lambda
@@ -67,13 +140,12 @@ Map(
     Select(["data","users"], Get(Var("r_doc"))),
     [Ref(Collection("users"), "267178323714507284")]
   )
-
-
-
 )
-
 
 // error: invalid expression
 // No form/function found, or invalid argument keys: { difference }.
 // position: ["map"]
+
+
+
 

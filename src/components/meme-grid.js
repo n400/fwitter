@@ -93,12 +93,19 @@ const MemeGrid = (passedData) => {
     // console.log("1",data)
 
     if (data === undefined) return (<React.Fragment><h1>Loading ... </h1></React.Fragment>)
-    console.log(data)
-    console.log('tab ' + (data.tabState == 'likes' ? 'active' : ''))
+
+  //   let tabListHTML = {
+  //     'likes'    : {text: 'You both liked'},
+  //     'dislikes' : {text: 'You both disliked'},
+  //     'findout'  : {text: 'Find out!'},
+  //  }
+  //                {(Object.keys(tabListHTML)).map((tabListId) => (
+  //                <div data-memebatch="{tabListId}" onClick={handleMemeTabs} className={'tab ' + (data.tabState == tabListId ? 'active' : '')}>{tabListHTML[tabListId]}</div>
+  //               ))}
     return (
       <>
             <div className="tabs">
-              <div data-memebatch="likes" onClick={handleMemeTabs} className={'tab ' + (data.tabState == 'likes' ? 'active' : '')}>You both liked</div>
+               <div data-memebatch="likes" onClick={handleMemeTabs} className={'tab ' + (data.tabState == 'likes' ? 'active' : '')}>You both liked</div>
               <div data-memebatch="dislikes" onClick={handleMemeTabs} className={'tab ' + (data.tabState == 'dislikes' ? 'active' : '')}>You both disliked</div>
               <div data-memebatch="findout" onClick={handleMemeTabs} className={'tab '+ (data.tabState == 'findout' ? 'active' : '')}>Find out!</div>
             </div>

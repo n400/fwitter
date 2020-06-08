@@ -2,11 +2,11 @@ import React, { useEffect } from 'react'
 // import ReactDOM from "react-dom";
 import { Link, BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import RateMemes from './pages/meme-deck'
-// import Home from './pages/home'
+import Home from './pages/home'
 import Login from './pages/login'
 import ProfileEdit from './pages/profile-edit'
 import Profile from './pages/profile'
-import User from './pages/user'
+import Settings from './pages/settings'
 import Profiles from './pages/profiles'
 import Register01 from './pages/register01'
 import Register02 from './pages/register02'
@@ -52,17 +52,17 @@ const App = () => {
                          page in case the app breaks b your queries suck or something. research 
                          techniques for js fallback and 404 with cra */}
               {user ? <Route exact path="/accounts/register02"><Register02 /></Route> : null}
-              {user ? <Route path="/profile-edit/:alias" component={ProfileEdit} /> : null}
+              {user ? <Route path="/settings" component={Settings} /> : null}
+              {user ? <Route path="/profile-edit" component={ProfileEdit} /> : null}
               <Route exact path="/legal"><Legal /></Route> 
               <Route exact path="/media"><Media /></Route>
               <Route exact path="/profiles" component={Profiles} />
               {user ? <Route exact path="/matches"><RateMatches /></Route> : null}
+              {user ? <Route exact path="/memes"><RateMemes /></Route> : null}
               {user ? <Route exact path="/profile/:userAlias" component={Profile} /> : null}
 
 
-              <Route path="/">
-                {user ? <RateMemes /> : <Register01 /> }
-              </Route>
+              <Route exact path="/"><Home /></Route>
             </Switch>
           </Layout>
         </SessionProvider>

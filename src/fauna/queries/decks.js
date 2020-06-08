@@ -1,7 +1,7 @@
 import faunadb from 'faunadb'
 
 const q = faunadb.query
-const { Difference, Documents, Ref, Now, Paginate, Lambda, Match, Index, Create, Collection, Let, Get, Identity, Var, ToNumber, Select } = q
+const { Difference, Documents, Filter, Exists, Intersection, Ref, Now, Paginate, Lambda, Match, Index, Create, Collection, Let, Get, Identity, Var, ToNumber, Select } = q
 
 // TODO: make this run async as a user rates more memes
 
@@ -35,6 +35,64 @@ function GetUnratedMemes(user) {
       )
     ), {size: 3})
   )
+}
+
+//get all user profiles
+function GetAllProfiles() {
+  // console.log('getting user profile')
+  return q.Map(
+    Paginate(Documents(Collection("users"))),
+    Lambda("i", Get(Var("i")))
+  )
+}
+
+// get all users and their meme ratings
+function GetAllMatches() {
+  console.log('getting user profile')
+  return Let({
+    accountRef: Identity(),
+    user: Select(['data', 'user'], Get(Var('accountRef'))),
+  },
+  q.Map(
+    Paginate(Filter(
+      Difference(
+        Match(Index("users_by_wantFriends"), true ),
+        Match(Index("matches_rated_by_user"), Var("user") ),
+        Match(Index("user_by_user"), Var("user") )
+      ),
+      Lambda(
+        "i",
+        Exists(
+            Intersection(
+                Match(Index("r_and_ref_by_user"), Var("user") ),
+                Match(Index("r_and_ref_by_user"), Var("i") )
+            )
+        )
+      )
+    ), {size: 2}),
+    Lambda(
+      "match",
+      Get(Var("match"))
+    )
+  )  
+)
+  // Let(
+  //   { 
+  //     user: Ref(Collection("users"), "267178323714507284")
+  //     // accountRef: Identity(),
+  //     // user: Select(['data', 'user'], Get(Var('accountRef'))),
+  //   },
+  //   q.Map(
+  //     Paginate(Match(Index("r_and_ref_by_user"), Var("user") ),{size: 2}),
+  //     Lambda(
+  //       "r_doc",
+  //       Get(Select(0,Difference(
+  //         Select(["data", "users"], Get(Select([1],Var("r_doc")))),
+  //         [Ref(Collection("users"), "267178323714507284")]
+  //       )))
+  //     )
+  //   )
+  // )
 }
 
 function SaveMemeRating(mRefId, rating) {
@@ -74,7 +132,7 @@ function SaveMatchRating(matchRef, rating) {
       data: {
           user: Var('userRef'),
           // match: Var('matchRef'),
-          match: Ref(Collection("users"), matchRef),
+          match: matchRef,
           match_rating: rating,
           // discovered: path to see alias of profile where they found it, if relevant
           created: Now()
@@ -83,39 +141,6 @@ function SaveMatchRating(matchRef, rating) {
   )
 }
 
-
-
-
-//get all user profiles
-function GetAllProfiles() {
-  // console.log('getting user profile')
-  return q.Map(
-    Paginate(Documents(Collection("users"))),
-    Lambda("i", Get(Var("i")))
-  )
-}
-
-// get all users and their meme ratings
-function GetAllMatches() {
-  console.log('getting user profile')
-  return Let(
-    { 
-      user: Ref(Collection("users"), "267178323714507284")
-      // accountRef: Identity(),
-      // user: Select(['data', 'user'], Get(Var('accountRef'))),
-    },
-    q.Map(
-      Paginate(Match(Index("r_and_ref_by_user"), Var("user") )),
-      Lambda(
-        "r_doc",
-        Get(Select(0,Difference(
-          Select(["data", "users"], Get(Select([1],Var("r_doc")))),
-          [Ref(Collection("users"), "267178323714507284")]
-        )))
-      )
-    )
-  )
-}
 
 
 export { SaveMatchRating, SaveMemeRating, GetUnratedMemes, GetAllMatches, GetAllProfiles }

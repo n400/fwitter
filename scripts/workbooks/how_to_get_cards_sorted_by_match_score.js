@@ -310,8 +310,280 @@ Map(
 //
 // readOps: 83
 
+// now get matches who havent already been rated and want friends/dates...
+// This lists all of the users who have not already been rated and want dates and are not self
+Difference(
+  Match(Index("users_by_wantFriends"),  true ),
+  Match(Index("matches_rated_by_user"),  Ref(Collection("users"), "3" )),
+  Match(Index("user_by_user"), Ref(Collection("users"), "3" ))
+)
+
+// data: [
+//   Ref(Collection("users"), "1"),
+//   Ref(Collection("users"), "2"),
+//   Ref(Collection("users"), "5"),
+//   ...
+//   Ref(Collection("users"), "267178220599640596"),
+//   Ref(Collection("users"), "267178323714507284")
+// ]
+// }
+
+//map thruogh each of them and get their match score, but check if it exists first
+
+Map(
+  Paginate(Difference(
+    Match(Index("users_by_wantFriends"), true ),
+    Match(Index("matches_rated_by_user"), Ref(Collection("users"), "3" )),
+    Match(Index("user_by_user"), Ref(Collection("users"), "3" ))
+  )),
+  Lambda(
+    "match",
+    If(
+      Exists(
+        Intersection(
+            Match(Index("r_and_ref_by_user"), Ref(Collection("users"), "3") ),
+            Match(Index("r_and_ref_by_user"), Var("match") )
+        )
+      ),
+      Get(Intersection(
+        Match(Index("r_and_ref_by_user"), Ref(Collection("users"), "3") ),
+        Match(Index("r_and_ref_by_user"), Var("match") )
+      )),
+      ["no r for",Var("match")]
+    )
+  )
+)
+
+// data: [
+//   {
+//     ref: Ref(Collection("match_scores"), "267713750245573139"),
+//     ts: 1591570577800000,
+//     data: {
+//       r: 0.039550285024046714,
+//       users: [Ref(Collection("users"), "1"), Ref(Collection("users"), "3")],
+//       n: 18
+//     }
+//   },
+//   {
+//     ref: Ref(Collection("match_scores"), "267715458212299264"),
+//     ts: 1591572206690000,
+//     data: {
+//       r: -0.42261260265415435,
+//       users: [Ref(Collection("users"), "2"), Ref(Collection("users"), "3")],
+//       n: 18
+//     }
+//   },
+//   ["no r for", Ref(Collection("users"), "5")],
+//   ["no r for", Ref(Collection("users"), "6")],
+//   ...
+
+
+// And, taking what we learned from before, let's get the content of the users field from each of these.
+
+
+Map(
+  Paginate(Difference(
+    Match(Index("users_by_wantFriends"), true ),
+    Match(Index("matches_rated_by_user"), Ref(Collection("users"), "3" )),
+    Match(Index("user_by_user"), Ref(Collection("users"), "3" ))
+  )),
+  Lambda(
+    "match",
+    If(
+      Exists(
+        Intersection(
+            Match(Index("r_and_ref_by_user"), Ref(Collection("users"), "3") ),
+            Match(Index("r_and_ref_by_user"), Var("match") )
+        )
+      ),
+      Select(["data", "users"],Get(Intersection(
+        Match(Index("r_and_ref_by_user"), Ref(Collection("users"), "3") ),
+        Match(Index("r_and_ref_by_user"), Var("match") )
+      ))),
+      ["no r for",Var("match")]
+    )
+  )
+)
+
+// But let's remove the currently logged-in user from the array.
+
+Map(
+  Paginate(Difference(
+    Match(Index("users_by_wantFriends"), true ),
+    Match(Index("matches_rated_by_user"), Ref(Collection("users"), "3" )),
+    Match(Index("user_by_user"), Ref(Collection("users"), "3" ))
+  )),
+  Lambda(
+    "match",
+    If(
+      Exists(
+        Intersection(
+            Match(Index("r_and_ref_by_user"), Ref(Collection("users"), "3") ),
+            Match(Index("r_and_ref_by_user"), Var("match") )
+        )
+      ),
+      Difference(
+        Select(["data", "users"],Get(Intersection(
+          Match(Index("r_and_ref_by_user"), Ref(Collection("users"), "3") ),
+          Match(Index("r_and_ref_by_user"), Var("match") )
+        ))),
+        [Ref(Collection("users"), "3")]
+      ),
+      []
+    )
+  )
+)
+
+// {
+// data: [
+//   [Ref(Collection("users"), "1")],
+//   [Ref(Collection("users"), "2")],
+//   null,
+//   null
+//   ...
+
+// And select the ref from the array
+
+Map(
+  Paginate(Difference(
+    Match(Index("users_by_wantFriends"), true ),
+    Match(Index("matches_rated_by_user"), Ref(Collection("users"), "3" )),
+    Match(Index("user_by_user"), Ref(Collection("users"), "3" ))
+  )),
+  Lambda(
+    "match",
+    If(
+      Exists(
+        Intersection(
+            Match(Index("r_and_ref_by_user"), Ref(Collection("users"), "3") ),
+            Match(Index("r_and_ref_by_user"), Var("match") )
+        )
+      ),
+      Select([0],
+        Difference(
+          Select(["data", "users"],Get(Intersection(
+            Match(Index("r_and_ref_by_user"), Ref(Collection("users"), "3") ),
+            Match(Index("r_and_ref_by_user"), Var("match") )
+          ))),
+          [Ref(Collection("users"), "3")]
+        )
+      ),
+      []
+    )
+  )
+)
+
+// And get the user doc from it
+
+Map(
+  Paginate(Difference(
+    Match(Index("users_by_wantFriends"), true ),
+    Match(Index("matches_rated_by_user"), Ref(Collection("users"), "3" )),
+    Match(Index("user_by_user"), Ref(Collection("users"), "3" ))
+  )),
+  Lambda(
+    "match",
+    If(
+      Exists(
+        Intersection(
+            Match(Index("r_and_ref_by_user"), Ref(Collection("users"), "3") ),
+            Match(Index("r_and_ref_by_user"), Var("match") )
+        )
+      ),
+      Get(Select([0],
+        Difference(
+          Select(["data", "users"],Get(Intersection(
+            Match(Index("r_and_ref_by_user"), Ref(Collection("users"), "3") ),
+            Match(Index("r_and_ref_by_user"), Var("match") )
+          ))),
+          [Ref(Collection("users"), "3")]
+        )
+      )),
+      []
+    )
+  )
+)
+
+// but let's get rid of the nulls by using Filter instead of Map
+Filter(
+  Paginate(Difference(
+    Match(Index("users_by_wantFriends"), true ),
+    Match(Index("matches_rated_by_user"), Ref(Collection("users"), "3" )),
+    Match(Index("user_by_user"), Ref(Collection("users"), "3" ))
+  )),
+  Lambda(
+    "user",
+    Exists(
+        Intersection(
+            Match(Index("r_and_ref_by_user"), Ref(Collection("users"), "3") ),
+            Match(Index("r_and_ref_by_user"), Var("user") )
+        )
+    )
+  )
+)
+
+// and then map over that
+Map(
+  Filter(
+    Paginate(Difference(
+      Match(Index("users_by_wantFriends"), true ),
+      Match(Index("matches_rated_by_user"), Ref(Collection("users"), "3" )),
+      Match(Index("user_by_user"), Ref(Collection("users"), "3" ))
+    )),
+    Lambda(
+      "filtered_results",
+      Exists(
+          Intersection(
+              Match(Index("r_and_ref_by_user"), Ref(Collection("users"), "3") ),
+              Match(Index("r_and_ref_by_user"), Var("filtered_results") )
+          )
+      )
+    )
+  ),
+  Lambda(
+    "match",
+    Get(Var("match"))
+  )
+)
+
+//and clean it up a little more with a Let
+
+Let({
+  user: Ref(Collection("users"), "3" )
+},
+  Map(
+    Paginate(Filter(
+      Difference(
+        Match(Index("users_by_wantFriends"), true ),
+        Match(Index("matches_rated_by_user"), Var("user") ),
+        Match(Index("user_by_user"), Var("user") )
+      ),
+      Lambda(
+        "i",
+        Exists(
+            Intersection(
+                Match(Index("r_and_ref_by_user"), Var("user") ),
+                Match(Index("r_and_ref_by_user"), Var("i") )
+            )
+        )
+      )
+    )),
+    Lambda(
+      "match",
+      Get(Var("match"))
+    )
+  )  
+)
+
+// in some cases, like when the user runs out of matches, 
+// we will want to use the prior function with the If so that we can calculate an r if it doesnt exist..
+// see calc_ALL_rs.js for part 2.
+
+
+
 // TODO: 
-// 1. keep the r from the match score. maybe you can assign it to a var in a Let at some point and store it there?
+// 1. keep the r from the match score. maybe you can assign it to a var in a 
+// Let at some point and store it there? Or use a join probably?
 // 2. Is there a more efficient way to do this? with an index binding maybe?
 //
 // do the other stuff first though and the answer will make itself apparent

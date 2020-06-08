@@ -5,6 +5,9 @@ import { faunaQueries } from '../fauna/query-manager'
 import { toast } from 'react-toastify'
 import { useHistory } from 'react-router-dom'
 import { flattenDataKeys } from '../fauna/helpers/util'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTimesCircle, faHeart, faStar, faComment, faImages, faUser, faUserEdit, faComments  } from '@fortawesome/free-solid-svg-icons'
+
 
 function RateMatches () {
   const sessionContext = useContext(SessionContext)
@@ -16,14 +19,11 @@ function RateMatches () {
     async function fetchData () {
       if (didCancel) return
       let memeList = await getNextMemeList()
-      console.log("ml1", memeList)
       let currentMeme = (memeList.size != 0) ? memeList[Symbol.iterator]().next().value[1] : undefined // I don't like this.
-      // let currentMeme = (memeList != undefined) ? memeList[0]: undefined
       setMemeData({
         currentMeme: currentMeme,
         memeList: memeList,
       })
-      console.log("matchlist1:", memeData)
     }
     fetchData()
     return function () {didCancel = true}
@@ -31,30 +31,31 @@ function RateMatches () {
 
   async function getNextMemeList (options = {}) {
     let excludeMeme = options.excludeMeme
+    console.log("oem",options.excludeMeme)
     return faunaQueries
       .getAllMatches()
       .then(res => {
-        // console.log("mtch res:", res)
-        // console.log("mtch res flattened:",flattenDataKeys(res))
 
         //// ??TODO: this "if (excludeMemeId)" var probably doesnt work anymore. 
         // probably needs to be excludeMeme.ref.id
-        let excludeMemeId = !excludeMeme ? undefined : excludeMeme.id
-        // console.log("excludeMemeId:", excludeMemeId, excludeMeme.ref.id)
+
+        let excludeMemeId = !excludeMeme ? undefined : excludeMeme.ref.value.id
+        console.log("excludeMemeId:", excludeMemeId, excludeMeme)
         // One of the memes might be already rated because of potential race conditions, ... 
         // ... so we remove it post-database-access.
-
         let memeList = new Map((res.data).map(function (n) {return [n.ref.value.id, n]}))
 
         //// ??TODO: this "if (excludeMemeId)" function probably doesnt work anymore because 
         //// the match data structure is a little different from the meme data structure
         if (excludeMemeId) {
+          console.log("its happening")
           Array.from(memeList).some(function (n) {
             let mId = n[0]
+            console.log("mId",n[0],mId)
             if (mId == excludeMemeId) memeList.delete(mId)
           })
         }
-        // console.log("mapped cardlist:", memeList)
+        console.log( memeList)
         return memeList
       })
       .catch(err => {
@@ -65,7 +66,7 @@ function RateMatches () {
   
   async function handleSaveRating  ({currentMeme, rating}) {
     // console.log("emoji",emoji)
-    let mId = currentMeme.ref.id
+    let mId = currentMeme.ref
     console.log(mId)
     return faunaQueries
       .saveMatchRating(mId, rating)
@@ -79,25 +80,21 @@ function RateMatches () {
   }
 
   async function loadNextMeme ({currentMeme, memeList}) {
-    //
-    // A Map that looks like {13 => 'apple', 17 => 'pear', 7 => 'banana'} ...
-    // ... then converts into this with Array.from:
-    // [0: [13, 'apple'], 1: [17, 'pear'], 2: [7, 'banana']]
-    //
-    // N.B.: To get a map value by id: myMeme = memeList.get(mId)
-
     let foundCurrentMeme = false
     let nextMeme = Array.from(memeList).find(function (n) {
       let meme = n[1]
+      console.log("nm", meme, "currentM", currentMeme)
       if (foundCurrentMeme == true) return true
       if (meme == currentMeme) foundCurrentMeme = true
     })
 
-    if (nextMeme) nextMeme = nextMeme[1]
-
-    if (nextMeme === undefined) {
+    if (nextMeme) nextMeme = nextMeme[1] 
+    console.log("nm?", nextMeme)
+    if (nextMeme === undefined) { //(i.e., if reached end of list)
       memeList = await getNextMemeList({excludeMeme: currentMeme})
+      console.log("size", memeList.size )
       nextMeme = (memeList.size != 0) ? memeList[Symbol.iterator]().next().value[1] : undefined
+      console.log( "nm..", nextMeme )
     }
     setMemeData({
       currentMeme: nextMeme,
@@ -111,53 +108,34 @@ function RateMatches () {
   function renderMeme () {
     async function clickRatingButtonEvent (evt) {
       let currentMeme = memeData.currentMeme
-      // console.log("evt",evt.target.dataset["emoji"])
-      // let emoji = evt.target.dataset[emoji]
       // No await here in handleSaveRating because we want it to run at the same time as "loadNextMeme".
-      let success = handleSaveRating({currentMeme: currentMeme, rating: evt.target.value, emoji: evt.target.dataset["emoji"]})
+
+      console.log(evt.target)
+ 
+      let success = handleSaveRating({currentMeme: currentMeme, rating: evt.target.dataset["swipe"] })
       loadNextMeme({currentMeme: currentMeme, memeList: memeData.memeList})
     }
     if (memeData === undefined) return (<React.Fragment><div>Loading ... </div></React.Fragment>)
     if (memeData.currentMeme === undefined) return (<React.Fragment><div>Ran out of matches!</div></React.Fragment>)
     let mId = memeData.currentMeme.ref.value.id
-    // let profilePhoto = memeData.currentMeme.data.asset01.url
-
-    // let mId = "1"
-    let profilePhoto = "url.jpg"
     console.log("matchlist:", memeData)
 
     return (
       <React.Fragment>
         <div className="rate_meme_element">
-        <h1>            {mId}</h1>
           <div className="swipeableAsset">
-            <img className="meme_to_rate" alt="" src={profilePhoto} />
-          </div>
-          <div className="action-bar meme-radios">
-          <div className="action-bar-button">
-              <label htmlFor={"hate_"+mId}><img className="emoji" src="images/icons/emojis_hate.svg"/></label>
-              <input type="radio" id={"hate_"+mId} name={mId} 
-              value="hate" onClick={clickRatingButtonEvent} data-emoji="images/icons/emojis_hate.svg"/>
-            </div>
-            <div className="action-bar-button">
-              <label htmlFor={"dislike_"+mId}><img className="emoji" src="images/icons/emojis_dislike.svg"/></label>
-              <input type="radio" id={"dislike_"+mId} name={mId} 
-              value="dislike" onClick={clickRatingButtonEvent}  data-emoji="images/icons/emojis_dislike.svg"/>
-            </div>
-            <div className="action-bar-button">
-              <label htmlFor={"meh_"+mId}><img className="emoji" src="images/icons/emojis_meh.svg"/></label>
-              <input type="radio" id={"meh_"+mId} name={mId} 
-              value="meh" onClick={clickRatingButtonEvent} data-emoji="images/icons/emojis_meh.svg" />
-            </div>
-            <div className="action-bar-button">
-              <label htmlFor={"like_"+mId}><img className="emoji" src="images/icons/emojis_like.svg"/></label>
-              <input type="radio" id={"like_"+mId} name={mId} 
-              value="like" onClick={clickRatingButtonEvent} data-emoji="images/icons/emojis_like.svg" />
-            </div>
-            <div className="action-bar-button">
-              <label htmlFor={"love_"+mId}><img className="emoji" src="images/icons/emojis_love.svg"/></label>
-              <input type="radio" id={"love_"+mId} name={mId} 
-              value="love" onClick={clickRatingButtonEvent}  data-emoji="images/icons/emojis_love.svg"/>
+            <img className="meme_to_rate" alt="" src={memeData.currentMeme.data.asset01.url} />
+            <div className="action-bar">
+              <div className="action" data-swipe="left" onClick={clickRatingButtonEvent} >
+                  swipe-left
+              </div>
+              <div className="">
+                <h2> {memeData.currentMeme.data.alias}</h2>
+                <div> {memeData.currentMeme.data.zip}<span>&bull;</span> {memeData.currentMeme.data.dob}</div>  
+              </div>
+              <div className="action" data-swipe="right" onClick={clickRatingButtonEvent} >
+                swipe-right
+              </div>
             </div>
           </div>
       </div>  

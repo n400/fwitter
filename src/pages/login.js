@@ -18,7 +18,7 @@ const handleLogin = (event, email, password, history, sessionContext) => {
       } else {
         // toast.success('Login successful')
         sessionContext.dispatch({ type: 'login', data: e })
-        history.push('/')
+        history.push('/../memes')
       }
     })
     .catch(err => {
@@ -69,9 +69,9 @@ const Login = props => {
           } else {
             // toast.success('Login successful')
             sessionContext.dispatch({ type: 'login', data: e })
-            // history.push('/matches')
+            history.push('/matches')
             // history.push('/profiles')//memes
-            history.push('/profile/greg')//memes
+            // history.push('/profile/meredith')//memes
             // history.push('/')          
           }
         })

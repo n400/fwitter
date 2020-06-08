@@ -39,13 +39,21 @@ CreateIndex({
   ]
 })
 
-// Get all memes the user has already rated
+// Get all memes/matches the user has already rated
 CreateIndex({
   name: "memes_rated_by_user",
   source: Collection("meme_ratings"),
   terms: [{field: ["data", "user"]}],
   values: [
     { field: ["data", "meme"] }
+  ]
+})
+CreateIndex({
+  name: "matches_rated_by_user",
+  source: Collection("match_ratings"),
+  terms: [{field: ["data", "user"]}],
+  values: [
+    { field: ["data", "match"] }
   ]
 })
 
@@ -194,7 +202,7 @@ CreateIndex({
 
 CreateIndex({
   name: "users_and_r_by_users",
-  unique: true,
+  // unique: true,
   source: Collection("match_scores"),
   terms: [
     { field: ["data", "users"] }
@@ -222,6 +230,15 @@ CreateIndex({
   ]
 });
 
+// TODO: this might eventually just be wants, not separate indexes for wantsFriends and wantDates
+CreateIndex({
+  name: "users_by_wantFriends",
+  source: Collection("users"),
+  terms: [
+    { field: ["data", "wantFriends"] }
+  ],
+  values: []
+})
 
 
 ///
@@ -418,7 +435,7 @@ CreateFunction({
             n: Var("n")
           }, }
         ),
-        "no new mutual meme ratings"
+        ["no new mutual meme ratings for ", Var("user_1"), Var("user_2")]
       ),
       //if empty, try to create it
       Create(Collection('match_scores'),{
