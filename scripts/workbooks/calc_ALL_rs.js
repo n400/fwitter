@@ -2,14 +2,14 @@
 
 // This updates r scores for all of the users who have not already been rated and want friends
 Let({ 
-    user_1: Ref(Collection("users"), "267178323714507284"),
+    user_1: Ref(Collection("users"), "1"),
     users: Paginate(
               Difference(
-                Match(Index("users_by_wantFriends"),  true ),
+                Match(Index("users_by_wants"),  'friends' ),
                 Match(Index("matches_rated_by_user"),  Var("user_1")),
                 Match(Index("user_by_user"), Var("user_1"))
               ), 
-            {size: 4}
+            {size: 40000}
           )
   },
   Map(

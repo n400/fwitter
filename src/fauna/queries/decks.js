@@ -1,7 +1,7 @@
 import faunadb from 'faunadb'
 
 const q = faunadb.query
-const { Difference, Documents, Filter, Exists, Intersection, Ref, Now, Paginate, Lambda, Match, Index, Create, Collection, Let, Get, Identity, Var, ToNumber, Select } = q
+const { Difference, Documents, Filter, Exists, Join, Intersection, Ref, Now, Paginate, Lambda, Match, Index, Create, Collection, Let, Get, Identity, Var, ToNumber, Select } = q
 
 // TODO: make this run async as a user rates more memes
 
@@ -54,27 +54,31 @@ function GetAllMatches() {
     user: Select(['data', 'user'], Get(Var('accountRef'))),
   },
   q.Map(
-    Paginate(Filter(
+    Paginate(Join(
       Difference(
-        Match(Index("users_by_wantFriends"), true ),
-        Match(Index("matches_rated_by_user"), Var("user") ),
-        Match(Index("user_by_user"), Var("user") )
+        Match(Index("users_by_wants"), 'friends' ),
+        Match(Index("matches_rated_by_user"), Var("user")),
+        Match(Index("user_by_user"), Var("user"))
       ),
       Lambda(
-        "i",
-        Exists(
-            Intersection(
-                Match(Index("r_and_ref_by_user"), Var("user") ),
-                Match(Index("r_and_ref_by_user"), Var("i") )
-            )
+        "match",
+        Intersection(
+          Match(Index("r_and_ref_by_user"), Var("user") ),
+          Match(Index("r_and_ref_by_user"), Var("match") )
         )
       )
-    ), {size: 2}),
+    ),{size: 2}),
     Lambda(
-      "match",
-      Get(Var("match"))
+      "r_doc",
+      [Select(0,Var("r_doc")),
+      Get(Select(0,
+        Difference(
+          Select(["data", "users"], Get(Select(1,Var("r_doc")))),
+          [Var("user")]
+        )
+      ))]
     )
-  )  
+  )
 )
   // Let(
   //   { 

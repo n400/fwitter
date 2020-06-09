@@ -35,16 +35,14 @@ function RateMatches () {
     return faunaQueries
       .getAllMatches()
       .then(res => {
+        console.log( res)
 
-        //// ??TODO: this "if (excludeMemeId)" var probably doesnt work anymore. 
-        // probably needs to be excludeMeme.ref.id
-
-        let excludeMemeId = !excludeMeme ? undefined : excludeMeme.ref.value.id
+        let excludeMemeId = !excludeMeme ? undefined : excludeMeme[1].ref.value.id
         console.log("excludeMemeId:", excludeMemeId, excludeMeme)
         // One of the memes might be already rated because of potential race conditions, ... 
         // ... so we remove it post-database-access.
-        let memeList = new Map((res.data).map(function (n) {return [n.ref.value.id, n]}))
-
+        let memeList = new Map((res.data).map(function (n) {return [n[1].ref.value.id, n]}))
+        console.log(memeList)
         //// ??TODO: this "if (excludeMemeId)" function probably doesnt work anymore because 
         //// the match data structure is a little different from the meme data structure
         if (excludeMemeId) {
@@ -55,7 +53,7 @@ function RateMatches () {
             if (mId == excludeMemeId) memeList.delete(mId)
           })
         }
-        console.log( memeList)
+      
         return memeList
       })
       .catch(err => {
@@ -66,7 +64,7 @@ function RateMatches () {
   
   async function handleSaveRating  ({currentMeme, rating}) {
     // console.log("emoji",emoji)
-    let mId = currentMeme.ref
+    let mId = currentMeme[1].ref
     console.log(mId)
     return faunaQueries
       .saveMatchRating(mId, rating)
@@ -116,22 +114,28 @@ function RateMatches () {
       loadNextMeme({currentMeme: currentMeme, memeList: memeData.memeList})
     }
     if (memeData === undefined) return (<React.Fragment><div>Loading ... </div></React.Fragment>)
-    if (memeData.currentMeme === undefined) return (<React.Fragment><div>Ran out of matches!</div></React.Fragment>)
-    let mId = memeData.currentMeme.ref.value.id
+    if (memeData.currentMeme === undefined) return (
+      <React.Fragment>
+        <div>Ran out of matches!</div>
+        <div>Summer: Try getting more</div>
+        <div>Rate more memes</div>
+        <div>Advertise us on tinder   </div>
+      </React.Fragment>)
+    let mId = memeData.currentMeme[1].ref.value.id
     console.log("matchlist:", memeData)
 
     return (
       <React.Fragment>
-        <div className="rate_meme_element">
+        <div className="swipe-container">
           <div className="swipeableAsset">
-            <img className="meme_to_rate" alt="" src={memeData.currentMeme.data.asset01.url} />
+            <img className="meme_to_rate" alt="" src={memeData.currentMeme[1].data.asset01 ? memeData.currentMeme[1].data.asset01.url : '/images/icons/emojis_love.svg'} />
             <div className="action-bar">
               <div className="action" data-swipe="left" onClick={clickRatingButtonEvent} >
                   swipe-left
               </div>
               <div className="">
-                <h2> {memeData.currentMeme.data.alias}</h2>
-                <div> {memeData.currentMeme.data.zip}<span>&bull;</span> {memeData.currentMeme.data.dob}</div>  
+                <h2> {memeData.currentMeme[1].data.alias}</h2>
+                <div> {memeData.currentMeme[1].data.zip}<span>&bull;</span> {memeData.currentMeme[1].data.dob}</div>  
               </div>
               <div className="action" data-swipe="right" onClick={clickRatingButtonEvent} >
                 swipe-right

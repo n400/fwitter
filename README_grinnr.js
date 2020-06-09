@@ -27,6 +27,23 @@ Map(
   Paginate(Documents(Collection("match_scores")),{size:10000}),
   Lambda(ref => Delete(ref))
 )
+// update data
+Map(
+  Paginate(Documents(Collection("users")),{size:10000}),
+  Lambda(
+    "ref",
+    Update(
+      Var("ref"),
+      {
+        data: {
+          wants: ['friends', 'dates'],
+          wantsMemes: null
+        },
+      },
+    )
+  )
+)
+
 
 //see all previously rated memes with their ratings
 CreateIndex({
@@ -231,6 +248,15 @@ CreateIndex({
 });
 
 // TODO: this might eventually just be wants, not separate indexes for wantsFriends and wantDates
+CreateIndex({
+  name: "users_by_wants",
+  source: Collection("users"),
+  terms: [
+    { field: ["data", "wants"] }
+  ],
+  values: []
+})
+
 CreateIndex({
   name: "users_by_wantFriends",
   source: Collection("users"),

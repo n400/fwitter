@@ -4,6 +4,7 @@ import SessionContext from '../context/session'
 import { faunaQueries } from '../fauna/query-manager'
 import { toast } from 'react-toastify'
 import { useHistory } from 'react-router-dom'
+import TinderCard from 'react-tinder-card'
 
 function RateMemes () {
   const sessionContext = useContext(SessionContext)
@@ -98,7 +99,20 @@ function RateMemes () {
       memeList: memeList,
     })
   }
-  
+
+
+
+
+
+
+
+  const onSwipe = (direction) => {
+    console.log('You swiped: ' + direction)
+  }
+   
+  const onCardLeftScreen = (myIdentifier) => {
+    console.log(myIdentifier + ' left the screen')
+  }
 
   return renderMeme()
 
@@ -116,10 +130,12 @@ function RateMemes () {
     let mId = memeData.currentMeme.id
     return (
       <React.Fragment>
-        <div className="rate_meme_element">
-          <div className="swipeableAsset">
-            <img className="meme_to_rate" alt="" src={"/images/memes/jim/meme (" + mId + ").jpg"} />
-          </div>
+        <div className="swipe-container">
+          <TinderCard onSwipe={onSwipe} onCardLeftScreen={() => onCardLeftScreen('fooBar')} preventSwipe={['down', 'up']}>
+            <div className="swipeableAsset">        
+              <img className="meme_to_rate" alt="" src={"/images/memes/jim/meme (" + mId + ").jpg"} />
+            </div>
+          </TinderCard>
           <div className="action-bar meme-radios">
           <div className="action-bar-button">
               <label htmlFor={"hate_"+mId}><img className="emoji" src="images/icons/emojis_hate.svg"/></label>
