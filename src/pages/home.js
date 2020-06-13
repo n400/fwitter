@@ -49,6 +49,19 @@ const handleRegister = (event, email, password, alias,
   event.preventDefault()
 }
 
+
+const setNextMeme = () => {
+  faunaQueries
+  .getAllProfiles()
+  .then(res => {
+    console.log( res)
+  })
+  .catch(err => {
+    console.log(err)
+    toast.error('getting profiles failed')
+  })
+}
+
 const Register = () => {
   const history = useHistory()
   const sessionContext = useContext(SessionContext)
@@ -62,7 +75,7 @@ const Register = () => {
       </div>
       <div className="main-left">
         <img 
-        // onClick={setNextMeme}
+        onClick={setNextMeme}
         src="/images/memes/grinnr-texting-boy-girl-color.jpg" alt="grinnr is a networking and dating app that analyzes your sense of humor to find people who share your sense of humor.
 " />
       </div>

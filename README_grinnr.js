@@ -258,14 +258,13 @@ CreateIndex({
 })
 
 CreateIndex({
-  name: "users_by_wantFriends",
-  source: Collection("users"),
+  name: "dob_by_user",
+  source: Collection("user_pii"),
   terms: [
-    { field: ["data", "wantFriends"] }
+    { field: ["data", "user"] }
   ],
-  values: []
+  values: [{ field: ["data", "dob"] }]
 })
-
 
 ///
 // FUNCTIONS
@@ -279,7 +278,21 @@ CreateFunction({
 
   ))
 })
+Get(Match(Index("dob_by_user"),Ref(Collection("users"),1)))
 
+CreateFunction({
+  name: "get_age",
+  body: Query(
+    Lambda(["user"],
+    Divide(TimeDiff( 
+      ToDate(Select(0,Paginate(Match(Index("dob_by_user"), Var("user"))))),
+      ToDate(SubString(ToString(Now()),0,FindStr(ToString(Now()), "T"))),
+      'days'
+    ),365)
+  ))
+})
+
+// Call(Function("get_age"),Ref(Collection("users"),1) )
 
 CreateFunction({
   name: "calc_stats",

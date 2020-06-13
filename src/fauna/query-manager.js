@@ -38,6 +38,8 @@ class QueryManager {
       if (res) {
         this.client = new faunadb.Client({ secret: res.secret })
       }
+      // console.log("client",this.client)
+      // console.log("res",res)
       return res
     })
   }
@@ -49,6 +51,8 @@ class QueryManager {
       if (res) {
         this.client = new faunadb.Client({ secret: res.secret.secret })
       }
+      // console.log("client",this.client)
+      // console.log("res",res)
       return res
     })
   }

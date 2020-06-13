@@ -1,7 +1,7 @@
 import faunadb from 'faunadb'
 
 const q = faunadb.query
-const { Difference, Documents, Filter, Exists, Join, Intersection, Ref, Now, Paginate, Lambda, Match, Index, Create, Collection, Let, Get, Identity, Var, ToNumber, Select } = q
+const { Call, Difference, Documents, Filter, Exists, Join, Intersection, Ref, Now, Paginate, Lambda, Match, Index, Create, Collection, Let, Get, Identity, Var, ToNumber, Select } = q
 
 // TODO: make this run async as a user rates more memes
 
@@ -40,11 +40,14 @@ function GetUnratedMemes(user) {
 //get all user profiles
 function GetAllProfiles() {
   // console.log('getting user profile')
-  return q.Map(
-    Paginate(Documents(Collection("users"))),
-    Lambda("i", Get(Var("i")))
-  )
+  return Call(q.Function("get_age"),
+      Ref(Collection("users"), "1"))
+      // return q.Map(
+      //   Paginate(Documents(Collection("users"))),
+      //   Lambda("i", Get(Var("i")))
+      // )
 }
+
 
 // get all users and their meme ratings
 function GetAllMatches() {
@@ -71,6 +74,15 @@ function GetAllMatches() {
     Lambda(
       "r_doc",
       [Select(0,Var("r_doc")),
+      // Call(q.Function("get_age"),
+      // Ref(Collection("users"), "1")
+      //   // Select(0,
+      //   //   Difference(
+      //   //     Select(["data", "users"], Get(Select(1,Var("r_doc")))),
+      //   //     [Var("user")]
+      //   //   )
+      //   // )
+      // ),
       Get(Select(0,
         Difference(
           Select(["data", "users"], Get(Select(1,Var("r_doc")))),
@@ -79,25 +91,7 @@ function GetAllMatches() {
       ))]
     )
   )
-)
-  // Let(
-  //   { 
-  //     user: Ref(Collection("users"), "267178323714507284")
-  //     // accountRef: Identity(),
-  //     // user: Select(['data', 'user'], Get(Var('accountRef'))),
-  //   },
-  //   q.Map(
-  //     Paginate(Match(Index("r_and_ref_by_user"), Var("user") ),{size: 2}),
-  //     Lambda(
-  //       "r_doc",
-  //       Get(Select(0,Difference(
-  //         Select(["data", "users"], Get(Select([1],Var("r_doc")))),
-  //         [Ref(Collection("users"), "267178323714507284")]
-  //       )))
-  //     )
-  //   )
-  // )
-}
+)}
 
 function SaveMemeRating(mRefId, rating) {
   console.log('saving in db', rating)
