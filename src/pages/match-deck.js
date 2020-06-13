@@ -7,7 +7,9 @@ import { useHistory } from 'react-router-dom'
 import { flattenDataKeys } from '../fauna/helpers/util'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimesCircle, faHeart, faStar, faComment, faImages, faUser, faUserEdit, faComments  } from '@fortawesome/free-solid-svg-icons'
+import TinderCard from 'react-tinder-card'
 
+// TODO: refactor match-deck and meme-deck functions into one that uses "card-deck"
 
 function RateMatches () {
   const sessionContext = useContext(SessionContext)
@@ -99,7 +101,28 @@ function RateMatches () {
       memeList: memeList,
     })
   }
+    
+    
+  const setNextMeme = () => {
+    faunaQueries
+    .getAllProfiles()
+    .then(res => {
+      console.log( res)
+    })
+    .catch(err => {
+      console.log(err)
+      toast.error('testFunction failed')
+    })
+  }
+
+
+  const onSwipe = (direction) => {
+    console.log('You swiped: ' + direction)
+  }
   
+  const onCardLeftScreen = (myIdentifier) => {
+    console.log(myIdentifier + ' left the screen')
+  }
 
   return renderMeme()
 
@@ -127,20 +150,30 @@ function RateMatches () {
     return (
       <React.Fragment>
         <div className="swipe-container">
-          <div className="swipeableAsset">
-            <img className="meme_to_rate" alt="" src={memeData.currentMeme[1].data.asset01 ? memeData.currentMeme[1].data.asset01.url : '/images/icons/emojis_love.svg'} />
-            <div className="action-bar">
-              <div className="action" data-swipe="left" onClick={clickRatingButtonEvent} >
-                  swipe-left
-              </div>
-              <div className="">
-                <h2> {memeData.currentMeme[1].data.alias}</h2>
-                <div> {memeData.currentMeme[1].data.zip}<span>&bull;</span> {memeData.currentMeme[1].data.dob}</div>  
-              </div>
-              <div className="action" data-swipe="right" onClick={clickRatingButtonEvent} >
-                swipe-right
+          <TinderCard onSwipe={onSwipe} onCardLeftScreen={() => onCardLeftScreen('fooBar')} preventSwipe={['down', 'up']}>
+            <div className="swipeableAsset">
+              <img className="meme_to_rate" 
+              // onClick={setNextMeme}
+              alt="" src={memeData.currentMeme[1].data.asset01 ? memeData.currentMeme[1].data.asset01.url : '/images/icons/emojis_love.svg'} />
+              <div className="action-bar">
+                <div className="action" data-swipe="left" onClick={clickRatingButtonEvent} >
+                    swipe-left
+                </div>
+                <div className="">
+                  <h2> {memeData.currentMeme[1].data.alias}</h2>
+                  <div> {memeData.currentMeme[1].data.zip}<span>&bull;</span> {memeData.currentMeme[2] ? memeData.currentMeme[2] : '?'}</div>  
+                </div>
+                <div className="action" data-swipe="right" onClick={clickRatingButtonEvent} >
+                  swipe-right
+                </div>
               </div>
             </div>
+          </TinderCard>
+          <div className="injectedProfile">
+           <p>uberuidcbiudbceibcnwibfwid</p>
+           <p>uberuidcbiudbceibcnwibfwid</p>
+           <p>uberuidcbiudbceibcnwibfwid</p>
+           <p>uberuidcbiudbceibcnwibfwid</p>
           </div>
       </div>  
     </React.Fragment>

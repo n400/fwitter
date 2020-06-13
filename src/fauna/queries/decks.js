@@ -39,13 +39,47 @@ function GetUnratedMemes(user) {
 
 //get all user profiles
 function GetAllProfiles() {
-  // console.log('getting user profile')
-  return Call(q.Function("get_age"),
-      Ref(Collection("users"), "1"))
-      // return q.Map(
-      //   Paginate(Documents(Collection("users"))),
-      //   Lambda("i", Get(Var("i")))
-      // )
+  console.log('lol lol oloolomono')
+//   return Let({
+//     accountRef: Identity(),
+//     user: Select(['data', 'user'], Get(Var('accountRef'))),
+//   },
+//   q.Map(
+//     Paginate(Join(
+//       Difference(
+//         Match(Index("users_by_wants"), 'friends' ),
+//         Match(Index("matches_rated_by_user"), Var("user")),
+//         Match(Index("user_by_user"), Var("user"))
+//       ),
+//       Lambda(
+//         "match",
+//         Intersection(
+//           Match(Index("r_and_ref_by_user"), Var("user") ),
+//           Match(Index("r_and_ref_by_user"), Var("match") )
+//         )
+//       )
+//     ),{size: 2}),
+//     Lambda(
+//       "r_doc",
+//       [Select(0,Var("r_doc")),
+//       Call(q.Function("get_age"),
+//       Ref(Collection("users"), "1")
+//       //   // Select(0,
+//       //   //   Difference(
+//       //   //     Select(["data", "users"], Get(Select(1,Var("r_doc")))),
+//       //   //     [Var("user")]
+//       //   //   )
+//       //   // )
+//       ),
+//       Get(Select(0,
+//         Difference(
+//           Select(["data", "users"], Get(Select(1,Var("r_doc")))),
+//           [Var("user")]
+//         )
+//       ))]
+//     )
+//   )
+// )
 }
 
 
@@ -74,21 +108,22 @@ function GetAllMatches() {
     Lambda(
       "r_doc",
       [Select(0,Var("r_doc")),
-      // Call(q.Function("get_age"),
-      // Ref(Collection("users"), "1")
-      //   // Select(0,
-      //   //   Difference(
-      //   //     Select(["data", "users"], Get(Select(1,Var("r_doc")))),
-      //   //     [Var("user")]
-      //   //   )
-      //   // )
-      // ),
       Get(Select(0,
         Difference(
           Select(["data", "users"], Get(Select(1,Var("r_doc")))),
           [Var("user")]
         )
-      ))]
+      )),
+      Call(q.Function("get_age"),
+      // Ref(Collection("users"), "1") 
+        Select(0,
+          Difference(
+            Select(["data", "users"], Get(Select(1,Var("r_doc")))),
+            [Var("user")]
+          )
+        )
+      )
+    ]
     )
   )
 )}

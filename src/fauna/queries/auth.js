@@ -26,7 +26,8 @@ const {
   ContainsStrRegex,
   Abort,
   GTE,
-  Length
+  Length,
+  Ref
 } = q
 
 /*
@@ -255,7 +256,15 @@ function LoginAccount(email, password) {
 async function login(client, email, password) {
   console.log("client2",client)
   return client.query(Call(q.Function('login'), email, password)).then(res => flattenDataKeys(res))
+  //return client.query(Call(q.Function("get_age"), Ref(Collection("users"), "1"))).then(res => console.log("resssss",res))
 }
+//res 
+// {account: {…}, user: {…}, secret: "fnEDuOxzwBACEgOy4dHuIAITByaoFWzIFwJzCm0_N-yFKOqNjpo"}
+// account: {ref: Ref, ts: 1591571469015000, email: "jim@gmail.com", user: Ref}
+// secret: "fnEDuOxzwBACEgOy4dHuIAITByaoFWzIFwJzCm0_N-yFKOqNjpo"
+// user: {ref: Ref, ts: 1591660362870000, alias: "jim", wantFriends: true, wantDates: true, …}
+// __proto__: Object
+
 
 /* ********** Call the UDF register function *********** */
 function register(client, email, password) {
