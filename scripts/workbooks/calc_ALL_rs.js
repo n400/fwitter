@@ -22,29 +22,29 @@ Let({
 )
 
 
-Let({
-    user: Ref(Collection("users"), "3" )
-  },
-  Map(
-    Paginate(Filter(
-      Difference(
-        Match(Index("users_by_wantFriends"), true ),
-        Match(Index("matches_rated_by_user"), Var("user") ),
-        Match(Index("user_by_user"), Var("user") )
-      ),
-      Lambda(
-        "i",
-        Exists(
-            Intersection(
-                Match(Index("r_and_ref_by_user"), Var("user") ),
-                Match(Index("r_and_ref_by_user"), Var("i") )
-            )
-        )
-      )
-    ), {size: 100}),
-    Lambda(
-      "match",
-      Get(Var("match"))
-    )
-  )  
-)
+// Let({
+//     user: Ref(Collection("users"), "3" )
+//   },
+//   Map(
+//     Paginate(Filter(
+//       Difference(
+//         Match(Index("users_by_wantFriends"), true ),
+//         Match(Index("matches_rated_by_user"), Var("user") ),
+//         Match(Index("user_by_user"), Var("user") )
+//       ),
+//       Lambda(
+//         "i",
+//         Exists(
+//             Intersection(
+//                 Match(Index("r_and_ref_by_user"), Var("user") ),
+//                 Match(Index("r_and_ref_by_user"), Var("i") )
+//             )
+//         )
+//       )
+//     ), {size: 100}),
+//     Lambda(
+//       "match",
+//       Get(Var("match"))
+//     )
+//   )  
+// )

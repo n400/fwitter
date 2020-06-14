@@ -8,6 +8,7 @@ import { flattenDataKeys } from '../fauna/helpers/util'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimesCircle, faHeart, faStar, faComment, faImages, faUser, faUserEdit, faComments  } from '@fortawesome/free-solid-svg-icons'
 import TinderCard from 'react-tinder-card'
+import { Scrollbars } from 'react-custom-scrollbars';
 
 // TODO: refactor match-deck and meme-deck functions into one that uses "card-deck"
 
@@ -103,9 +104,10 @@ function RateMatches () {
   }
     
     
-  const setNextMeme = () => {
+  const tryGettingMore = () => {
+    console.log("clicked")
     faunaQueries
-    .getAllProfiles()
+    .calculateMatches()
     .then(res => {
       console.log( res)
     })
@@ -140,7 +142,7 @@ function RateMatches () {
     if (memeData.currentMeme === undefined) return (
       <React.Fragment>
         <div>Ran out of matches!</div>
-        <div>Summer: Try getting more</div>
+        <div className="button" onClick={tryGettingMore}>Summer: Try getting more</div>
         <div>Rate more memes</div>
         <div>Advertise us on tinder   </div>
       </React.Fragment>)
@@ -151,30 +153,46 @@ function RateMatches () {
       <React.Fragment>
         <div className="swipe-container">
           <TinderCard onSwipe={onSwipe} onCardLeftScreen={() => onCardLeftScreen('fooBar')} preventSwipe={['down', 'up']}>
+          {/* <Scrollbars style={{ width: '800px', autoHeight:'true' }}> */}
             <div className="swipeableAsset">
-              <img className="meme_to_rate" 
-              // onClick={setNextMeme}
-              alt="" src={memeData.currentMeme[1].data.asset01 ? memeData.currentMeme[1].data.asset01.url : '/images/icons/emojis_love.svg'} />
-              <div className="action-bar">
-                <div className="action" data-swipe="left" onClick={clickRatingButtonEvent} >
-                    swipe-left
+              <div className="preview-wrap">
+                <div className="img-wrap">
+                  <div className="overlay"></div>
+                  <img className="meme_to_rate" 
+                  // onClick={setNextMeme}
+                  alt="" src={memeData.currentMeme[1].data.asset01 ? memeData.currentMeme[1].data.asset01.url : '/images/icons/emojis_love.svg'} /> 
                 </div>
-                <div className="">
-                  <h2> {memeData.currentMeme[1].data.alias}</h2>
-                  <div> {memeData.currentMeme[1].data.zip}<span>&bull;</span> {memeData.currentMeme[2] ? memeData.currentMeme[2] : '?'}</div>  
-                </div>
-                <div className="action" data-swipe="right" onClick={clickRatingButtonEvent} >
-                  swipe-right
+                 <div className="action-bar">
+                  <div className="action" data-swipe="left" onClick={clickRatingButtonEvent} >
+                      swipe-left
+                  </div>
+                  <div className="">
+                    <h2> {memeData.currentMeme[1].data.alias}</h2>
+                    <div> {memeData.currentMeme[1].data.zip}<span>&bull;</span> {memeData.currentMeme[2] ? memeData.currentMeme[2] : '?'}</div>  
+                  </div>
+                  <div className="action" data-swipe="right" onClick={clickRatingButtonEvent} >
+                    swipe-right
+                  </div>
                 </div>
               </div>
+              <div className="injectedProfile">
+              <p>uberuidcbiudbceibcnwibfwid</p>
+              <p>uberuidcbiudbceibcnwibfwid</p>
+              <p>uberuidcbiudbceibcnwibfwid</p>
+              <p>uberuidcbiudbceibcnwibfwid</p>
+              <p>uberuidcbiudbceibcnwibfwid</p>
+              <p>uberuidcbiudbceibcnwibfwid</p>
+              <p>uberuidcbiudbceibcnwibfwid</p>
+              <p>uberuidcbiudbceibcnwibfwid</p>
+              <p>uberuidcbiudbceibcnwibfwid</p>
+              <p>uberuidcbiudbceibcnwibfwid</p>
+              <p>uberuidcbiudbceibcnwibfwid</p>
+              <p>uberuidcbiudbceibcnwibfwid</p>
+              </div>
             </div>
+            <p>Some great content...</p>
+          {/* </Scrollbars> */}
           </TinderCard>
-          <div className="injectedProfile">
-           <p>uberuidcbiudbceibcnwibfwid</p>
-           <p>uberuidcbiudbceibcnwibfwid</p>
-           <p>uberuidcbiudbceibcnwibfwid</p>
-           <p>uberuidcbiudbceibcnwibfwid</p>
-          </div>
       </div>  
     </React.Fragment>
     )

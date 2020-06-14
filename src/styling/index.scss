@@ -32,6 +32,7 @@ $grey-legible: #798086;
 $grey-gradient: linear-gradient(160.49deg, #C0C9D2 12.86%, #B0C0CF 84.67%);
 $teal: #04A7C9;
 $teal-gradient: linear-gradient(161.3deg, #04A7C9 14.59%, #00BDB2 81.6%);
+$hot-pink: #FF009B;
 $pink-gradient: linear-gradient(86.74deg, #FF1800 11.09%, #FF009B 87.91%);
 
 //TODO: This doesnt work. forgot how to do this
@@ -42,6 +43,7 @@ $pink-gradient: linear-gradient(86.74deg, #FF1800 11.09%, #FF009B 87.91%);
 @import "./theme/normalize";
 @import "./theme/typ";
 @import "./theme/layout";
+@import "./theme/scrollbar";
 @import "./theme/forms";
 @import "./theme/tabs";
 @import "./components/nav";

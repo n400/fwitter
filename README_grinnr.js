@@ -27,6 +27,7 @@ Map(
   Paginate(Documents(Collection("match_scores")),{size:10000}),
   Lambda(ref => Delete(ref))
 )
+
 // update data
 Map(
   Paginate(Documents(Collection("users")),{size:10000}),
@@ -44,6 +45,13 @@ Map(
   )
 )
 
+
+// npm install --save react-tinder-card
+// npm install react-custom-scrollbars --save
+// https://github.com/malte-wessel/react-custom-scrollbars
+// https://github.com/3DJakob/react-tinder-card
+
+// CREATE NEW DB
 
 //see all previously rated memes with their ratings
 CreateIndex({

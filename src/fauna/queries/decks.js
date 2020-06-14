@@ -38,49 +38,15 @@ function GetUnratedMemes(user) {
 }
 
 //get all user profiles
+//get all user profiles
 function GetAllProfiles() {
-  console.log('lol lol oloolomono')
-//   return Let({
-//     accountRef: Identity(),
-//     user: Select(['data', 'user'], Get(Var('accountRef'))),
-//   },
-//   q.Map(
-//     Paginate(Join(
-//       Difference(
-//         Match(Index("users_by_wants"), 'friends' ),
-//         Match(Index("matches_rated_by_user"), Var("user")),
-//         Match(Index("user_by_user"), Var("user"))
-//       ),
-//       Lambda(
-//         "match",
-//         Intersection(
-//           Match(Index("r_and_ref_by_user"), Var("user") ),
-//           Match(Index("r_and_ref_by_user"), Var("match") )
-//         )
-//       )
-//     ),{size: 2}),
-//     Lambda(
-//       "r_doc",
-//       [Select(0,Var("r_doc")),
-//       Call(q.Function("get_age"),
-//       Ref(Collection("users"), "1")
-//       //   // Select(0,
-//       //   //   Difference(
-//       //   //     Select(["data", "users"], Get(Select(1,Var("r_doc")))),
-//       //   //     [Var("user")]
-//       //   //   )
-//       //   // )
-//       ),
-//       Get(Select(0,
-//         Difference(
-//           Select(["data", "users"], Get(Select(1,Var("r_doc")))),
-//           [Var("user")]
-//         )
-//       ))]
-//     )
-//   )
-// )
+  // console.log('getting user profile')
+  return q.Map(
+    Paginate(Documents(Collection("users"))),
+    Lambda("i", Get(Var("i")))
+  )
 }
+
 
 
 // get all users and their meme ratings
@@ -127,6 +93,32 @@ function GetAllMatches() {
     )
   )
 )}
+
+function CalculateMatches(){
+  return Let({ 
+    accountRef: Identity(),
+    user_1: Select(['data', 'user'], Get(Var('accountRef'))),
+    // user_1: Ref(Collection("users"), "1"),
+    users: Paginate(
+              Difference(
+                Match(Index("users_by_wants"),  'friends' ),
+                Match(Index("matches_rated_by_user"),  Var("user_1")),
+                Match(Index("user_by_user"), Var("user_1"))
+              ), 
+            {size: 40000}
+          )
+  },
+  q.Map(
+    Var("users"),
+    Lambda(
+      "user_2",
+      Call(q.Function("update_r"),[Var("user_1"), Var("user_2")])
+    )
+  )
+)
+
+}
+
 
 function SaveMemeRating(mRefId, rating) {
   console.log('saving in db', rating)
@@ -176,4 +168,4 @@ function SaveMatchRating(matchRef, rating) {
 
 
 
-export { SaveMatchRating, SaveMemeRating, GetUnratedMemes, GetAllMatches, GetAllProfiles }
+export { SaveMatchRating, SaveMemeRating, GetUnratedMemes, GetAllMatches, GetAllProfiles, CalculateMatches }
