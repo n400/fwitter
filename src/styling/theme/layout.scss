@@ -10,7 +10,10 @@ a{text-decoration:none;}
 
 .mobile-layout .body-container{background: $background-color;}
 .body-container{
-  position:absolute;display:flex;flex-direction:column;width:100%;}
+  position:absolute;display:flex;flex-direction:column;width:100%;
+  height: 100%;
+  padding: 0 4%;
+}
 
 main.main-wrapper {
   // background:black;
@@ -18,7 +21,9 @@ main.main-wrapper {
   display:flex;
   align-items: center;
   justify-content: flex-start;
-  padding: 0 4%;
+  height: 100%;
+  // windows chrome fix
+  max-height:calc(100vh - #{$nav-height} - #{$action-bar-height});
 }
 .split-layout{
   display: flex;

@@ -90,6 +90,9 @@ const Profile = ({ match, location, props }) => {
         {/* <div className="main-left"> */}
           <div className="profilePhotos">
             {/* {asset01 ? <Asset asset={asset01}></Asset> : null} */}
+            <div>
+              <Link to={`/profile/${user.alias}`}>view {user.alias} profile</Link>
+            </div>
             <Link to={`/profile-edit/`}>edit profile</Link>
           </div>
           <h1>

@@ -136,34 +136,45 @@ function RateMemes () {
               <img className="meme_to_rate" alt="" src={"/images/memes/jim/meme (" + mId + ").jpg"} />
             </div>
           </TinderCard>
-          <div className="action-bar meme-radios">
-          <div className="action-bar-button">
+        </div>  
+        {/* //TODO: factor into normal buttons, not radios, with need to QA ratings being saved */}
+        <div className="action-bar meme-radios">
+          <div className="action">
+            <div className="action-content">
               <label htmlFor={"hate_"+mId}><img className="emoji" src="images/icons/emojis_hate.svg"/></label>
               <input type="radio" id={"hate_"+mId} name={mId} 
               value="1" onClick={clickRatingButtonEvent} data-emoji="images/icons/emojis_hate.svg"/>
             </div>
-            <div className="action-bar-button">
+          </div>
+          <div className="action">
+            <div className="action-content">
               <label htmlFor={"dislike_"+mId}><img className="emoji" src="images/icons/emojis_dislike.svg"/></label>
               <input type="radio" id={"dislike_"+mId} name={mId} 
               value="2" onClick={clickRatingButtonEvent}  data-emoji="images/icons/emojis_dislike.svg"/>
             </div>
-            <div className="action-bar-button">
+          </div>
+          <div className="action">
+            <div className="action-content">
               <label htmlFor={"meh_"+mId}><img className="emoji" src="images/icons/emojis_meh.svg"/></label>
               <input type="radio" id={"meh_"+mId} name={mId} 
               value="3" onClick={clickRatingButtonEvent} data-emoji="images/icons/emojis_meh.svg" />
             </div>
-            <div className="action-bar-button">
+          </div>
+          <div className="action">
+            <div className="action-content">
               <label htmlFor={"like_"+mId}><img className="emoji" src="images/icons/emojis_like.svg"/></label>
               <input type="radio" id={"like_"+mId} name={mId} 
               value="4" onClick={clickRatingButtonEvent} data-emoji="images/icons/emojis_like.svg" />
             </div>
-            <div className="action-bar-button">
+          </div>
+          <div className="action">
+            <div className="action-content">
               <label htmlFor={"love_"+mId}><img className="emoji" src="images/icons/emojis_love.svg"/></label>
               <input type="radio" id={"love_"+mId} name={mId} 
               value="5" onClick={clickRatingButtonEvent}  data-emoji="images/icons/emojis_love.svg"/>
             </div>
           </div>
-      </div>  
+        </div>
     </React.Fragment>
     )
   }

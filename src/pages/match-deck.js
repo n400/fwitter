@@ -6,9 +6,10 @@ import { toast } from 'react-toastify'
 import { useHistory } from 'react-router-dom'
 import { flattenDataKeys } from '../fauna/helpers/util'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTimesCircle, faHeart, faStar, faComment, faImages, faUser, faUserEdit, faComments  } from '@fortawesome/free-solid-svg-icons'
+import { faTimesCircle, faTimes, faHeart, faStar, faComment, faImages, faUser, faUserEdit, faComments  } from '@fortawesome/free-solid-svg-icons'
 import TinderCard from 'react-tinder-card'
 import { Scrollbars } from 'react-custom-scrollbars';
+import {MemeGrid} from '../components/meme-grid'
 
 // TODO: refactor match-deck and meme-deck functions into one that uses "card-deck"
 
@@ -147,53 +148,77 @@ function RateMatches () {
         <div>Advertise us on tinder   </div>
       </React.Fragment>)
     let mId = memeData.currentMeme[1].ref.value.id
+    let profileToFetch = memeData.currentMeme[1].data.alias
+    let zip = memeData.currentMeme[1].data.zip
+    let age = (memeData.currentMeme[2] ? memeData.currentMeme[2] : '?')
     console.log("matchlist:", memeData)
 
     return (
       <React.Fragment>
         <div className="swipe-container">
-          <TinderCard onSwipe={onSwipe} onCardLeftScreen={() => onCardLeftScreen('fooBar')} preventSwipe={['down', 'up']}>
+          {/* <TinderCard onSwipe={onSwipe} onCardLeftScreen={() => onCardLeftScreen('fooBar')} preventSwipe={['down', 'up']}> */}
           {/* <Scrollbars style={{ width: '800px', autoHeight:'true' }}> */}
-            <div className="swipeableAsset">
-              <div className="preview-wrap">
-                <div className="img-wrap">
-                  <div className="overlay"></div>
-                  <img className="meme_to_rate" 
-                  // onClick={setNextMeme}
-                  alt="" src={memeData.currentMeme[1].data.asset01 ? memeData.currentMeme[1].data.asset01.url : '/images/icons/emojis_love.svg'} /> 
-                </div>
-                 <div className="action-bar">
-                  <div className="action" data-swipe="left" onClick={clickRatingButtonEvent} >
-                      swipe-left
-                  </div>
+              <div className="scroll-container">
+                <div className="preview-wrap">
+                  <div className="img-wrap">
+                    <div className="overlay"></div>
+                    <img className="meme_to_rate" 
+                    // onClick={setNextMeme}
+                    alt="" src={memeData.currentMeme[1].data.asset01 ? memeData.currentMeme[1].data.asset01.url : '/images/icons/emojis_love.svg'} /> 
+                  </div>{/* </img-wrap> */}
                   <div className="">
-                    <h2> {memeData.currentMeme[1].data.alias}</h2>
-                    <div> {memeData.currentMeme[1].data.zip}<span>&bull;</span> {memeData.currentMeme[2] ? memeData.currentMeme[2] : '?'}</div>  
+                    <h2> {profileToFetch}</h2>
+                    <div> {zip}<span>&bull;</span> {age}</div>  
                   </div>
-                  <div className="action" data-swipe="right" onClick={clickRatingButtonEvent} >
-                    swipe-right
-                  </div>
+                </div>{/* </preview-wrap> */}
+                <div className="profile-description">
+                  <section>
+                    <h5 className="section-header">Lorem ipsum dolor sit amet</h5> 
+                    <p>consectetur adipiscing elit, sed do eiusmod tempor 
+                      incididunt ut labore et dolore magna aliqua. Morbi enim 
+                      nunc faucibus a pellentesque sit amet porttitor. Posuere 
+                      sollicitudin aliquam ultrices sagittis orci a. Justo 
+                      eget magna fermentum iaculis eu non diam. Pharetra diam 
+                      sit amet nisl. Nibh sed pulvinar proin gravida hendrerit 
+                    </p>
+                  </section>
+                  <section>
+                    <h5 className="section-header">Lorem ipsum dolor sit amet</h5> 
+                    <p>consectetur adipiscing elit, sed do eiusmod tempor 
+                      incididunt ut labore et dolore magna aliqua. Morbi enim 
+                      nunc faucibus a pellentesque sit amet porttitor. Posuere 
+                      sollicitudin aliquam ultrices sagittis orci a. Justo 
+                      eget magna fermentum iaculis eu non diam. Pharetra diam 
+                      sit amet nisl. Nibh sed pulvinar proin gravida hendrerit 
+                    </p>
+                  </section>
+                  <section>
+                    <h5 className="section-header">Lorem ipsum dolor sit amet</h5> 
+                    <p>consectetur adipiscing elit, sed do eiusmod tempor 
+                      incididunt ut labore et dolore magna aliqua. Morbi enim 
+                      nunc faucibus a pellentesque sit amet porttitor. Posuere 
+                      sollicitudin aliquam ultrices sagittis orci a. Justo 
+                      eget magna fermentum iaculis eu non diam. Pharetra diam 
+                      sit amet nisl. Nibh sed pulvinar proin gravida hendrerit 
+                    </p>
+                  </section>
+                </div>{/* profile-description */}
+                <div className="grid">
+                  {<MemeGrid passedData={profileToFetch} />}
                 </div>
-              </div>
-              <div className="injectedProfile">
-              <p>uberuidcbiudbceibcnwibfwid</p>
-              <p>uberuidcbiudbceibcnwibfwid</p>
-              <p>uberuidcbiudbceibcnwibfwid</p>
-              <p>uberuidcbiudbceibcnwibfwid</p>
-              <p>uberuidcbiudbceibcnwibfwid</p>
-              <p>uberuidcbiudbceibcnwibfwid</p>
-              <p>uberuidcbiudbceibcnwibfwid</p>
-              <p>uberuidcbiudbceibcnwibfwid</p>
-              <p>uberuidcbiudbceibcnwibfwid</p>
-              <p>uberuidcbiudbceibcnwibfwid</p>
-              <p>uberuidcbiudbceibcnwibfwid</p>
-              <p>uberuidcbiudbceibcnwibfwid</p>
-              </div>
-            </div>
-            <p>Some great content...</p>
+              </div>{/* </scroll-container> */}
           {/* </Scrollbars> */}
-          </TinderCard>
+          {/* </TinderCard> */}
       </div>  
+      <div className="action-bar">
+        <div className="action" data-swipe="left" onClick={clickRatingButtonEvent} >
+          <div className="action-content dislike"><FontAwesomeIcon icon={faTimes} /></div>
+        </div>
+
+        <div className="action" data-swipe="right" onClick={clickRatingButtonEvent} >
+          <div className="action-content like"><FontAwesomeIcon icon={faComment} /></div>
+        </div>
+      </div>{/* action-bar */}
     </React.Fragment>
     )
   }
