@@ -12,8 +12,17 @@ a{text-decoration:none;}
 .body-container{
   position:absolute;display:flex;flex-direction:column;width:100%;
   height: 100%;
-  padding: 0 4%;
+  padding: 0 5px;
+  // overflow: hidden;
 }
+div[class*="matches"],
+div[class*="memes"]{
+  .body-container{overflow:hidden;}
+}
+div[class*="chats"]{
+  overflow-y:scroll;
+}
+
 
 main.main-wrapper {
   // background:black;

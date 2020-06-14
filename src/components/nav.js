@@ -8,8 +8,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGrin, faHeart, faStar, faComment, faImages, faUser, faUserEdit, faComments  } from '@fortawesome/free-solid-svg-icons'
 
 function SignupOrLoginOrLogout(sessionContext) {
-  const { user } = sessionContext.state
   const location = useLocation();
+  const { user } = sessionContext.state
   const linkInfo = (location.pathname === "/accounts/login")
   ? { linkText: 'signup', link: '/accounts/register' }
   : { linkText: 'login', link: '/accounts/login' }
@@ -74,17 +74,14 @@ const NavMobile = () => {
   const sessionContext = useContext(SessionContext)
   const { user } = sessionContext.state
   const location = useLocation();
-
+  console.log("location", location.pathname)
   const linkInfo = (location.pathname === "/accounts/login")
   ? { linkText: 'signup', link: '/accounts/register' }
   : { linkText: 'login', link: '/accounts/login' }
+
   if (user) {
     return (
       <nav>
-
-
-{/* <h5 key={index}><Link to={`/profile/${match.data.alias}`}>{match.data.alias}</Link></h5> */}
-
         <NavLink to={'/settings'} exact={true}>
           <FontAwesomeIcon icon={faUser} />
         </NavLink>
@@ -93,6 +90,9 @@ const NavMobile = () => {
         </NavLink>
 
         <NavLink to={'/matches'} exact={true}>
+          {(location.pathname !== "/matches")
+          ? ( <FontAwesomeIcon icon={faHeart} /> )
+          : (
           <span className="oval">
             <span className="circle circle-dates">
               <FontAwesomeIcon icon={faHeart} />
@@ -100,22 +100,21 @@ const NavMobile = () => {
             <span className="circle circle-friends">
               <FontAwesomeIcon className="fa-flip-horizontal" icon={faStar} />
             </span>
-          </span>
+          </span>)}
         </NavLink>
 
-
-        <NavLink to='/profiles' exact={true}>
-          <span className="oval">
+        <NavLink to='/chats' exact={true}>
+          {(location.pathname !== "/chats")
+          ? ( <FontAwesomeIcon icon={faComment} />)
+          : (<span className="oval">
             <span className="circle circle-dates">
               <FontAwesomeIcon icon={faComment} />
             </span>
             <span className="circle circle-friends">
               <FontAwesomeIcon className="fa-flip-horizontal" icon={faComment} />
             </span>
-          </span>
+          </span>)}
         </NavLink>
-        
-
       </nav>
     ) 
   } else {

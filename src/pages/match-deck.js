@@ -6,7 +6,8 @@ import { toast } from 'react-toastify'
 import { useHistory } from 'react-router-dom'
 import { flattenDataKeys } from '../fauna/helpers/util'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTimesCircle, faTimes, faHeart, faStar, faComment, faImages, faUser, faUserEdit, faComments  } from '@fortawesome/free-solid-svg-icons'
+import { faTimesCircle, faTimes, faHeart, faStar, faComment, faImages, faUser, faArrowDown,
+  faUserEdit, faUserNinja, faGraduationCap, faPuzzlePiece, faCaretDown  } from '@fortawesome/free-solid-svg-icons'
 import TinderCard from 'react-tinder-card'
 import { Scrollbars } from 'react-custom-scrollbars';
 import {MemeGrid} from '../components/meme-grid'
@@ -114,7 +115,7 @@ function RateMatches () {
     })
     .catch(err => {
       console.log(err)
-      toast.error('testFunction failed')
+      toast.error('trygettingmore failed')
     })
   }
 
@@ -149,8 +150,13 @@ function RateMatches () {
       </React.Fragment>)
     let mId = memeData.currentMeme[1].ref.value.id
     let profileToFetch = memeData.currentMeme[1].data.alias
-    let zip = memeData.currentMeme[1].data.zip
+    // let zip = memeData.currentMeme[1].data.zip
     let age = (memeData.currentMeme[2] ? memeData.currentMeme[2] : '?')
+    let asset01 = memeData.currentMeme[1].data.asset01 ? memeData.currentMeme[1].data.asset01.url : '/images/people/image17.jpg'
+    let match_score = Math.ceil(memeData.currentMeme[0]*100)
+    let city = 'Brookyln, NY'
+    let gender = [ 'woman', 'mTf' ]
+    let orientation = [ 'gay', 'lesbian', 'sapiosexual', 'humorsexual', 'monogamous', 'single']
     console.log("matchlist:", memeData)
 
     return (
@@ -159,19 +165,36 @@ function RateMatches () {
           {/* <TinderCard onSwipe={onSwipe} onCardLeftScreen={() => onCardLeftScreen('fooBar')} preventSwipe={['down', 'up']}> */}
           {/* <Scrollbars style={{ width: '800px', autoHeight:'true' }}> */}
               <div className="scroll-container">
-                <div className="preview-wrap">
-                  <div className="img-wrap">
+                <div className="teaser-wrap">
+                  <div className="teaser-image">
                     <div className="overlay"></div>
                     <img className="meme_to_rate" 
                     // onClick={setNextMeme}
-                    alt="" src={memeData.currentMeme[1].data.asset01 ? memeData.currentMeme[1].data.asset01.url : '/images/icons/emojis_love.svg'} /> 
+                    alt="" src={asset01} /> 
                   </div>{/* </img-wrap> */}
-                  <div className="">
-                    <h2> {profileToFetch}</h2>
-                    <div> {zip}<span>&bull;</span> {age}</div>  
+                  <div className="teaser-text">
+                    <div>
+                      <h2> {profileToFetch}</h2>
+                      <div>{age}<span>&bull;</span>{city}</div>  
+                    </div>
+                    <a href="#memes" className="match-score">
+                      <h2>{match_score}<small>%</small></h2>
+                      <FontAwesomeIcon icon={faArrowDown} />
+                    </a>
                   </div>
                 </div>{/* </preview-wrap> */}
                 <div className="profile-description">
+                  <section>
+                    <div>
+                      <FontAwesomeIcon icon={faUserNinja} /> DX
+                    </div>
+                    <div>
+                      <FontAwesomeIcon icon={faGraduationCap} /> University of Chicago
+                    </div>
+                    <div>
+                      <FontAwesomeIcon icon={faPuzzlePiece} /> {orientation} <span>&bull;</span> {gender} <span>&bull;</span>
+                    </div>
+                  </section>
                   <section>
                     <h5 className="section-header">Lorem ipsum dolor sit amet</h5> 
                     <p>consectetur adipiscing elit, sed do eiusmod tempor 
@@ -203,7 +226,7 @@ function RateMatches () {
                     </p>
                   </section>
                 </div>{/* profile-description */}
-                <div className="grid">
+                <div id="memes" className="profile-meme-grid">
                   {<MemeGrid passedData={profileToFetch} />}
                 </div>
               </div>{/* </scroll-container> */}

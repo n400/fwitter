@@ -27,7 +27,7 @@ const Matches = props => {
         <p> To accelerate this process, complete your <Link to="/profile">profile</Link>, rate <Link to="/">memes</Link> to improve match accuracy, and <Link to="/media">advertise grinnr on 
           your tinder profile.</Link></p>
           {/* <p><strong>"Waiting for you on grinnr.com (no, not grindr)".</strong></p> */}
-        <Link className="button-cta" to="/">Rate memes</Link>
+        <Link className="button" to="/">Rate memes</Link>
 
      </div>
 

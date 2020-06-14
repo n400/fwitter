@@ -24,7 +24,7 @@ Ref(Collection('users'), '1')
 
 //delete all meme ratings
 Map(
-  Paginate(Documents(Collection("match_scores")),{size:10000}),
+  Paginate(Documents(Collection("match_ratings")),{size:10000}),
   Lambda(ref => Delete(ref))
 )
 
@@ -45,7 +45,8 @@ Map(
   )
 )
 
-
+// react-spring https://codesandbox.io/s/frosty-firefly-4eiy1?file=/src/index.js
+//
 // npm install --save react-tinder-card
 // npm install react-custom-scrollbars --save
 // https://github.com/malte-wessel/react-custom-scrollbars

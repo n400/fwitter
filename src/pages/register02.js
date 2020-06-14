@@ -82,7 +82,7 @@ const Register02 = (props) => {
               {renderInputField('dob (you must be over 18 to view profiles)', dob, 'date', e => handleChangeDob(e), 'dob')}
               {renderInputField('zip code', zip, 'text', e => handleChangeZip(e), 'zip')}
               <div className="input-row align-right">
-                <button className="button-cta"> Next </button>
+                <button className="button"> Next </button>
               </div>
             </form>
           </div>

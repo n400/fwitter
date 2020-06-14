@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import SessionContext from './../context/session'
+import SessionContext from '../context/session'
 import { faunaQueries } from '../fauna/query-manager'
 import { toast } from 'react-toastify'
 import { Uploader } from '../components/uploader'
@@ -8,7 +8,7 @@ import Asset from '../components/asset'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch, faEye, faIcons, faHeadSideVirus, faLaugh, faHeart, faImages, faUserFriends, faBirthdayCake, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons'
 
-const Profiles = () => {
+const Chats = () => {
   const [data, setData] = useState(undefined)
   useEffect(() => {
     async function fetchData () {
@@ -51,4 +51,4 @@ const Profiles = () => {
 };
 
 
-export default Profiles
+export default Chats

@@ -1,7 +1,7 @@
 import faunadb from 'faunadb'
 
 const q = faunadb.query
-const { Call, Difference, Documents, Filter, Exists, Join, Intersection, Ref, Now, Paginate, Lambda, Match, Index, Create, Collection, Let, Get, Identity, Var, ToNumber, Select } = q
+const { Call, Delete, Difference, Documents, Do, Filter, Exists, Join, Intersection, Ref, Now, Paginate, Lambda, Match, Index, Create, Collection, Let, Get, Identity, Var, ToNumber, Select } = q
 
 // TODO: make this run async as a user rates more memes
 
@@ -108,11 +108,17 @@ function CalculateMatches(){
             {size: 40000}
           )
   },
-  q.Map(
-    Var("users"),
-    Lambda(
-      "user_2",
-      Call(q.Function("update_r"),[Var("user_1"), Var("user_2")])
+  Do(
+    q.Map(
+      Paginate(Documents(Collection("match_ratings")),{size:10000}),
+      Lambda(ref => Delete(ref))
+    ),
+    q.Map(
+      Var("users"),
+      Lambda(
+        "user_2",
+        Call(q.Function("update_r"),[Var("user_1"), Var("user_2")])
+      )
     )
   )
 )

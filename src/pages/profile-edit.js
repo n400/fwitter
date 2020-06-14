@@ -134,7 +134,7 @@ const Profile = props => {
 
   
             <div className="input-row align-right">
-              <button className="button-cta"> Update </button>
+              <button className="button"> Update </button>
             </div>
           </form>
       </div>

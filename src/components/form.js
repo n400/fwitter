@@ -71,7 +71,7 @@ const Form = props => {
 
           {renderInputField('password', password, 'password', e => handleChangePassword(e), 'current-password')}
           <div className="input-row align-right">
-            <button className="button-cta"> {props.isLogin ? 'Login' : 'Next'} </button>
+            <button className="button"> {props.isLogin ? 'Login' : 'Next'} </button>
           </div>
 
         </form>

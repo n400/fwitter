@@ -7,7 +7,7 @@ import Login from './pages/login'
 import ProfileEdit from './pages/profile-edit'
 import Profile from './pages/profile'
 import Settings from './pages/settings'
-import Profiles from './pages/profiles'
+import Chats from './pages/chats'
 import Register01 from './pages/register01'
 import Register02 from './pages/register02'
 import RateMatches from './pages/match-deck'
@@ -56,7 +56,7 @@ const App = () => {
               {user ? <Route path="/profile-edit" component={ProfileEdit} /> : null}
               <Route exact path="/legal"><Legal /></Route> 
               <Route exact path="/media"><Media /></Route>
-              <Route exact path="/profiles" component={Profiles} />
+              <Route exact path="/chats" component={Chats} />
               {user ? <Route exact path="/matches"><RateMatches /></Route> : null}
               {user ? <Route exact path="/memes"><RateMemes /></Route> : null}
               {user ? <Route exact path="/profile/:userAlias" component={Profile} /> : null}
