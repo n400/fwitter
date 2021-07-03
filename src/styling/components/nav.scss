@@ -26,43 +26,57 @@ nav {
         // https://codepen.io/ismailfarooq/pen/wewNxx
         color: $grey-gradient;
     }
+    select {
+        background-color: transparent;
+        border: 0;
+    }
+    select, option {
+        font-size: 12px;
+        font-weight: 600;
+        color: grey;
+        cursor: pointer;
+        &:focus, &:active, &:hover {
+            outline:0;
+        }
+    }
 }
 .desktop-layout{
     a{color: $soft-white;}
 }
 
-.oval{
-    display: flex;
-    flex-direction: row;
-    height: $min-touch;
-    width: calc( (#{$min-touch}*2) - 2);
-    border-radius: 100px;
-    background: $grey-gradient;
-}
-.circle{
-    height: $min-touch;
-    width: $min-touch;
-    border-radius: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    // transitions not supported with gradients;
-    // try this at some point if you need to:
-    // https://joshwcomeau.com/react/rainbow-button/
-    // transition: $generic-transition;
-}
-.circle-friends{
-    margin-left:-1px;
-    transition: all 2s ease-out;
-    &:hover{
-        background: $teal-gradient;
-    }
-}
-.circle-dates{
-    margin-right:-1px;
-    &:hover{
-        background: $pink-gradient;
-    }
-}
+// .oval{
+//     display: flex;
+//     flex-direction: row;
+//     height: $min-touch;
+//     width: calc( (#{$min-touch}*2) - 2);
+//     border-radius: 100px;
+//     background: $grey-gradient;
+// }
+// .circle{
+//     height: $min-touch;
+//     width: $min-touch;
+//     border-radius: 100%;
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     color: white;
+//     // transitions not supported with gradients;
+//     // try this at some point if you need to:
+//     // https://joshwcomeau.com/react/rainbow-button/
+//     // transition: $generic-transition;
+// }
+// .circle-friends{
+//     margin-left:-1px;
+//     transition: all 2s ease-out;
+//     &:hover{
+//         background: $teal-gradient;
+//     }
+// }
+// .circle-dates{
+//     margin-right:-1px;
+//     background: $pink-gradient;
+//     &:hover{
+//         background: $pink-gradient;
+//     }
+// }
 

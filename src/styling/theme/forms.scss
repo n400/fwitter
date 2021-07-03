@@ -44,7 +44,8 @@ form {
 input{
   width: 100%;
   background: transparent;
-  background: #e8f0fe; //TODO, this is Chrome's default fill background, on Windows anyway
+  background: white;
+  // #e8f0fe; //TODO, this is Chrome's default fill background, on Windows anyway
   border: $input-border;
 }
 label{
@@ -55,7 +56,6 @@ label{
 }
 
 .button {
-  background: $pink-gradient;
   color:white;
   border-radius:50px;
   height: 60px;
@@ -68,6 +68,8 @@ label{
   letter-spacing: .06em;
   box-shadow: $button-box-shadow;
   margin-top:1rem;
+  &.dates{ background: $pink-gradient;}
+  &.friends{ background: $teal-gradient;}
   &:hover{
     color: white;
     background: $primary-cta-hover;
@@ -139,9 +141,9 @@ label{
   //input[type=radio]:checked + label, 
   input[type=checkbox]:checked + label
   {
-    background:#3384e8;
+    // background:#3384e8;
     font-style: normal;
-    color:$white;
+    // color:$white;
     box-shadow: 0 0 0 transparent;
     &:before {
       // position: relative;
@@ -190,6 +192,9 @@ label{
     }
   }
 }
+
+
+
 
 @media only screen and (min-width: $small-bp){
   .form-wrapper{width: auto;}

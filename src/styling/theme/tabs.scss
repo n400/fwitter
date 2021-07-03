@@ -1,15 +1,17 @@
 .tabs{
   display: flex;
-  width: 100%;
+  // width: 100%;
   margin-bottom:1rem;
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 600;
+  justify-content: center;
   .tab{
-    width: 33.333%;
+    width: auto;
+    margin: 0 0.75rem;
     // align-items: center;
     display:flex;
     justify-content:space-around;
-    border-bottom: 2px solid $grey-legible;
+    border-bottom: 2px solid transparent;
     color: $grey-legible;
     height: 44px;
     cursor: pointer;

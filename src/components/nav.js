@@ -74,7 +74,6 @@ const NavMobile = () => {
   const sessionContext = useContext(SessionContext)
   const { user } = sessionContext.state
   const location = useLocation();
-  console.log("location", location.pathname)
   const linkInfo = (location.pathname === "/accounts/login")
   ? { linkText: 'signup', link: '/accounts/register' }
   : { linkText: 'login', link: '/accounts/login' }
@@ -82,38 +81,31 @@ const NavMobile = () => {
   if (user) {
     return (
       <nav>
+
         <NavLink to={'/settings'} exact={true}>
           <FontAwesomeIcon icon={faUser} />
         </NavLink>
+
         <NavLink to='/memes'>
           <FontAwesomeIcon icon={faImages} />
         </NavLink>
 
-        <NavLink to={'/matches'} exact={true}>
           {(location.pathname !== "/matches")
-          ? ( <FontAwesomeIcon icon={faHeart} /> )
+          ? ( 
+            <NavLink to={'/matches'} exact={true}>
+              <FontAwesomeIcon icon={faHeart} /> 
+            </NavLink>
+            )
           : (
-          <span className="oval">
-            <span className="circle circle-dates">
-              <FontAwesomeIcon icon={faHeart} />
-            </span>
-            <span className="circle circle-friends">
-              <FontAwesomeIcon className="fa-flip-horizontal" icon={faStar} />
-            </span>
-          </span>)}
-        </NavLink>
+          <select name="want" id="want">
+            <option value="friends">friends only</option>
+            <option value="dates">dates only</option>
+            <option value="everyone">everyone</option>
+          </select>
+          )}
 
         <NavLink to='/chats' exact={true}>
-          {(location.pathname !== "/chats")
-          ? ( <FontAwesomeIcon icon={faComment} />)
-          : (<span className="oval">
-            <span className="circle circle-dates">
-              <FontAwesomeIcon icon={faComment} />
-            </span>
-            <span className="circle circle-friends">
-              <FontAwesomeIcon className="fa-flip-horizontal" icon={faComment} />
-            </span>
-          </span>)}
+          <FontAwesomeIcon icon={faComment} />
         </NavLink>
       </nav>
     ) 

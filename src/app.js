@@ -56,7 +56,7 @@ const App = () => {
               {user ? <Route path="/profile-edit" component={ProfileEdit} /> : null}
               <Route exact path="/legal"><Legal /></Route> 
               <Route exact path="/media"><Media /></Route>
-              <Route exact path="/chats" component={Chats} />
+              <Route exact path="/chats:mode" component={Chats} />
               {user ? <Route exact path="/matches"><RateMatches /></Route> : null}
               {user ? <Route exact path="/memes"><RateMemes /></Route> : null}
               {user ? <Route exact path="/profile/:userAlias" component={Profile} /> : null}

@@ -5,26 +5,27 @@ import { faunaQueries } from '../fauna/query-manager'
 import { toast } from 'react-toastify'
 import Asset from '../components/asset'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch, faEye, faIcons, faHeadSideVirus, faLaugh, faHeart, faImages, faUserFriends, faBirthdayCake, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons'
+import { faPencilAlt, faEye, faIcons, faHeadSideVirus, faLaugh, faHeart, faImages, faUserFriends, faBirthdayCake, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons'
 
 const Profile = ({ match, location, props }) => {
   const sessionContext = useContext(SessionContext)
   const { user } = sessionContext.state 
   const profileToFetch = user
   const [profileData, setProfileData] = useState(undefined)
-  async function getUserProfile (options = {}) {
+
+  async function getUserSettings (options = {}) {
     console.log(user)
-    // return faunaQueries
-    //   .getUserProfile(profileToFetch)
-    //   .then(res => {
-    //     let fetchedProfile = res.data
-    //     console.log("fetchedProfile",fetchedProfile)
-    //     return fetchedProfile
-    //   })
-    //   .catch(err => {
-    //     console.log(err)
-    //     toast.error('get profile failed')
-    //   })
+    return faunaQueries
+      .getUserSettings(user.alias)
+      .then(res => {
+        let userSettings = res.data
+        console.log("userSettinggs",userSettings)
+        return userSettings
+      })
+      .catch(err => {
+        console.log(err)
+        toast.error('get profile failed')
+      })
   }
 
   useEffect(() => {
@@ -32,12 +33,12 @@ const Profile = ({ match, location, props }) => {
     async function fetchData () {
       if (didCancel) return
       
-      // let memeList = await getNextMemeList({ rating1: "4", rating2: "5" })
-      let fetchedProfile = await getUserProfile()
+      let userSettings = await getUserSettings()
+      // let fetchedProfile = await getUserProfile()
       
        setProfileData({
-        // memeList: memeList,
-        profileDetails: fetchedProfile
+        userSettings: userSettings,
+        // profileDetails: fetchedProfile
       })
       //profileData is still undefined the first time this useEffect runs
     }
@@ -45,13 +46,13 @@ const Profile = ({ match, location, props }) => {
     return function () {didCancel = true}
   }, [])
 
-  // async function getNextMemeList (options = { rating1: "1", rating2: "2" }) {
+  // async function getUserSettings (options = { rating1: "1", rating2: "2" }) {
   //   return faunaQueries
-  //     .getMemesRatedMutually(profileToFetch,options.rating1,options.rating2)
+  //     .getUserSettings()
   //     .then(res => {
-  //       let memeList = res.data
+  //       let userSettings = res.data
   //       console.log( "result: ", res.data )
-  //       return memeList
+  //       return userSettings
   //     })
   //     .catch(err => {
   //       console.log(err)
@@ -61,25 +62,25 @@ const Profile = ({ match, location, props }) => {
 
   return renderProfile()
   function renderProfile () {
-    // async function clickRatingButtonEvent (evt) {
-    //   let currentMeme = profileData.memeList
-    // }
-    if (profileData === undefined) return (<React.Fragment><h1>Loading ... </h1></React.Fragment>)
-    console.log("pd", profileData)
-
+    async function handleChangeSetting (evt) {
+      console.log(evt)
+    }
+    // if (profileData === undefined) return (<React.Fragment><h1>Loading ... </h1></React.Fragment>)
+    // console.log("pd", profileData)
+    // let asset01 = profileData.asset01
     // let thisProfile = profileData.profileDetails[0].data
     // let alias = thisProfile.alias
     // let zip = thisProfile.zip
     // let dob = thisProfile.dob
     // let asset01 = thisProfile.asset01
 
-    // function switchMemeList(evt){
+    // function switchuserSettings(evt){
     //   switch ( evt.target.dataset.memebatch ) {
     //     case 'likes':      
-    //       getNextMemeList({ rating1: "4", rating2: "5" })
+    //       getUserSettings({ rating1: "4", rating2: "5" })
     //       break;
     //     case 'dislikes':
-    //       getNextMemeList({ rating1: "1", rating2: "2" })
+    //       getUserSettings({ rating1: "1", rating2: "2" })
     //       break;
     //   }
     // }
@@ -88,16 +89,56 @@ const Profile = ({ match, location, props }) => {
       <React.Fragment>
       {/* <div className="split-layout"> */}
         {/* <div className="main-left"> */}
-          <div className="profilePhotos">
-            {/* {asset01 ? <Asset asset={asset01}></Asset> : null} */}
-            <div>
-              <Link to={`/profile/${user.alias}`}>view {user.alias} profile</Link>
-            </div>
-            <Link to={`/profile-edit/`}>edit profile</Link>
+        <div className="avatars" style={{ display: "flex", flexDirection: "row"}}>
+          <div className="avatar">
+            <img style={{borderRadius: '200%'}} src={user.asset01.url ? user.asset01.url : ''}/>
+            <Link className="button dates" to={`/profile-edit/`}><FontAwesomeIcon icon={faPencilAlt} /></Link>
           </div>
-          <h1>
-          {/* {alias} */}
-          </h1>
+          {/* <div className="avatar">
+            <img style={{borderRadius: '200%'}} src={user.asset01.url ? user.asset01.url : ''}/>
+            <Link className="button friends" to={`/profile-edit/`}><FontAwesomeIcon icon={faPencilAlt} /></Link>
+          </div> */}
+        </div>
+        <div>
+          {user.asset01.url}
+          {user.wants}
+          {user.dob}
+          <Link to={`/profile/${user.alias}`}>view {user.alias} profile</Link>
+        </div>
+
+        <div className="form form-full-width">       
+          <div className="">
+            <div className="input-group">
+              <input type="checkbox" id="friends" checked={true} onChange={handleChangeSetting} />
+              <label htmlFor="friends">friends</label>
+            </div>
+            <div className="input-group">
+              <input type="checkbox" id="dates" checked={false} onChange={handleChangeSetting} />
+              <label htmlFor="dates">dates</label>
+            </div>
+          </div>     
+          <div className="small">about me</div>
+          <div className="input-group">
+            <input type="text" id="city" onChange={handleChangeSetting} />
+            <label htmlFor="city">city</label>
+          </div>
+          <div className="input-group">
+            <input type="text" id="gender" onChange={handleChangeSetting} />
+            <label htmlFor="gender">gender</label>
+          </div>
+          <div className="input-group">
+            <input type="text" id="birthdate" onChange={handleChangeSetting} />
+            <label htmlFor="birthdate">birthdate</label>
+          </div>
+          <div className="input-group">
+            <input type="text" id="username" onChange={handleChangeSetting} />
+            <label htmlFor="username">username</label>
+          </div>
+          <div className="input-group">
+            <input type="text" id="email" onChange={handleChangeSetting} />
+            <label htmlFor="email">email</label>
+          </div>     
+        </div>
 
     </React.Fragment>
     )

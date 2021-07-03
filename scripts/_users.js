@@ -58,3 +58,64 @@ Map(
     )
   )
 )
+
+
+
+
+// create data
+Map(
+  Paginate(Documents(Collection("users")),{size:10000}),
+  Lambda(
+    "ref",
+    Create(
+      Collection('profiles_dates'),
+      {
+        data: {
+          'user': Var('ref'),
+          "created": Time("2020-05-25T20:28:24.851124Z"),
+          "job":"quant",
+          "gender":["male","fTm"],
+          "orientation":["gay","blerghh"],
+          "status":"single",
+          "school":"hard knocks",
+          "aboutMe": "I’m looking to have a kid this year, so I need a wife. I wish this site let me say I want a wife. Oh, wait I guess it does!",
+          "whyGrinnr": "I’m sad and lonely and all I do all day is look at memes anyway.",
+          "assets": [ 
+            { "url": "/images/people/image10.jpg","caption":"guess where this was taken" },
+            { "url": "/images/people/image11.jpg","caption":"guess where this was taken" },
+            { "url": "/images/people/image12.jpg","caption":"guess where this was taken" },
+            { "url": "/images/people/image13.jpg","caption":"guess where this was taken" },
+            { "url": "/images/people/image14.jpg","caption":"guess where this was taken" },
+          ]
+        },
+      },
+    )
+  )
+)
+
+Map(
+  Paginate(Documents(Collection("users")),{size:10000}),
+  Lambda(
+    "ref",
+    Create(
+      Collection('profiles_friends'),
+      {
+        data: {
+          'user': Var('ref'),
+          "created": Time("2020-05-25T20:28:24.851124Z"),
+          "job":"quant",
+          "school":"hard knocks",
+          "aboutMe": "This is where i convince you to be my bro because I’m a really good guy, just here for buds and memes",
+          "whyGrinnr": "I don’t know. It’s kinda weird. Where’d they get these crazy memes?! Anyway, grindr has gotten a little gay.",
+          "assets": [ 
+            { "url": "/images/people/image18.jpg","caption":"guess where this was taken" },
+            { "url": "/images/people/image19.jpg","caption":"guess where this was taken" },
+            { "url": "/images/people/image20.jpg","caption":"guess where this was taken" },
+            { "url": "/images/people/image21.jpg","caption":"guess where this was taken" },
+            { "url": "/images/people/image22.jpg","caption":"guess where this was taken" },
+          ]
+        },
+      },
+    )
+  )
+)

@@ -2,7 +2,7 @@ import faunadb from 'faunadb'
 
 const q = faunadb.query
 const { Lambda, Create, Collection, Update, Let, Get, Identity, Var, Select, Now,
-Paginate,Match,Index } = q
+Paginate,Match,Index,Ref } = q
 
 function CreateUser(alias, wantMemes, wantFriends, wantDates) {
   return Create(Collection('users'), {
@@ -83,6 +83,23 @@ function GetUserProfile(userAlias) {
   )
 }
 
+function GetUserSettings(){
+  console.log("trying")
+  return Let(
+    {
+      accountRef: Identity(),
+      userRef: Select(['data', 'user'], Get(Var('accountRef')))
+    },
+
+     // if the user wants dates
+      Get(Match(Index("assetsD_by_user"), Ref(Collection("users"), "1" ))),
+      // if the user wants friends
+      Get(Match(Index("assetsF_by_user"), Ref(Collection("users"), "1" ))) 
+    
+  )
+
+}
+
 // Ask Brecht or someone: Should i be saving the meme ratings 
 // in the user collection instead of a separate meme_ratings collection?
 function GetRatedMemes(userAlias) { 
@@ -109,5 +126,5 @@ function GetRatedMemes(userAlias) {
 
 
 
-export { CreateUser, UpdateUser, FinishRegistration, GetUserProfile, 
+export { CreateUser, UpdateUser, FinishRegistration, GetUserProfile, GetUserSettings,
   GetRatedMemes }

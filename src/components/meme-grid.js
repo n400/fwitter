@@ -10,7 +10,7 @@ const MemeGrid = (passedData) => {
 
   const profileToFetch = passedData.passedData
   const [data, setData] = useState(undefined)
-  const [showModal, setShowModal] = useState( true )
+  const [showModal, setShowModal] = useState( false )
   
   async function getNextMemeList (options = {}) {
     return faunaQueries

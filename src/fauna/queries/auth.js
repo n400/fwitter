@@ -254,7 +254,7 @@ function LoginAccount(email, password) {
 
 /* ********** Call the UDF login function *********** */
 async function login(client, email, password) {
-  console.log("client2",client)
+  // console.log("client2",client)
   return client.query(Call(q.Function('login'), email, password)).then(res => flattenDataKeys(res))
   //return client.query(Call(q.Function("get_age"), Ref(Collection("users"), "1"))).then(res => console.log("resssss",res))
 }

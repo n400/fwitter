@@ -60,7 +60,7 @@
 .swipe-container{
   height:100%;
   width: 100%;
-  border-radius: 15px;
+  border-radius: $border-radius;
   overflow: hidden;
   box-shadow: $button-box-shadow;
   &>div { height:100%; width: 100%;   overflow: hidden;} //<TinderCard>'s div
@@ -172,7 +172,7 @@ div[class*="matches"] {
   .scroll-container{
     height: 100%;
     overflow-y: scroll;
-    border-radius: 15px;
+    border-radius: $border-radius;
     // scrollbar-width: thin;
     // scrollbar-color: $hot-pink white;
     // /* Works on Chrome/Edge/Safari */

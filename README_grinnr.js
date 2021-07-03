@@ -45,6 +45,8 @@ Map(
   )
 )
 
+
+
 // react-spring https://codesandbox.io/s/frosty-firefly-4eiy1?file=/src/index.js
 //
 // npm install --save react-tinder-card
@@ -53,6 +55,15 @@ Map(
 // https://github.com/3DJakob/react-tinder-card
 
 // CREATE NEW DB
+
+
+CreateCollection({"name": "memes", "history_days": 0});
+CreateCollection({"name": "meme_ratings", "history_days": 0});
+CreateCollection({"name": "meme_stats", "history_days": 0});
+CreateCollection({"name": "match_ratings", "history_days": 0}); //todo: change to user_ratings
+CreateCollection({"name": "match_scores", "history_days": 0});
+CreateCollection({"name": "profiles_friends", "history_days": 0});
+CreateCollection({"name": "profiles_dates", "history_days": 0});
 
 //see all previously rated memes with their ratings
 CreateIndex({
@@ -111,7 +122,6 @@ CreateIndex({
   ]
 })
 
-CreateCollection({"name": "meme_ratings", "history_days": 0});
 CreateIndex({
   name: "ratings_by_mid",
   source: Collection("meme_ratings"),
@@ -188,7 +198,7 @@ CreateIndex({
 });
 
 //meme stats collections and indexes
-CreateCollection({"name": "meme_stats", "history_days": 0});
+
 CreateIndex({
   name: 'ms_by_meme',
   source: Collection('meme_stats'),
@@ -274,6 +284,22 @@ CreateIndex({
   ],
   values: [{ field: ["data", "dob"] }]
 })
+
+
+CreateIndex({
+  name: "assetsF_by_user",
+  source: Collection("profiles_friends"),
+  terms: [{ field: ["data", "user"]}], 
+  values: [{ field: ["data", "assets","url"]},{ field: ["data", "assets","caption"]}],
+})
+
+CreateIndex({
+  name: "assetsD_by_user",
+  source: Collection("profiles_dates"),
+  terms: [{ field: ["data", "user"]}], 
+  values: [{ field: ["data", "assets","url"]},{ field: ["data", "assets","caption"]}],
+})
+
 
 ///
 // FUNCTIONS

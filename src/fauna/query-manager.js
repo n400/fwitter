@@ -10,7 +10,7 @@ import {
   refweet,
   comment
 } from './queries/fweets'
-import { UpdateUser, FinishRegistration, GetRatedMemes, GetUserProfile } from './queries/users'
+import { UpdateUser, FinishRegistration, GetRatedMemes, GetUserProfile, GetUserSettings } from './queries/users'
 import { GetMemesRatedMutually, GetUnratedMemesFromProfile, UploadMeme } from './queries/memes'
 import { SaveMemeRating, GetUnratedMemes, GetAllProfiles, GetAllMatches, SaveMatchRating, CalculateMatches } from './queries/decks'
 import { searchPeopleAndTags } from './queries/search'
@@ -88,6 +88,10 @@ class QueryManager {
 
   getUserProfile(userAlias) {
     return this.client.query(GetUserProfile(userAlias))
+  }
+
+  getUserSettings() {
+    return this.client.query(GetUserSettings())
   }
   
   getRatedMemes(userAlias) {

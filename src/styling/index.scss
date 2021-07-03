@@ -24,7 +24,7 @@ $form-background: white;
 $form-border: 2px solid $primary-cta;
 $border-radius: 8px;
 $footer-height: 36px;
-$nav-height: 60px;
+$nav-height: 44px;
 $min-touch: 44px;
 $action-bar-height: 92px;
 $generic-transition: all .5s ease-in-out;
@@ -56,6 +56,7 @@ $pink-gradient: linear-gradient(86.74deg, #FF1800 11.09%, #FF009B 87.91%);
 @import "./pages/page-specific-styles";
 @import "./pages/rate-memes";
 @import "./pages/profile";
+@import "./pages/settings";
 
 
 // CSS from libraries  
