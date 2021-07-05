@@ -1,5 +1,8 @@
-// This optional code is used to register a service worker.
-// register() is not called by default.
+import {precacheAndRoute} from 'workbox-precaching';
+
+if (process.env.NODE_ENV === 'production'){
+  precacheAndRoute(self.__WB_MANIFEST);
+}
 
 // This lets the app load faster on subsequent visits in production, and gives
 // it offline capabilities. However, it also means that developers (and users)
